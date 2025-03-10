@@ -7,19 +7,14 @@
 #-----------------------------------------------------------------------------------------
 #                          RUTAS DE APOYO
 # ----------------------------------------------------------------------------------------
-var_RutaRaiz='C:\\MisCompilados\\PROY_BOLSA_MX\\'
-var_RutaInforme=f'{var_RutaRaiz}INFORMES\\'
-var_RutaInformeBiva=f'{var_RutaRaiz}BIVA\\INFORMES\\'
-var_RutaInformeBmv=f'{var_RutaRaiz}BMV\\INFORMES\\'
+var_RutaRaiz='C:\\MisCompilados\\PROY_CALENDARIZAR\\MAILING\\'
 var_RutaConfig=f'{var_RutaRaiz}CONFIG\\'
-var_RutaCompile='C:\\MisCompilados\\dist\\'
+var_RutaInforme=f'{var_RutaRaiz}INFORMES\\'
 
 # ----------------------------------------------------------------------------------------
 #                          VARIABLES DE APOYO
 # ----------------------------------------------------------------------------------------
-var_NombreEmisores="BOLSAS_Filtro_Emisores_DEV"
-var_NombreBMV="BMV_Main_v2.exe"
-var_NombreBIVA="BIVA_Main_v2.exe"
+var_NombreEmisores="Tabla_Eventos_Periodicos_Especiales_DEV"
 
 # ----------------------------------------------------------------------------------------
 #                          AUTOR

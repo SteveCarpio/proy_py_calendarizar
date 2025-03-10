@@ -7,19 +7,14 @@
 #-----------------------------------------------------------------------------------------
 #                          RUTAS DE APOYO
 # ----------------------------------------------------------------------------------------
-var_RutaRaiz='C:\\MisCompilados\\PROY_CALENDARIZAR\\'
+var_RutaRaiz='C:\\MisCompilados\\PROY_CALENDARIZAR\\MAILING\\'
 var_RutaConfig=f'{var_RutaRaiz}CONFIG\\'
 var_RutaInforme=f'{var_RutaRaiz}INFORMES\\'
-var_RutaInformeMail=f'{var_RutaRaiz}MAILING\\INFORMES\\'
-var_RutaInformeTask=f'{var_RutaRaiz}TASKS\\INFORMES\\'
-var_RutaCompile='C:\\MisCompilados\\dist\\'
 
 # ----------------------------------------------------------------------------------------
 #                          VARIABLES DE APOYO
 # ----------------------------------------------------------------------------------------
 var_NombreEmisores="Tabla_Eventos_Periodicos_Especiales_DEV"
-var_NombreMailing="MAILING_Main.exe"
-var_NombreTasks="TASKS_Main.exe"
 
 # ----------------------------------------------------------------------------------------
 #                          AUTOR
