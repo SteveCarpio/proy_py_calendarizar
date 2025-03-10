@@ -33,3 +33,34 @@ fecha_final = restar_dias_habiles(fecha2, 3, fiestas)
 print("Fecha inicial:", fechaini.strftime('%d/%m/%Y'))
 print("Fecha2 (10 días naturales después):", fecha2.strftime('%d/%m/%Y'))
 print("Fecha final (3 días hábiles antes de fecha2, excluyendo fiestas):", fecha_final.strftime('%d/%m/%Y'))
+
+
+##################################################
+
+from datetime import datetime
+import calendar
+
+# Obtener la fecha actual
+fecha_actual = datetime.now()
+
+# Obtener el último día del mes actual
+ultimo_dia_del_mes = calendar.monthrange(fecha_actual.year, fecha_actual.month)[1]
+
+# Crear un objeto datetime con el último día del mes
+ultimo_dia_del_mes = datetime(fecha_actual.year, fecha_actual.month, ultimo_dia_del_mes)
+
+# Mostrar el último día del mes
+print("Último día del mes actual:", ultimo_dia_del_mes.strftime('%d/%m/%Y'))
+
+#####################################################
+
+from datetime import datetime
+
+# Obtener el año actual
+anio_actual = datetime.now().year
+
+# Obtener el último día del año (31 de diciembre)
+ultimo_dia_del_anio = datetime(anio_actual, 12, 31)
+
+# Mostrar el último día del año
+print("Último día del año actual:", ultimo_dia_del_anio.strftime('%d/%m/%Y'))
