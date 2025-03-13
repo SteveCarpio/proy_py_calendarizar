@@ -3,7 +3,7 @@ Option Compare Database
 Option Explicit
 
 Sub CALENDARIZAR_MAIN()
-    Dim c_fechaFin As Date
+    Dim c_fechaInicio, c_fechaFin As Date
     Dim c_idPlanif As String
     Dim c_periodicidad As String
     Dim c_hn_1, c_hn_2 As String
@@ -15,6 +15,10 @@ Sub CALENDARIZAR_MAIN()
     
     
     Set db = CurrentDb()
+    
+    strSQL = "DELETE FROM LANZADOR;"
+    db.Execute strSQL, dbFailOnError
+    
     strSQL = "SELECT ID_PLANIF, PERIODICIDAD, FECHA_FIN, LIMITE_EJECUCION, HN_1, AVISO, HN_2 FROM PLANIFICADOR WHERE P_ACT = 'S' "
     Set rs = db.OpenRecordset(strSQL)
     
@@ -22,17 +26,18 @@ Sub CALENDARIZAR_MAIN()
         Do While Not rs.EOF
             
             ' Leer datos del planificador
-            c_idPlanif = rs!id_planif
-            c_periodicidad = rs!periodicidad
-            c_fechaFin = rs!fecha_fin
-            c_limitEjecucion = rs!limite_ejecucion
-            c_hn_1 = rs!hn_1
-            c_aviso = rs!aviso
-            c_hn_2 = rs!hn_2
+            c_idPlanif = rs!ID_PLANIF
+            c_periodicidad = rs!PERIODICIDAD
+            c_fechaFin = rs!FECHA_FIN
+            c_limitEjecucion = rs!LIMITE_EJECUCION
+            c_hn_1 = rs!HN_1
+            c_aviso = rs!AVISO
+            c_hn_2 = rs!HN_2
+            c_fechaInicio = Date ' #12/31/2023#
             
             ' FUNCION - CALCULO_ANUAL_31 ---------------------------------
             If c_periodicidad = "Anual-31" Then
-                resultado = CALCULO_ANUAL_31(c_idPlanif, c_fechaFin, c_limitEjecucion, c_aviso, c_hn_1, c_hn_2)
+                resultado = CALCULO_ANUAL_31(c_idPlanif, c_fechaInicio, c_fechaFin, c_limitEjecucion, c_aviso, c_hn_1, c_hn_2)
             End If
             
 

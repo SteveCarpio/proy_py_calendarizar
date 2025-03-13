@@ -2,11 +2,12 @@ Attribute VB_Name = "M_ANUAL_31"
 Option Compare Database
 Option Explicit
 
-Function CALCULO_ANUAL_31(idPlanif As String, fechaFinal As Date, dias1, dias2 As Integer, hn1, hn2 As String) As String
+Function CALCULO_ANUAL_31(idPlanif As String, fechaInicio, fechaFinal As Date, dias1, dias2 As Integer, hn1, hn2 As String) As String
     
-    Dim fechaInicio, fechaAnalizar, nuevaFecha As Date
+    Dim fechaAnalizar, nuevaFecha As Date
     Dim db As DAO.Database
     Dim rs As DAO.Recordset
+    Dim strSQL As String
     Dim ano_ini, ano_fin As Integer
     Dim countDiasHabiles, dia As Integer
     Dim festivo As Boolean
@@ -15,9 +16,8 @@ Function CALCULO_ANUAL_31(idPlanif As String, fechaFinal As Date, dias1, dias2 A
     ' Conexión con la tabla de festivos
     Set db = CurrentDb
     Set rs = db.OpenRecordset("SELECT Festivo FROM Festivos", dbOpenSnapshot)
-    
-    'fechaHoy = Date
-    ano_ini = Year(Date)
+      
+    ano_ini = Year(fechaInicio)  ' Year(Date) ''
     ano_fin = Year(fechaFinal)
     
     ' Recorro todos los años a analizar
@@ -63,7 +63,7 @@ Function CALCULO_ANUAL_31(idPlanif As String, fechaFinal As Date, dias1, dias2 A
                         If Not festivo Then
                             countDiasHabiles = countDiasHabiles + 1
                             fechaAnalizar = nuevaFecha
-                            Debug.Print ("hb 1: " & countDiasHabiles & " - " & nuevaFecha & " - " & dia)
+                            'Debug.Print ("hb 1: " & countDiasHabiles & " - " & nuevaFecha & " - " & dia)
                          End If
                     End If
                         
@@ -116,7 +116,7 @@ Function CALCULO_ANUAL_31(idPlanif As String, fechaFinal As Date, dias1, dias2 A
                         If Not festivo Then
                             countDiasHabiles = countDiasHabiles + 1
                             fechaAnalizar = nuevaFecha
-                            Debug.Print ("hb 2: " & countDiasHabiles & " - " & nuevaFecha & " - " & dia)
+                            'Debug.Print ("hb 2: " & countDiasHabiles & " - " & nuevaFecha & " - " & dia)
                          End If
                     End If
                         
@@ -132,11 +132,22 @@ Function CALCULO_ANUAL_31(idPlanif As String, fechaFinal As Date, dias1, dias2 A
 
             End If
             
-            ' RESULTADO FINAL A PLANIFICAR
+            ' RESULTADO FINAL A PLANIFICAR - Mandar dato a la tabla -- SCHEDULLING
             Debug.Print (idPlanif & "       - " & fechaAnalizar)
+            
+            ' Insertar nuevos datos en la tabla
+            strSQL = "INSERT INTO LANZADOR (ID_PLANIF, FECHA_AVISO) " & _
+                     "VALUES ('" & idPlanif & "', #" & fechaAnalizar & "#);"
+            db.Execute strSQL, dbFailOnError
+    
+
+            
             
         End If
     Next i
+    
+    ' Cerrar la conexión
+    Set db = Nothing
 End Function
 
 
