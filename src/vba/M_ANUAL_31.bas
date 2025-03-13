@@ -2,11 +2,8 @@ Attribute VB_Name = "M_ANUAL_31"
 Option Compare Database
 Option Explicit
 
-'---------------------------
-'---------------------------
-'---------------------------
-
-Function Calculo_Anual_31(idPlanif As String, fechaFinal As Date, dias1, dias2 As Integer, hn1, hn2 As String) As Date
+Function CALCULO_ANUAL_31(idPlanif As String, fechaFinal As Date, dias1, dias2 As Integer, hn1, hn2 As String) As String
+    
     Dim fechaInicio, fechaAnalizar, nuevaFecha As Date
     Dim db As DAO.Database
     Dim rs As DAO.Recordset
@@ -97,15 +94,7 @@ Function Calculo_Anual_31(idPlanif As String, fechaFinal As Date, dias1, dias2 A
     Next i
 End Function
 
-Sub Anual_31()
-    Dim fechaFin As Date
-    Dim idPlanif As String
-    
-    fechaFin = #1/1/2029#     ' sTv:  mm/dd/aaaa
-    idPlanif = "PLAN000001"
-    
-    fechaFin = Calculo_Anual_31(idPlanif, fechaFin, -2, -15, "DH", "DH")
-End Sub
+
 
 
 
