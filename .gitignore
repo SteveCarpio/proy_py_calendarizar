@@ -11,3 +11,5 @@ dist/
 # Ignorar dependencias si usas pipenv o poetry
 Pipfile
 Pipfile.lock
+
+*.laccdb
