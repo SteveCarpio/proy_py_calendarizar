@@ -2,14 +2,14 @@ Attribute VB_Name = "M_ANUAL_31"
 Option Compare Database
 Option Explicit
 
-Function CALCULO_ANUAL_31(idPlanif As String, fechaInicio, fechaFinal As Date, dias1, dias2 As Integer, hn1, hn2 As String) As String
+Function CALCULO_ANUAL_31(Id2 As Integer, idPlanif As String, fechaInicio, fechaFinal As Date, dias1, dias2 As Integer, hn1, hn2 As String) As Integer
     
     Dim fechaAnalizar, nuevaFecha As Date
     Dim db As DAO.Database
     Dim rs As DAO.Recordset
     Dim strSQL As String
     Dim ano_ini, ano_fin As Integer
-    Dim countDiasHabiles, dia As Integer
+    Dim countDiasHabiles, dia, cont As Integer
     Dim festivo As Boolean
     Dim i As Integer
     
@@ -19,9 +19,12 @@ Function CALCULO_ANUAL_31(idPlanif As String, fechaInicio, fechaFinal As Date, d
       
     ano_ini = Year(fechaInicio)  ' Year(Date) ''
     ano_fin = Year(fechaFinal)
+    cont = 0
     
     ' Recorro todos los años a analizar
     For i = ano_ini To ano_fin Step 1
+    
+        
     
         If hn1 = "DN" Then
             fechaAnalizar = DateSerial(i, 12, 31)
@@ -37,7 +40,8 @@ Function CALCULO_ANUAL_31(idPlanif As String, fechaInicio, fechaFinal As Date, d
         ' Compuebo que no supero la fecha final
         If fechaAnalizar < fechaFinal Then
             
-            ' -------- LIMITE DE EJECUCION --------
+            ' ---------------- LIMITE DE EJECUCION ----------------
+            
             ' 1- Para días Naturales --------------
             If hn1 = "DN" Then
                 fechaAnalizar = fechaAnalizar + dias1
@@ -77,18 +81,16 @@ Function CALCULO_ANUAL_31(idPlanif As String, fechaInicio, fechaFinal As Date, d
                     End If
                 Loop
             End If
+                     
             
-                
+            ' -------------------- AVISO --------------------
             
-            
-            ' ------------ AVISO ------------
-            ' 1- Para días Naturales --------
+            ' 1- Para días Naturales ------------------------
             If hn2 = "DN" Then
                 fechaAnalizar = fechaAnalizar + dias2
             End If
-
             
-            ' 2- Para días Hábiles --------
+            ' 2- Para días Hábiles --------------------------
             If hn2 = "DH" Then
             
                 If dias2 > 0 Then
@@ -98,11 +100,9 @@ Function CALCULO_ANUAL_31(idPlanif As String, fechaInicio, fechaFinal As Date, d
                     fechaAnalizar = fechaAnalizar - 1
                 End If
             
-            
-                ' Analizamos cuando el valor es POSITIVO ----
                 nuevaFecha = fechaAnalizar
+                
                 countDiasHabiles = 0
-                    
                 Do While countDiasHabiles < Abs(dias2)
                     
                     ' Verificar si el día no es sábado (7) ni domingo (1)
@@ -117,6 +117,7 @@ Function CALCULO_ANUAL_31(idPlanif As String, fechaInicio, fechaFinal As Date, d
                             countDiasHabiles = countDiasHabiles + 1
                             fechaAnalizar = nuevaFecha
                             'Debug.Print ("hb 2: " & countDiasHabiles & " - " & nuevaFecha & " - " & dia)
+                            
                          End If
                     End If
                         
@@ -132,22 +133,21 @@ Function CALCULO_ANUAL_31(idPlanif As String, fechaInicio, fechaFinal As Date, d
 
             End If
             
-            ' RESULTADO FINAL A PLANIFICAR - Mandar dato a la tabla -- SCHEDULLING
-            Debug.Print (idPlanif & "       - " & fechaAnalizar)
+            cont = cont + 1
             
-            ' Insertar nuevos datos en la tabla
-            strSQL = "INSERT INTO LANZADOR (ID_PLANIF, FECHA_AVISO) " & _
-                     "VALUES ('" & idPlanif & "', #" & fechaAnalizar & "#);"
+            'Debug.Print (idPlanif & "       - " & fechaAnalizar & " " & cont)
+            
+            ' Insertar nuevos datos en la tabla LANZADOR
+            strSQL = "INSERT INTO 3_LANZADOR (id2, ID_PLANIF, FECHA_AVISO) " & _
+                     "VALUES (" & Id2 & ",'" & idPlanif & "', #" & fechaAnalizar & "#);"
             db.Execute strSQL, dbFailOnError
-    
-
-            
             
         End If
+        
     Next i
-    
     ' Cerrar la conexión
     Set db = Nothing
+    CALCULO_ANUAL_31 = cont
 End Function
 
 
