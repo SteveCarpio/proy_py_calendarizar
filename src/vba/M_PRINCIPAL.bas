@@ -46,6 +46,7 @@ Sub CALENDARIZAR_MAIN()
         Loop
         INICIALIZA_ID3
         Debug.Print ("Número de tareas programadas para (ANUL-31): " & totalTareas1)
+        MsgBox ("Número de tareas programadas para (ANUL-31): " & totalTareas1)
         
     Else
         Debug.Print "No se encontraron registros con la condición especificada."
