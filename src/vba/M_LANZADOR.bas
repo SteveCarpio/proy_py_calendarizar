@@ -2,6 +2,7 @@ Attribute VB_Name = "M_LANZADOR"
 Option Compare Database
 Option Explicit
 
+' Inicializa el campo ID3 y ID_LANZADOR secuensialmente
 Sub INICIALIZA_ID3()
     Dim db As DAO.Database
     Dim rs As DAO.Recordset
