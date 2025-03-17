@@ -1,16 +1,15 @@
 Attribute VB_Name = "M_MENSUAL_31"
 Option Compare Database
 Option Explicit
-
-Function CALCULO_MENSUAL_31(Id2 As Integer, idPlanif As String, fechaInicio, fechaFinal As Date, dias1, dias2 As Integer, hn1, hn2 As String) As Integer
+  
+Function CALCULO_MENSUAL_31(Id2 As Integer, idPlanif As String, fechaInicio, fechaFinal As Date, dias1 As Integer, dias2 As Integer, hn1 As String, hn2 As String) As Integer
 
     Dim fechaAnalizar As Date
     Dim fechaActual As Date
     Dim ultimo_dia_mes As Date
     Dim nuevaFecha As Date
     Dim fechaLimite As Date
-
-
+    Dim fechaAviso As Date
 
     Dim db As DAO.Database
     Dim rs As DAO.Recordset
@@ -39,150 +38,40 @@ Function CALCULO_MENSUAL_31(Id2 As Integer, idPlanif As String, fechaInicio, fec
         
         fechaAnalizar = ultimo_dia_mes
         
-        
-        If dias1 > 0 Then
-                fechaAnalizar = fechaAnalizar + 1
-            End If
-            If dias1 < 0 Then
-                fechaAnalizar = fechaAnalizar - 1
-        End If
-        
-        
-        
-        ' ---------------- LIMITE DE EJECUCION ----------------
+        ' Compuebo que no supero la fecha final
+        If fechaAnalizar < fechaFinal Then
             
-            ' 1- Para días Naturales --------------
+            ' FECHA_LIMITE -----------------------------
             If hn1 = "DN" Then
-                fechaLimite = fechaAnalizar
-                fechaAnalizar = fechaAnalizar + dias1
-                
+                fechaLimite = CALCULO_NATURALES(dias1, hn1, fechaAnalizar)
+            Else
+                fechaLimite = CALCULO_HABILES(dias1, hn1, fechaAnalizar)
             End If
- 
-            ' 2- Para días Hábiles ----------------
-            If hn1 = "DH" Then
-                         
-                ' Analizamos cuando el valor es POSITIVO ----
-                nuevaFecha = fechaAnalizar
-                countDiasHabiles = 0
-                    
-                Do While countDiasHabiles < Abs(dias1)
-                    
-                    ' Verificar si el día no es sábado (7) ni domingo (1)
-                    dia = Weekday(nuevaFecha)
-                    If dia <> 7 And dia <> 1 Then
-                            
-                        ' Verificar si el día no es festivo usando DLookup
-                        festivo = Not IsNull(DLookup("Festivo", "Festivos", "Festivo = #" & nuevaFecha & "#"))
-                
-                        ' Si no es festivo, contar como día hábil
-                        If Not festivo Then
-                            countDiasHabiles = countDiasHabiles + 1
-                            fechaAnalizar = nuevaFecha
-                            'Debug.Print ("hb 1: " & countDiasHabiles & " - " & nuevaFecha & " - " & dia)
-                         End If
-                    End If
-                        
-                    ' Si el valor es POSITIVO
-                    If dias1 > 0 Then
-                        fechaLimite = nuevaFecha
-                        nuevaFecha = nuevaFecha + 1
-                    End If
-                    ' Si el valor es NEGATIVO
-                    If dias1 < 0 Then
-                        fechaLimite = nuevaFecha
-                        nuevaFecha = nuevaFecha - 1
-                    End If
-                Loop
-            End If
-                     
+            fechaAnalizar = fechaLimite
             
-            ' -------------------- AVISO --------------------
-            
-            ' 1- Para días Naturales ------------------------
+            ' FECHA_AVISO -----------------------------
             If hn2 = "DN" Then
-                fechaAnalizar = fechaAnalizar + dias2
+                fechaAviso = CALCULO_NATURALES(dias2, hn2, fechaAnalizar)
+            Else
+                fechaAviso = CALCULO_HABILES(dias2, hn2, fechaAnalizar)
             End If
-            
-            ' 2- Para días Hábiles --------------------------
-            If hn2 = "DH" Then
-            
-                If dias2 > 0 Then
-                    fechaAnalizar = fechaAnalizar + 1
-                End If
-                If dias2 < 0 Then
-                    fechaAnalizar = fechaAnalizar - 1
-                End If
-            
-                nuevaFecha = fechaAnalizar
-                
-                countDiasHabiles = 0
-                Do While countDiasHabiles < Abs(dias2)
-                    
-                    ' Verificar si el día no es sábado (7) ni domingo (1)
-                    dia = Weekday(nuevaFecha)
-                    If dia <> 7 And dia <> 1 Then
-                            
-                        ' Verificar si el día no es festivo usando DLookup
-                        festivo = Not IsNull(DLookup("Festivo", "Festivos", "Festivo = #" & nuevaFecha & "#"))
-                
-                        ' Si no es festivo, contar como día hábil
-                        If Not festivo Then
-                            countDiasHabiles = countDiasHabiles + 1
-                            fechaAnalizar = nuevaFecha
-                            'Debug.Print ("hb 2: " & countDiasHabiles & " - " & nuevaFecha & " - " & dia)
-                            
-                         End If
-                    End If
-                        
-                    ' Si el valor es POSITIVO
-                    If dias2 > 0 Then
-                        nuevaFecha = nuevaFecha + 1
-                    End If
-                    ' Si el valor es NEGATIVO
-                    If dias2 < 0 Then
-                        nuevaFecha = nuevaFecha - 1
-                    End If
-                Loop
 
-            End If
-            
-            cont = cont + 1
-            
-            'Debug.Print (idPlanif & "       - " & fechaAnalizar & " " & cont)
+            'Debug.Print ("FECHA_LIMITE: " & fechaLimite & " - " & hn1 & dias1)
+            'Debug.Print ("FECHA_AVISO:  " & fechaAviso & " - " & hn2 & dias2)
             
             ' Insertar nuevos datos en la tabla LANZADOR
-            'strSQL = "INSERT INTO 3_LANZADOR (id2, ID_PLANIF, FECHA_AVISO) " & _
-                     "VALUES (" & Id2 & ",'" & idPlanif & "', #" & fechaAnalizar & "#);"
-                     
             strSQL = "INSERT INTO 3_LANZADOR (id2, ID_PLANIF, FECHA_LIMITE, FECHA_AVISO) " & _
-                      "VALUES (" & Id2 & ",'" & idPlanif & "', #" & Format(fechaLimite, "yyyy-mm-dd") & "#, #" & Format(fechaAnalizar, "yyyy-mm-dd") & "#);"
-
-            
+                    "VALUES (" & Id2 & ",'" & idPlanif & "', #" & Format(fechaLimite, "yyyy-mm-dd") & "#, #" & Format(fechaAviso, "yyyy-mm-dd") & "#);"
             db.Execute strSQL, dbFailOnError
             
-            
- 
-        
-        
-        
-        
-        
-        
-        
-        
-        
+            cont = cont + 1
+        End If
         ' ------------------------------------------------------------------------------------------------------------------
-        
-        ' Mostrar el aviso Final
-        Debug.Print ("OLD: " & ultimo_dia_mes & " - NEW: " & fechaAnalizar & " - ID_PLANIF: " & idPlanif & " - " & hn1 & dias1 & " " & hn2 & dias2)
-        
-        
         ' Avanzamos al siguiente mes
         fechaActual = DateAdd("m", 1, fechaActual)
         fechaActual = DateSerial(Year(fechaActual), Month(fechaActual), 1) ' Establecer el primer día del siguiente mes
-    
     Loop
-    
+    CALCULO_MENSUAL_31 = cont
 End Function
 
 Function ObtenerUltimoDiaDelMes(fecha As Date) As Date

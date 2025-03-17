@@ -46,8 +46,8 @@ Function CALCULO_ANUAL_31(Id2 As Integer, idPlanif As String, fechaInicio, fecha
                 fechaAviso = CALCULO_HABILES(dias2, hn2, fechaAnalizar)
             End If
 
-            Debug.Print ("FECHA_LIMITE: " & fechaLimite & " - " & hn1 & dias1)
-            Debug.Print ("FECHA_AVISO:  " & fechaAviso & " - " & hn2 & dias2)
+            'Debug.Print ("FECHA_LIMITE: " & fechaLimite & " - " & hn1 & dias1)
+            'Debug.Print ("FECHA_AVISO:  " & fechaAviso & " - " & hn2 & dias2)
             
             ' Insertar nuevos datos en la tabla LANZADOR
             strSQL = "INSERT INTO 3_LANZADOR (id2, ID_PLANIF, FECHA_LIMITE, FECHA_AVISO) " & _
