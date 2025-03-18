@@ -5,15 +5,13 @@ Option Explicit
 Function CALCULO_ANUAL_31(Id2 As Integer, idPlanif As String, fechaInicio, fechaFinal As Date, dias1 As Integer, dias2 As Integer, hn1 As String, hn2 As String) As Integer
     
     Dim fechaAnalizar As Date
-    Dim nuevaFecha As Date
     Dim fechaLimite As Date
     Dim fechaAviso As Date
     Dim db As DAO.Database
     Dim rs As DAO.Recordset
     Dim strSQL As String
     Dim ano_ini, ano_fin As Integer
-    Dim countDiasHabiles, dia, cont As Integer
-    Dim festivo As Boolean
+    Dim cont As Integer
     Dim i As Integer
     
     ' Conexión con la tabla de festivos

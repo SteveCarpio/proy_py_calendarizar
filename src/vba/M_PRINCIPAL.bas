@@ -47,7 +47,7 @@ Sub CALENDARIZAR_MAIN()
             
             ' FUNCION - CALCULO_ANUAL_31 -----------------------------------
             numTareas = 0
-            If c_periodicidad = "Anual-31" And c_id2 = 55 Then
+            If c_periodicidad = "Anual-31" Then
                 numTareas = CALCULO_ANUAL_31(c_id2, c_idPlanif, c_fechaInicio, c_fechaFin, c_limitEjecucion, c_aviso, c_hn_1, c_hn_2)
                 totalTareas1 = totalTareas1 + numTareas
             End If
@@ -55,7 +55,7 @@ Sub CALENDARIZAR_MAIN()
             ' FUNCION - CALCULO_MENSUAL_31 ---------------------------------
             numTareas = 0
             If c_periodicidad = "Mensual-31" Then
-                'numTareas = CALCULO_MENSUAL_31(c_id2, c_idPlanif, c_fechaInicio, c_fechaFin, c_limitEjecucion, c_aviso, c_hn_1, c_hn_2)
+                numTareas = CALCULO_MENSUAL_31(c_id2, c_idPlanif, c_fechaInicio, c_fechaFin, c_limitEjecucion, c_aviso, c_hn_1, c_hn_2)
                 totalTareas2 = totalTareas2 + numTareas
                 'Debug.Print ("------------------------------------------------------------ ")
             End If
@@ -63,21 +63,21 @@ Sub CALENDARIZAR_MAIN()
             ' FUNCION - CALCULO_TRIMESTRAL ---------------------------------
             numTareas = 0
             If c_periodicidad = "Trimestral" Then
-                'numTareas = CALCULO_TRIMESTRAL(c_id2, c_idPlanif, c_fechaInicio, c_fechaFin, c_limitEjecucion, c_aviso, c_hn_1, c_hn_2)
+                numTareas = CALCULO_TRIMESTRAL(c_id2, c_idPlanif, c_fechaInicio, c_fechaFin, c_limitEjecucion, c_aviso, c_hn_1, c_hn_2)
                 totalTareas3 = totalTareas3 + numTareas
             End If
             
             ' FUNCION - CALCULO_UNAVEZ -------------------------------------
             numTareas = 0
             If c_periodicidad = "UnaVez" Then
-                'numTareas = CALCULO_UNAVEZ(c_id2, c_idPlanif, c_fechaInicio, c_fechaFin, c_limitEjecucion, c_aviso, c_hn_1, c_hn_2)
+                numTareas = CALCULO_UNAVEZ(c_id2, c_idPlanif, c_fechaInicio, c_fechaFin, c_limitEjecucion, c_aviso, c_hn_1, c_hn_2)
                 totalTareas4 = totalTareas4 + numTareas
             End If
             
 
             rs.MoveNext
         Loop
-        'Debug.Print (vbCrLf & "Número de tareas programadas para: " & vbCrLf & vbCrLf & _
+        Debug.Print (vbCrLf & "Número de tareas programadas para: " & vbCrLf & vbCrLf & _
                 "- (ANUL-31)   : " & totalTareas1 & vbCrLf & _
                 "- (MENSUAL-31): " & totalTareas2 & vbCrLf & _
                 "- (TRIMESTRAL): " & totalTareas3 & vbCrLf & _
@@ -85,7 +85,7 @@ Sub CALENDARIZAR_MAIN()
         
         INICIALIZA_ID3
         
-       ' MsgBox ("Número de tareas programadas para: " & vbCrLf & vbCrLf & _
+        MsgBox ("Número de tareas programadas para: " & vbCrLf & vbCrLf & _
                 "- (ANUL-31)   : " & totalTareas1 & vbCrLf & _
                 "- (MENSUAL-31): " & totalTareas2 & vbCrLf & _
                 "- (TRIMESTRAL): " & totalTareas3 & vbCrLf & _
