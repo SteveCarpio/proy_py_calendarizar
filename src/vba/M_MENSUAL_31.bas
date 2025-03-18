@@ -39,7 +39,7 @@ Function CALCULO_MENSUAL_31(Id2 As Integer, idPlanif As String, fechaInicio, fec
         fechaAnalizar = ultimo_dia_mes
         
         ' Compuebo que no supero la fecha final
-        If fechaAnalizar < fechaFinal Then
+        If fechaAnalizar <= fechaFinal Then
             
             ' FECHA_LIMITE -----------------------------
             If hn1 = "DN" Then

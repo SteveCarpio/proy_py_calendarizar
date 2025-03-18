@@ -29,7 +29,7 @@ Function CALCULO_ANUAL_31(Id2 As Integer, idPlanif As String, fechaInicio, fecha
         fechaAnalizar = DateSerial(i, 12, 31)
         
         ' Compuebo que no supero la fecha final
-        If fechaAnalizar < fechaFinal Then
+        If fechaAnalizar <= fechaFinal Then
             
             ' FECHA_LIMITE -----------------------------
             If hn1 = "DN" Then
