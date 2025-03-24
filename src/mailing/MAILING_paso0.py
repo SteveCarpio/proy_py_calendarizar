@@ -4,7 +4,7 @@
 # ----------------------------------------------------------------------------------------
 
 import cfg.MAILING_variables as sTv
-from   cfg.MAILING_librerias import *
+from   cfg.MAILING_library import *
 
 # ----------------------------------------------------------------------------------------
 #                                  FUNCIONES
@@ -30,19 +30,24 @@ def borrar_archivos(ruta_carpeta, patron):
     for archivo in archivos:
         os.remove(archivo)
         print(Fore.RED + f'Archivo borrado:   {archivo}')
-        
+
+def copiar_access():
+    print("")
+
 # ----------------------------------------------------------------------------------------
 #                               INICIO PROGRAMA
 # ----------------------------------------------------------------------------------------
 
 def sTv_paso0(var_NombreSalida, var_Fechas3):
     # Valida carpetas del programa
-    valida_carpetas(sTv.var_RutaRaiz)
-    valida_carpetas(sTv.var_RutaInforme)
+    valida_carpetas(sTv.loc_RutaRaiz)
+    valida_carpetas(sTv.loc_RutaAccess)
+    valida_carpetas(sTv.loc_RutaConfig)
+    valida_carpetas(sTv.loc_RutaInforme)
+    valida_carpetas(sTv.red_RutaInforme)
 
     # Borra todos los files 
-    borrar_archivos(sTv.var_RutaInforme,  f'{var_NombreSalida}_paso2.xlsx')
-    borrar_archivos(sTv.var_RutaInforme,  f'{var_NombreSalida}_paso3.xlsx')
-    borrar_archivos(sTv.var_RutaInforme,  f'{var_NombreSalida}_paso4.xlsx')
+    borrar_archivos(sTv.loc_RutaAccess,  sTv.var_NombreAccess)
+    
     
     print(Fore.WHITE + "\nRequisitos previos ok\n")

@@ -7,17 +7,25 @@
 #-----------------------------------------------------------------------------------------
 #                          RUTAS DE APOYO
 # ----------------------------------------------------------------------------------------
-var_RutaRaiz='C:\\MisCompilados\\PROY_CALENDARIZAR\\MAILING\\'
-var_RutaConfig=f'{var_RutaRaiz}CONFIG\\'
-var_RutaInforme=f'{var_RutaRaiz}INFORMES\\'
+# **** Local ****
+loc_RutaRaiz='C:\\MisCompilados\\PROY_CALENDARIZAR\\'
+loc_RutaAccess=f"{loc_RutaRaiz}BBDD\\"
+loc_RutaConfig=f'{loc_RutaRaiz}CONFIG\\'
+loc_RutaInforme=f'{loc_RutaRaiz}INFORMES\\'
+# **** Red ****
+
+red_RutaRaiz="H:\\Proyectos\\Python\\MisCompilados\\PROY_CALENDARIZAR\\"
+red_RutaAccess=f"{red_RutaRaiz}BBDD\\"
+red_RutaConfig=f'{red_RutaRaiz}CONFIG\\'
+red_RutaInforme=f'{red_RutaRaiz}INFORMES\\'
 
 # ----------------------------------------------------------------------------------------
 #                          VARIABLES DE APOYO
 # ----------------------------------------------------------------------------------------
-var_NombreEmisores="Tabla_Eventos_Periodicos_Especiales_DEV"
-
+var_NombreAccess="Tabla_Eventos.accdb"
+var_TablaLanzador="3_LANZADOR"
 # ----------------------------------------------------------------------------------------
 #                          AUTOR
 # ----------------------------------------------------------------------------------------
-var_sTv1="SteveCarpio-2024"
+var_sTv1="SteveCarpio-2025"
 var_sTv2="stv.madrid@gmail.com" 
