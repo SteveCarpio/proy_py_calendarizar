@@ -9,9 +9,10 @@
 import os                                                         # -- p0 p1 -- -- -- #
 import shutil                                                     # -- -- p1 -- -- -- #
 import time                                                       # -- -- p1 -- -- -- #
-import pandas as pd                                               # -- -- -- -- -- -- #
+import pandas as pd                                               # -- -- -- p2 -- -- #
 import smtplib                                                    # -- -- -- -- -- -- #
 import glob                                                       # -- p0 -- -- -- -- #
+import pyodbc                                                     # -- -- -- p2 -- -- #
 from colorama import init, Fore, Back, Style                      # ma p0 -- -- -- -- #
 from datetime import datetime as dt                               # ma -- -- -- -- -- #
 from datetime import timedelta                                    # ma -- -- -- -- -- #

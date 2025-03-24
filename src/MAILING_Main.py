@@ -9,6 +9,7 @@
 from   cfg.MAILING_library import *
 from   mailing.MAILING_paso0     import sTv_paso0
 from   mailing.MAILING_paso1     import sTv_paso1
+from   mailing.MAILING_paso2     import sTv_paso2
 
 var_NombreSalida = 'MAILING'
 var_SendEmail= 'S'
@@ -32,7 +33,7 @@ os.system("cls")
 init(autoreset=True)
 
 # Inicializar carpetas y borrado de files
-sTv_paso0(var_NombreSalida, var_Fechas3)
+#sTv_paso0(var_NombreSalida, var_Fechas3)
 
 # ------------------------------- MENU -----------------------------------
 
@@ -44,7 +45,7 @@ def paso1():
 
 def paso2():
     print(Fore.GREEN + f"\nEjecutando PASO_2........ {dt.now()} 👌\n")
-    #sTv_paso2(var_NombreSalida, var_Fechas1)
+    sTv_paso2()
     print(Fore.GREEN + "\nPaso 2 completado! \n")
 
 def paso3():

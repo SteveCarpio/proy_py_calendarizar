@@ -1,66 +1,51 @@
-from datetime import datetime, timedelta
 
-# Definir la fecha inicial
-fechaini = datetime.strptime('01/03/2025', '%d/%m/%Y')
+# ----------------------------------------------------------------------------------------
+#  PASO2: IMPORTAR DATOS DE LA BBDD ACCESS LOCAL  
+#  Autor: SteveCarpio-2025
+# ----------------------------------------------------------------------------------------
 
-# Definir la lista de fiestas de Mexico (en formato 'dd/mm/yyyy')
-fiestas = [
-    '12/03/2025',  # Fiesta 1
-    '01/03/2025',  # Fiesta 2
-    '25/03/2025',  # Fiesta 3
-]
+import cfg.MAILING_variables as sTv
+from   cfg.MAILING_library import *
 
-# Convertir las fechas de fiestas a objetos datetime
-fiestas = [datetime.strptime(fecha, '%d/%m/%Y') for fecha in fiestas]
-
-# 1. Sumar 10 días naturales a la fecha
-fecha2 = fechaini + timedelta(days=10)
-
-# 2. Función para restar días hábiles, excluyendo los días festivos
-def restar_dias_habiles(fecha, dias_habiles, fiestas):
-    dias_restados = 0
-    while dias_habiles > 0:
-        fecha -= timedelta(days=1)
-        # Verificar si el día es un día hábil (lunes a viernes) y no es festivo
-        if fecha.weekday() < 5 and fecha not in fiestas:
-            dias_habiles -= 1
-    return fecha
-
-# Restar 3 días hábiles (excluyendo festivos)
-fecha_final = restar_dias_habiles(fecha2, 3, fiestas)
-
-# Mostrar los resultados
-print("Fecha inicial:", fechaini.strftime('%d/%m/%Y'))
-print("Fecha2 (10 días naturales después):", fecha2.strftime('%d/%m/%Y'))
-print("Fecha final (3 días hábiles antes de fecha2, excluyendo fiestas):", fecha_final.strftime('%d/%m/%Y'))
+# ----------------------------------------------------------------------------------------
+#                                  FUNCIONES
+# ----------------------------------------------------------------------------------------
 
 
-##################################################
 
-from datetime import datetime
-import calendar
+# ----------------------------------------------------------------------------------------
+#                               INICIO PROGRAMA
+# ----------------------------------------------------------------------------------------
 
-# Obtener la fecha actual
-fecha_actual = datetime.now()
+def sTv_paso2():
 
-# Obtener el último día del mes actual
-ultimo_dia_del_mes = calendar.monthrange(fecha_actual.year, fecha_actual.month)[1]
+    # Ruta del archivo de la base de datos Access
+    db_file = f'{sTv.loc_RutaAccess}{sTv.var_NombreAccess}'
 
-# Crear un objeto datetime con el último día del mes
-ultimo_dia_del_mes = datetime(fecha_actual.year, fecha_actual.month, ultimo_dia_del_mes)
+    # Conectar a la base de datos
+    conn = pyodbc.connect(r'DRIVER={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=' + db_file)
 
-# Mostrar el último día del mes
-print("Último día del mes actual:", ultimo_dia_del_mes.strftime('%d/%m/%Y'))
+    # Crear un cursor
+    cursor = conn.cursor()
 
-#####################################################
 
-from datetime import datetime
+    # Escribir la consulta SQL
+    sql_query = '''
+        SELECT 3_LANZADOR.FECHA_LIMITE, 1_TAREAS.CLAVE_PIZARRA, 1_TAREAS.EMISIONES, 1_TAREAS.CLASE, 1_TAREAS.ASUNTO, First(1_TAREAS.DETALLE_DEL_EVENTO) AS DETALLE_DEL_EVENTO, Year(FECHA_LIMITE) AS ANO, Month(FECHA_LIMITE) AS MES
+        FROM (1_TAREAS LEFT JOIN 2_PLANIFICADOR ON 1_TAREAS.Id1 = 2_PLANIFICADOR.Id1) LEFT JOIN 3_LANZADOR ON 2_PLANIFICADOR.Id2 = 3_LANZADOR.id2
+        GROUP BY 3_LANZADOR.FECHA_LIMITE, 1_TAREAS.CLAVE_PIZARRA, 1_TAREAS.EMISIONES, 1_TAREAS.CLASE, 1_TAREAS.ASUNTO, Year(FECHA_LIMITE), Month(FECHA_LIMITE), 1_TAREAS.ID_TAREA
+        HAVING (((Year(FECHA_LIMITE))=2025) AND ((Month(FECHA_LIMITE))=4))
+        ORDER BY 3_LANZADOR.FECHA_LIMITE
+    '''
 
-# Obtener el año actual
-anio_actual = datetime.now().year
+    # Ejecutar la consulta
+    cursor.execute(sql_query)
 
-# Obtener el último día del año (31 de diciembre)
-ultimo_dia_del_anio = datetime(anio_actual, 12, 31)
+    # Traer el resultado a un DataFrame de pandas
+    df = pd.read_sql_query(sql_query, conn)
 
-# Mostrar el último día del año
-print("Último día del año actual:", ultimo_dia_del_anio.strftime('%d/%m/%Y'))
+    # Mostrar el DataFrame
+    print(df)
+
+    # Cerrar la conexión
+    conn.close()
