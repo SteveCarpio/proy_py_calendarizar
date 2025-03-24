@@ -38,4 +38,4 @@ def sTv_paso1():
     dest = f"{sTv.loc_RutaAccess}{sTv.var_NombreAccess}"
     
     # Llamar a la función de copia
-    copiar_bbdd_or_access(orig, dest)
+    #copiar_bbdd_or_access(orig, dest)

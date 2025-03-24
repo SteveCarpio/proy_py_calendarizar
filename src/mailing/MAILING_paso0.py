@@ -44,7 +44,7 @@ def sTv_paso0(var_NombreSalida, var_Fechas3):
     valida_carpetas(sTv.loc_RutaAccess)
     valida_carpetas(sTv.loc_RutaConfig)
     valida_carpetas(sTv.loc_RutaInforme)
-    valida_carpetas(sTv.red_RutaInforme)
+    #valida_carpetas(sTv.red_RutaInforme)
 
     # Borra todos los files 
     borrar_archivos(sTv.loc_RutaAccess,  sTv.var_NombreAccess)
