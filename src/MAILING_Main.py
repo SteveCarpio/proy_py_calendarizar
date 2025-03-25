@@ -10,6 +10,8 @@ from   cfg.MAILING_library import *
 from   mailing.MAILING_paso0     import sTv_paso0
 from   mailing.MAILING_paso1     import sTv_paso1
 from   mailing.MAILING_paso2     import sTv_paso2
+from   mailing.MAILING_paso3     import sTv_paso3
+from   mailing.MAILING_paso4     import sTv_paso4
 
 var_NombreSalida = 'MAILING'
 var_SendEmail= 'S'
@@ -17,15 +19,16 @@ var_SendEmail= 'S'
 if len(sys.argv) > 1 :
     var_param1 = sys.argv[1]
 
-#tiempo_inicio = dt.now()
-tiempo_inicio = dt(2025, 3, 8)
+tiempo_inicio = dt.now()
+#tiempo_inicio = dt(2025, 3, 8)
 
 # Restar 1 día a la fecha actual
-fecha_reducida = tiempo_inicio - timedelta(days=1)
+fecha_reducida = tiempo_inicio - timedelta(days=0)
+
 # Crear variables con los formatos que necesitamos
-var_Fechas1 = fecha_reducida.strftime('%Y-%m-%d')  # Formato "2025-03-04"
-var_Fechas2 = fecha_reducida.strftime('%d-%m-%Y')  # Formato "04-03-2025"
-var_Fechas3 = fecha_reducida.strftime('%Y%m%d')    # Formato "20250304"
+var_Fecha = fecha_reducida.strftime('%Y-%m-%d')  # Formato "2025-03-04"
+var_Ano    = fecha_reducida.strftime('%Y')        # Formato "2025"
+var_Mes    = fecha_reducida.strftime('%m')        # Formato "04"
 
 os.system("cls")
 
@@ -33,7 +36,7 @@ os.system("cls")
 init(autoreset=True)
 
 # Inicializar carpetas y borrado de files
-#sTv_paso0(var_NombreSalida, var_Fechas3)
+sTv_paso0()
 
 # ------------------------------- MENU -----------------------------------
 
@@ -50,12 +53,12 @@ def paso2():
 
 def paso3():
     print(Fore.GREEN + f"\nEjecutando PASO_3........ {dt.now()} 👌\n")
-    #sTv_paso3(var_NombreSalida, var_Fechas1)
+    sTv_paso3(var_Ano, var_Mes)
     print(Fore.GREEN + "\nPaso 3 completado! \n")
 
 def paso4():
     print(Fore.GREEN + f"\nEjecutando PASO_4........ {dt.now()} 👌\n")
-    #sTv_paso4(var_NombreSalida, var_Fechas1)
+    sTv_paso4(var_Fecha)
     print(Fore.GREEN + "\nPaso 4 completado! \n")
 
 def paso5():
@@ -151,11 +154,11 @@ def mostrar_menu(par_FechasSalida):
     print(Fore.MAGENTA + "=" * 37)
     print(Fore.WHITE   + "0) ⚪ Ejecutar TODOS los pasos   ")
     print("")
-    print(Fore.YELLOW  + "1) 🟡 Ejecutar el PASO_1         ")
-    print(Fore.GREEN   + "2) 🟢 Ejecutar el PASO_2         ")
-    print(Fore.GREEN   + "3) 🟢 Ejecutar el PASO_3         ")
-    print(Fore.GREEN   + "4) 🟢 Ejecutar el PASO_4         ")
-    print(Fore.BLUE    + "5) 🔵 Ejecutar el PASO_5         ")
+    print(Fore.YELLOW  + "1) 🟡 Copiar datos de la RED --> LOCAL        ")
+    print(Fore.GREEN   + "2) 🟢 Leer datos BBDD Eventos (no habilitado) ") # conflicto 64vs32 bits --
+    print(Fore.GREEN   + "3) 🔵 Envío Email Diario                      ") 
+    print(Fore.GREEN   + "4) 🔵 Envió Email Mensual                     ")
+    #print(Fore.BLUE    + "5) 🔵 Ejecutar el PASO_5         ")
     print("")
     print(Fore.MAGENTA + "?) 🟣 Ayuda                      ")
     print(Fore.RED     + "x) ❌ Salir del programa   " + Fore.WHITE + "    (.v3)")
@@ -198,6 +201,6 @@ if len(sys.argv) > 1 :
         todos()
 else:
     input(Fore.WHITE + "Presiona Enter para continuar...")
-    ejecutar_menu(var_Fechas1)
+    ejecutar_menu(var_Fecha)
 
 # FIN: By Steve Carpio - 2025    
