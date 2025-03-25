@@ -22,8 +22,8 @@ red_RutaInforme=f'{red_RutaRaiz}INFORMES\\'
 # ----------------------------------------------------------------------------------------
 #                          VARIABLES DE APOYO
 # ----------------------------------------------------------------------------------------
-var_NombreCsvGlobal="C_Export_CSV_Diario.csv"
-var_NombreCsvDiario="C_Export_CSV_Mensual.csv"
+var_NombreCsvDiario="C_Export_CSV_Diario.csv"
+var_NombreCsvMensual="C_Export_CSV_Mensual.csv"
 var_NombreAccess="Tabla_Eventos.accdb"
 
 # ----------------------------------------------------------------------------------------

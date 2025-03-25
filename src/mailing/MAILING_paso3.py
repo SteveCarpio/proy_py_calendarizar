@@ -18,5 +18,5 @@ from   cfg.MAILING_library import *
 
 def sTv_paso3(Var_Ano, Var_Mes):
 
-    # Ruta del archivo de la base de datos Access
-    db_file = f'{sTv.loc_RutaAccess}{sTv.var_NombreAccess}'
+    # Ruta del archivo
+    var_csv = f'{sTv.loc_RutaAccess}{sTv.var_NombreCsvMensual}'
