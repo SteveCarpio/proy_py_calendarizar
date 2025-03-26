@@ -10,8 +10,9 @@ from   cfg.MAILING_library import *
 #                                  FUNCIONES
 # ----------------------------------------------------------------------------------------
 
-def Mandar_Email_Diario(destinatarios_to, destinatarios_cc, asunto, cuerpo, df, var_Fecha):
-    registros = len(df)
+def Mandar_Email_Diario(destinatarios_to, destinatarios_cc, asunto, cuerpo, var_Fecha, df1, df2):
+    
+    registros = len(df1)
     print(f"Se han recibido: {registros} registros. ")
     if registros > 0:
         # Configuración del servidor SMTP (Zimbra)
@@ -30,7 +31,7 @@ def Mandar_Email_Diario(destinatarios_to, destinatarios_cc, asunto, cuerpo, df, 
         todos_destinatarios = destinatarios_to + destinatarios_cc 
 
         # Convertir el DataFrame a HTML
-        tabla_html = df.to_html(index=True)  # con el índice
+        tabla_html = df1.to_html(index=True)  # con el índice
 
         # Cuerpo del correo usando HTML y CSS
         cuerpo_html = f"""
@@ -80,12 +81,12 @@ def Mandar_Email_Diario(destinatarios_to, destinatarios_cc, asunto, cuerpo, df, 
           
                 <table style="border-collapse: collapse;">
                     <tr>
-                        <th style="text-align: left; padding: 8px; width: 200px; border: 1px solid white;">Fecha Aviso:</th>
-                        <td style="padding: 8px; border: 1px solid white;">{var_Fecha}</td>
+                        <th style="text-align: left; padding: 8px; width: 200px; border: 1px solid white;">Fecha Informe:</th>
+                        <td style="padding: 8px; border: 1px solid white;">{var_Fecha.year} {var_Fecha.month} {var_Fecha.day} </td>
                     </tr>
                     <tr>
                         <th style="text-align: left; padding: 8px; width: 200px; border: 1px solid white;">Registros Pendientes:</th>
-                        <td style="padding: 8px; border: 1px solid white;">{len(df)}</td>
+                        <td style="padding: 8px; border: 1px solid white;">{len(df1)}</td>
                     </tr>
                 </table>
 
@@ -169,9 +170,8 @@ def Crear_DF_Mensual(df, var_Ano, var_Mes):
 
 def Crear_DF_Semanal(df, var_Ano, var_Mes, var_Dia):
     
-
     # Fecha de hoy
-    hoy = datetime.date(2025, 3, 26)
+    hoy = datetime.date(var_Ano, var_Mes, var_Dia)
     
     # Calcular cuántos días faltan para el próximo lunes (0 es lunes, 6 es domingo)
     dias_para_lunes = (7 - hoy.weekday()) % 7
@@ -192,8 +192,13 @@ def Crear_DF_Semanal(df, var_Ano, var_Mes, var_Dia):
 
     # Filtrar el DataFrame entre las fechas inicial y final
     df_filtrado = df[(df['FECHA_LIMITE'] >= proximo_lunes) & (df['FECHA_LIMITE'] <= proximo_domingo)]
+    df_filtrado = df_filtrado.reset_index(drop=True)
+    df_filtrado.index = df_filtrado.index + 1
 
-    return df_filtrado
+    # Eliminar las columnas que nos necesarias del DataFrame
+    df_resultado = df_filtrado.drop(columns=['ANO', 'MES', 'SEMANA'])
+
+    return df_resultado
 
 # ----------------------------------------------------------------------------------------
 #                               INICIO PROGRAMA
@@ -224,4 +229,4 @@ def sTv_paso4(tiempo_inicio, var_Entorno):
         destinatarios_to=['carpios@tda-sgft.com']
         destinatarios_cc=['carpios@tda-sgft.com']
 
-    #Mandar_Email_Diario(destinatarios_to, destinatarios_cc, f"Tareas pendientes a revisar (FECHA AVISO: {var_Fecha})", "", df, var_Fecha)
+    Mandar_Email_Diario(destinatarios_to, destinatarios_cc, f"Resumen de tareas pendientes a revisar (Periodo: {tiempo_inicio.year}-{tiempo_inicio.month + 1} )", "", tiempo_inicio, df_Semanal, df_Mensual )
