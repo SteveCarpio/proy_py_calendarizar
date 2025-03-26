@@ -161,7 +161,7 @@ def Mandar_Email_Diario(destinatarios_to, destinatarios_cc, asunto, cuerpo, df, 
 #                               INICIO PROGRAMA
 # ----------------------------------------------------------------------------------------
 
-def sTv_paso3(var_Fecha):
+def sTv_paso3(var_Fecha, var_Entorno):
 
     # Ruta del archivo
     var_csv = f'{sTv.loc_RutaAccess}{sTv.var_NombreCsvDiario}'
@@ -171,6 +171,14 @@ def sTv_paso3(var_Fecha):
     df = Leer_Csv_DataFrame(var_Fecha)
 
     # Mandar Email Diario con el DataFrame filtrado
-    destinatarios_to=['carpios@tda-sgft.com']
-    destinatarios_cc=['carpios@tda-sgft.com']
+    if var_Entorno == "PRO":
+        print("Ejecución en modo: PRO")
+        destinatarios_to=['carpios@tda-sgft.com']
+        destinatarios_cc=['carpios@tda-sgft.com']
+    else:
+        print("Ejecución en modo: DEV")
+        destinatarios_to=['carpios@tda-sgft.com']
+        destinatarios_cc=['carpios@tda-sgft.com']
+
+
     Mandar_Email_Diario(destinatarios_to, destinatarios_cc, f"Tareas pendientes a revisar (FECHA AVISO: {var_Fecha})", "", df, var_Fecha)

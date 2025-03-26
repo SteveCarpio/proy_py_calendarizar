@@ -13,14 +13,28 @@ from   mailing.MAILING_paso2     import sTv_paso2
 from   mailing.MAILING_paso3     import sTv_paso3
 from   mailing.MAILING_paso4     import sTv_paso4
 
-var_NombreSalida = 'MAILING'
-var_SendEmail= 'S'
 
+
+
+# Parámetro1: Diaria o Mensual
 if len(sys.argv) > 1 :
     var_param1 = sys.argv[1]
 
+var_Entorno="DEV"
+# Parámetro2: Producción o Desarrollo
+if len(sys.argv) > 2 :
+    var_param2 = sys.argv[2]
+    var_Entorno = var_param2
+
+
 tiempo_inicio = dt.now()
-tiempo_inicio = dt(2025, 3, 19)
+#tiempo_inicio = dt(2025, 3, 19)
+# Parámetro3: Fecha (opcional)
+if len(sys.argv) > 3 :
+    var_param3 = sys.argv[3]
+
+
+
 
 # Restar 1 día a la fecha actual
 fecha_reducida = tiempo_inicio - timedelta(days=0)
@@ -54,12 +68,12 @@ def paso2():
 
 def paso3():
     print(Fore.BLUE + f"\nEjecutando PASO_3........ {dt.now()} 👌\n")
-    sTv_paso3(var_Fecha)
+    sTv_paso3(var_Fecha, var_Entorno)
     print(Fore.BLUE + "\nPaso 3 completado! \n")
 
 def paso4():
     print(Fore.BLUE + f"\nEjecutando PASO_4........ {dt.now()} 👌\n")
-    sTv_paso4(var_Fecha, var_Ano, var_Mes)
+    sTv_paso4(var_Fecha, var_Ano, var_Mes, var_Entorno)
     print(Fore.BLUE + "\nPaso 4 completado! \n")
 
 def paso5():
@@ -129,14 +143,22 @@ def pasoHelp():
     print(Fore.WHITE + "Versión 3 - 2025")
     print(Fore.MAGENTA + "=" * 94)
 
-def todos():
-    print(Fore.WHITE + "\nEjecutando TODOS los pasos.......................... 💪")
+def todos_diario():
+    print(Fore.WHITE + "\nEjecutando TODOS los pasos DIARIOS.......................... 💪")
     paso1()
     paso2()
     paso3()
+    print(Fore.WHITE + "¡Todos los pasos DIARIOS completados exitosamente! 🎉 \n")
+    print(Fore.MAGENTA + f"---------------------------------------------------------------------------------------")
+    print(Fore.WHITE + f" Tiempo Transcurrido INI: {tiempo_inicio} - FIN: {dt.now()}")
+    print(Fore.MAGENTA + f"---------------------------------------------------------------------------------------")
+
+def todos_mensual():
+    print(Fore.WHITE + "\nEjecutando TODOS los pasos MENSUAL.......................... 💪")
+    paso1()
+    paso2()
     paso4()
-    paso5()
-    print(Fore.WHITE + "¡Todos los pasos completados exitosamente! 🎉 \n")
+    print(Fore.WHITE + "¡Todos los pasos MENSUAL completados exitosamente! 🎉 \n")
     print(Fore.MAGENTA + f"---------------------------------------------------------------------------------------")
     print(Fore.WHITE + f" Tiempo Transcurrido INI: {tiempo_inicio} - FIN: {dt.now()}")
     print(Fore.MAGENTA + f"---------------------------------------------------------------------------------------")
@@ -153,13 +175,13 @@ def mostrar_menu(par_FechasSalida):
     print(Fore.MAGENTA + "=" * 37)
     print(Fore.WHITE   + "        🖥️   MENÚ PRINCIPAL 🖥️")
     print(Fore.MAGENTA + "=" * 37)
-    print(Fore.WHITE   + "0) ⚪ Ejecutar TODOS los pasos   ")
+    print(Fore.WHITE   + "d) ⚪ Ejecutar TODOS los pasos DIARIO  ")
+    print(Fore.WHITE   + "m) ⚪ Ejecutar TODOS los pasos MENSUAL  ")
     print("")
     print(Fore.YELLOW  + "1) 🟡 Copiar datos:  RED --> LOCAL            ")
     print(Fore.GREEN   + "2) 🟢 Leer datos BBDD Eventos (no habilitado) ") # conflicto 64vs32 bits --
     print(Fore.BLUE    + "3) 🔵 Envío Email Diario                      ") 
     print(Fore.BLUE    + "4) 🔵 Envió Email Mensual                     ")
-    #print(Fore.BLUE   + "5) 🔵 Ejecutar el PASO_5         ")
     print("")
     print(Fore.MAGENTA + "?) 🟣 Ayuda                      ")
     print(Fore.RED     + "x) ❌ Salir del programa   " + Fore.WHITE + "    (.v3)")
@@ -171,8 +193,10 @@ def ejecutar_menu(par_FechasSalida):
         mostrar_menu(par_FechasSalida)
         option = input(Fore.WHITE + "Selecciona una opción: ")
 
-        if option   == '0':
-            todos()
+        if option.upper()   == 'D':
+            todos_diario()
+        elif option.upper()   == 'M':
+            todos_mensual()
         elif option == '1':
             paso1()
         elif option == '2':
@@ -196,10 +220,16 @@ def ejecutar_menu(par_FechasSalida):
 
 # Evaluamos como ejecutamos el proceso
 if len(sys.argv) > 1 :
-    if var_param1 == "RUN-NO-EMAIL":
-        var_SendEmail = 'N'
-    if "RUN" in var_param1:
-        todos()
+    if var_param1 == "RUN-DIARIO":
+        todos_diario()
+        
+    if var_param1 == "RUN-MENSUAL":
+        todos_mensual()
+    
+    if var_param1 != "RUN-DIARIO" and var_param1 != "RUN-MENSUAL":
+        print("Parámetro incorrecto: \n Modo1: RUN-DIARIO [PRO/DEV] \n Modo2: RUN-MENSUAL [PRO/DEV]\n")
+        print("Cualquier duda contactar con: SteveCarpio.\n")
+
 else:
     input(Fore.WHITE + "Presiona Enter para continuar...")
     ejecutar_menu(var_Fecha)
