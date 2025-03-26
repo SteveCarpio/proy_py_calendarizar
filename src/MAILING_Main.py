@@ -15,6 +15,7 @@ from   mailing.MAILING_paso4     import sTv_paso4
 
 tiempo_inicio2 = dt.now()
 
+
 # Parámetro1: Diaria o Mensual
 if len(sys.argv) > 1 :
     var_param1 = sys.argv[1]
@@ -27,6 +28,7 @@ if len(sys.argv) > 2 :
 
 # Parámetro3: Fecha (opcional)
 tiempo_inicio = dt.now()
+#tiempo_inicio = dt(2025, 12, 28)
 if len(sys.argv) > 3 :
     var_param3 = sys.argv[3]
     if re.match(r"^\d{4}-\d{2}-\d{2}$", var_param3):
@@ -44,6 +46,7 @@ fecha_reducida = tiempo_inicio - timedelta(days=0)
 var_Fecha  = fecha_reducida.strftime('%Y-%m-%d')  # Formato "2025-03-04"
 var_Ano    = fecha_reducida.strftime('%Y')        # Formato "2025"
 var_Mes    = fecha_reducida.strftime('%m')        # Formato "04"
+var_Dia    = fecha_reducida.strftime('%d')        # Formato "01"
 
 os.system("cls")
 
@@ -74,7 +77,7 @@ def paso3():
 
 def paso4():
     print(Fore.BLUE + f"\nEjecutando PASO_4........ {dt.now()} 👌\n")
-    sTv_paso4(var_Fecha, var_Ano, var_Mes, var_Entorno)
+    sTv_paso4(tiempo_inicio, var_Entorno)
     print(Fore.BLUE + "\nPaso 4 completado! \n")
 
 def paso5():

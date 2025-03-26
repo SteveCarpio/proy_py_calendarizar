@@ -14,8 +14,10 @@ import pandas as pd                                               # -- -- -- p2 
 import smtplib                                                    # -- -- -- -- -- -- #
 import glob                                                       # -- p0 -- -- -- -- #
 import pyodbc                                                     # -- -- -- p2 -- -- #
+import calendar                                                   # -- -- -- -- -- p4 #
+import datetime                                                   # -- -- -- -- -- p4 # 
 from colorama import init, Fore, Back, Style                      # ma p0 -- -- -- -- #
-from datetime import datetime as dt                               # ma -- -- -- -- -- #
+from datetime import datetime as dt                               # ma -- -- -- -- p4 #
 from datetime import timedelta                                    # ma -- -- -- -- -- #
 from email.mime.multipart import MIMEMultipart                    # -- -- -- -- -- -- #
 from email.mime.text import MIMEText                              # -- -- -- -- -- -- #
