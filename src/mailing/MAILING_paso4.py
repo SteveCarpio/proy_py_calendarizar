@@ -1,5 +1,5 @@
 # ----------------------------------------------------------------------------------------
-#  PASO4: Enviar Email Diario   
+#  PASO4: Enviar Email Mensual   
 #  Autor: SteveCarpio-2025
 # ----------------------------------------------------------------------------------------
 
@@ -16,7 +16,8 @@ from   cfg.MAILING_library import *
 #                               INICIO PROGRAMA
 # ----------------------------------------------------------------------------------------
 
-def sTv_paso4(var_Fecha):
+def sTv_paso4(var_Fecha, var_Ano, var_Mes):
 
     # Ruta del archivo
-    var_csv = f'{sTv.loc_RutaAccess}{sTv.var_NombreCsvDiario}'
+    var_csv = f'{sTv.loc_RutaAccess}{sTv.var_NombreCsvMensual}'
+    print(f"File:  {var_csv}")

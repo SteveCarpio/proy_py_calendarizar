@@ -20,7 +20,7 @@ if len(sys.argv) > 1 :
     var_param1 = sys.argv[1]
 
 tiempo_inicio = dt.now()
-#tiempo_inicio = dt(2025, 3, 8)
+tiempo_inicio = dt(2025, 3, 19)
 
 # Restar 1 día a la fecha actual
 fecha_reducida = tiempo_inicio - timedelta(days=0)
@@ -36,7 +36,7 @@ os.system("cls")
 init(autoreset=True)
 
 # Inicializar carpetas y borrado de files
-sTv_paso0()
+#sTv_paso0()
 
 # ------------------------------- MENU -----------------------------------
 
@@ -48,18 +48,19 @@ def paso1():
 
 def paso2():
     print(Fore.GREEN + f"\nEjecutando PASO_2........ {dt.now()} 👌\n")
-    sTv_paso2()
+    #sTv_paso2()
+    print("   ¡¡ Paso deshabilitado por motivos de conflictos entre versiones de 32 y 64 bits !!")
     print(Fore.GREEN + "\nPaso 2 completado! \n")
 
 def paso3():
-    print(Fore.GREEN + f"\nEjecutando PASO_3........ {dt.now()} 👌\n")
-    sTv_paso3(var_Ano, var_Mes)
-    print(Fore.GREEN + "\nPaso 3 completado! \n")
+    print(Fore.BLUE + f"\nEjecutando PASO_3........ {dt.now()} 👌\n")
+    sTv_paso3(var_Fecha)
+    print(Fore.BLUE + "\nPaso 3 completado! \n")
 
 def paso4():
-    print(Fore.GREEN + f"\nEjecutando PASO_4........ {dt.now()} 👌\n")
-    sTv_paso4(var_Fecha)
-    print(Fore.GREEN + "\nPaso 4 completado! \n")
+    print(Fore.BLUE + f"\nEjecutando PASO_4........ {dt.now()} 👌\n")
+    sTv_paso4(var_Fecha, var_Ano, var_Mes)
+    print(Fore.BLUE + "\nPaso 4 completado! \n")
 
 def paso5():
     print(Fore.YELLOW + f"\nEjecutando PASO_5........ {dt.now()} 👌\n")
@@ -154,11 +155,11 @@ def mostrar_menu(par_FechasSalida):
     print(Fore.MAGENTA + "=" * 37)
     print(Fore.WHITE   + "0) ⚪ Ejecutar TODOS los pasos   ")
     print("")
-    print(Fore.YELLOW  + "1) 🟡 Copiar datos de la RED --> LOCAL        ")
+    print(Fore.YELLOW  + "1) 🟡 Copiar datos:  RED --> LOCAL            ")
     print(Fore.GREEN   + "2) 🟢 Leer datos BBDD Eventos (no habilitado) ") # conflicto 64vs32 bits --
-    print(Fore.GREEN   + "3) 🔵 Envío Email Diario                      ") 
-    print(Fore.GREEN   + "4) 🔵 Envió Email Mensual                     ")
-    #print(Fore.BLUE    + "5) 🔵 Ejecutar el PASO_5         ")
+    print(Fore.BLUE    + "3) 🔵 Envío Email Diario                      ") 
+    print(Fore.BLUE    + "4) 🔵 Envió Email Mensual                     ")
+    #print(Fore.BLUE   + "5) 🔵 Ejecutar el PASO_5         ")
     print("")
     print(Fore.MAGENTA + "?) 🟣 Ayuda                      ")
     print(Fore.RED     + "x) ❌ Salir del programa   " + Fore.WHITE + "    (.v3)")

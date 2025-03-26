@@ -49,8 +49,8 @@ def sTv_paso0():
     valida_carpetas(sTv.red_RutaInforme)
 
     # Borra todos los files 
-    borrar_archivos(sTv.loc_RutaAccess,  sTv.var_NombreCsvGlobal)
     borrar_archivos(sTv.loc_RutaAccess,  sTv.var_NombreCsvDiario)
+    borrar_archivos(sTv.loc_RutaAccess,  sTv.var_NombreCsvMensual)
     
     
     print(Fore.WHITE + "\nRequisitos previos ok\n")

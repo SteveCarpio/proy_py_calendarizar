@@ -34,5 +34,6 @@ def copiar_files(src_path, dest_path):
 def sTv_paso1():
 
     # Llamar a la función de copia
-    copiar_files(f"{sTv.red_RutaAccess}{sTv.var_NombreCsvGlobal}", f"{sTv.loc_RutaAccess}{sTv.var_NombreCsvGlobal}")
     copiar_files(f"{sTv.red_RutaAccess}{sTv.var_NombreCsvDiario}", f"{sTv.loc_RutaAccess}{sTv.var_NombreCsvDiario}")
+    copiar_files(f"{sTv.red_RutaAccess}{sTv.var_NombreCsvMensual}", f"{sTv.loc_RutaAccess}{sTv.var_NombreCsvMensual}")
+    
