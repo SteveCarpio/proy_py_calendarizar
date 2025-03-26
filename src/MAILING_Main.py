@@ -13,6 +13,8 @@ from   mailing.MAILING_paso2     import sTv_paso2
 from   mailing.MAILING_paso3     import sTv_paso3
 from   mailing.MAILING_paso4     import sTv_paso4
 
+tiempo_inicio2 = dt.now()
+
 # Parámetro1: Diaria o Mensual
 if len(sys.argv) > 1 :
     var_param1 = sys.argv[1]
@@ -27,8 +29,13 @@ if len(sys.argv) > 2 :
 tiempo_inicio = dt.now()
 if len(sys.argv) > 3 :
     var_param3 = sys.argv[3]
-    anio, mes, dia = map(int, var_param3.split('-'))
-    tiempo_inicio = dt(anio, mes, dia)
+    if re.match(r"^\d{4}-\d{2}-\d{2}$", var_param3):
+        anio, mes, dia = map(int, var_param3.split('-'))
+        tiempo_inicio = dt(anio, mes, dia)
+    else:
+        print("El formato de fecha debe ser, ejemplo: 2025-07-28")
+        input(Fore.WHITE + f"Se ejecutará con el día {tiempo_inicio.strftime('%Y-%m-%d')}")
+
 
 # Restar 1 día a la fecha actual - en este proyecto no procede por eso le resto CERO días
 fecha_reducida = tiempo_inicio - timedelta(days=0)
@@ -90,51 +97,51 @@ def pasoHelp():
     print(Fore.WHITE + "    C:\\MisCompilados\\PROY_CALENDARIZAR\\")
     print("")
     print(Fore.WHITE + "Ejecución:")
-    print(Fore.WHITE + "    MAILING_Main_v1.exe RUN-NO-EMAIL")
+    print(Fore.WHITE + "    MAILING_Main_v1.exe")
     print("")
-    print(Fore.WHITE + "Parámetros:")
+    print(Fore.WHITE + "Parámetros [RUN-DIARIO/RUN-MENSUAL] [DEV/PRO] [opcional AAAA-MM-DD]:")
     print(Fore.WHITE + "    [vació]: Muestra el menú actual")
-    print(Fore.WHITE + "    RUN: Ejecuta el proceso enviando el correo de la Bolsa correspondiente")
-    print(Fore.WHITE + "    RUN-NO-EMAIL: Ejecuta el proceso sin enviar el correo")
+    print(Fore.WHITE + "    RUN-DIARIO, Ejecuta el proceso diario y envía el email en modo DEV")
+    print(Fore.WHITE + "    RUN-MENSUAL, Ejecuta el proceso mensual y envía el email en modo DEV")
+    print(Fore.WHITE + "    DEV: Ejecuta el proceso y manda el email a la lista desarrollo")
+    print(Fore.WHITE + "    PRO: Ejecuta el proceso y manda el email a la lista usuarios finales")
+    print(Fore.WHITE + "    AAAA-MM-DD: Ejecuta el proceso y para el día pasado por parámetro")
     print("")
     print(Fore.WHITE + "Planificación:")
-    print(Fore.WHITE + "    Lun, Mar, Mié, Jue y Vie: 08:50h")
-    print(Fore.WHITE + "    Sáb, Dom: 13:00h")
+    print(Fore.WHITE + "    Proceso Diario: Lun, Mar, Mié, Jue, Vie, Sab y Dom: 7:00h")
+    print(Fore.WHITE + "    Proceso Mensual: Cada 15 días, día 1 y 15: 9:00h")
     print("")
     print(Fore.WHITE + "Pasos de ejecución:")
     print("")
-    print(Fore.YELLOW + "    1) Selenium-WebScraping 'biva.mx': Métodos empleados.. XPath, Html.PageSource.")
-    print(Fore.WHITE + "       Tener en cuenta el explorador y el driver de google, tener acceso fluido de internet para no tener")
-    print(Fore.WHITE + "       problemas de red, no es recomendable usar el explorador Google mientras este en funcionamiento.")
+    print(Fore.YELLOW + "   d) Ejecución de todo el proceso DIARIO")
+    print(Fore.WHITE + "       Se ejecutarán todos los pasos para el proceso Diario.")
     print("")
-    print(Fore.GREEN + "    2) Beautifulsoup y Pandas: Parsear Html y generación de excel de apoyo desde DataFrame con Pandas")
-    print(Fore.WHITE + "       Se creará archivos excel con la información de apoyo para el siguiente paso.")
+    print(Fore.GREEN + "    m) Ejecución de todo el proceso MENSUAL")
+    print(Fore.WHITE + "       Se ejecutarán todos los pasos para el proceso Mensual.")
     print("")
-    print(Fore.GREEN + "    3) Pandas: Agregar ID-Emisores")
-    print(Fore.WHITE + "       Creará archivos excel con los ID de los emisores filtrador por el usuario.")
+    print(Fore.GREEN + "    1) Copia datos RED to LOCAL")
+    print(Fore.WHITE + "       Copiará los ficheros CSV de entrada generados por VBA.")
     print("")
-    print(Fore.GREEN + "    4) Pandas: Preparación del informe final")
-    print(Fore.WHITE + "       Creará un excel con la información final de IdEmisores, datos del WebScraping y datos de los destinatarios.")
+    print(Fore.GREEN + "    2) Lee los datos de la BBDD de Eventos")
+    print(Fore.WHITE + "       Actualmente por temas de conflicto estará deshabilitado.")
     print("")
-    print(Fore.BLUE  + "    5) Pandas y Smtplib: Envió del email")
+    print(Fore.BLUE  + "    3) Proceso envío de email DIARIO")
+    print(Fore.WHITE + "       Si existen datos se enviará un email en formato html desde un DataFrame.")
+    print("")
+    print(Fore.BLUE  + "    4) Proceso envío de email MENSUAL")
     print(Fore.WHITE + "       Si existen datos se enviará un email en formato html desde un DataFrame.")
     print("")
     print(Fore.WHITE + "Dependencias importantes:")
     print("")
-    print(Fore.WHITE + "    - Google Chrome:")
-    print(Fore.WHITE + "        Es fundamental tener instalada una versión estable (no Beta).")
+    print(Fore.WHITE + "    - Ruta de RED H:")
+    print(Fore.WHITE + "        .")
     print("")
-    print(Fore.WHITE + "    - ChromeDriver:")
-    print(Fore.WHITE + "        Debe coincidir con la versión de Google Chrome instalada.")
-    print(Fore.WHITE + "        Ruta del binario: C:\\MisCompilados\\cfg\\chromedriver-win32\\chromedriver.exe")
-    print(Fore.WHITE + "        Para otras versiones: C:\\MisCompilados\\cfg\\chromedriver-win32\\1??\\")
-    print("")
-    print(Fore.WHITE + "    - Acceso a las URL:")
-    print(Fore.WHITE + "        https://www.biva.mx/")
+    print(Fore.WHITE + "    - Files CSV:")
+    print(Fore.WHITE + "        .")
     print("")
     print(Fore.MAGENTA + "=" * 94)
     print(Fore.WHITE + "Para más ayuda, contactar con: SteveCarpio 'carpios@tda-sgft.com' (stv.madrid@gmail.com) ")
-    print(Fore.WHITE + "Versión 3 - 2025")
+    print(Fore.WHITE + "Versión 1 - 2025")
     print(Fore.MAGENTA + "=" * 94)
 
 def todos_diario():
@@ -144,7 +151,7 @@ def todos_diario():
     paso3()
     print(Fore.WHITE + "¡Todos los pasos DIARIOS completados exitosamente! 🎉 \n")
     print(Fore.MAGENTA + f"---------------------------------------------------------------------------------------")
-    print(Fore.WHITE + f" Tiempo Transcurrido INI: {tiempo_inicio} - FIN: {dt.now()}")
+    print(Fore.WHITE + f" Tiempo Transcurrido INI: {tiempo_inicio2} - FIN: {dt.now()}")
     print(Fore.MAGENTA + f"---------------------------------------------------------------------------------------")
 
 def todos_mensual():
@@ -154,7 +161,7 @@ def todos_mensual():
     paso4()
     print(Fore.WHITE + "¡Todos los pasos MENSUAL completados exitosamente! 🎉 \n")
     print(Fore.MAGENTA + f"---------------------------------------------------------------------------------------")
-    print(Fore.WHITE + f" Tiempo Transcurrido INI: {tiempo_inicio} - FIN: {dt.now()}")
+    print(Fore.WHITE + f" Tiempo Transcurrido INI: {tiempo_inicio2} - FIN: {dt.now()}")
     print(Fore.MAGENTA + f"---------------------------------------------------------------------------------------")
 
 # Función para limpiar la pantalla (en sistemas basados en UNIX)

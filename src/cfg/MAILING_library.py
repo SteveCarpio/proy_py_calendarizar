@@ -7,6 +7,7 @@
 # CARGA DE LIBRERÍAS ------------------------------------------------------------------
 #                                                                 # Ma P0 P1 P2 P3 P4 #
 import os                                                         # -- p0 p1 -- -- -- #
+import re                                                         # ma -- -- -- -- -- # 
 import shutil                                                     # -- -- p1 -- -- -- #
 import time                                                       # -- -- p1 -- -- -- #
 import pandas as pd                                               # -- -- -- p2 -- -- #
