@@ -8,6 +8,7 @@ __pycache__/
 build/
 dist/
 .idea/
+.vscode/
 
 # Ignorar dependencias si usas pipenv o poetry
 Pipfile

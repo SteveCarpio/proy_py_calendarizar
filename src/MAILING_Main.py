@@ -26,7 +26,7 @@ tiempo_inicio = dt(2025, 3, 19)
 fecha_reducida = tiempo_inicio - timedelta(days=0)
 
 # Crear variables con los formatos que necesitamos
-var_Fecha = fecha_reducida.strftime('%Y-%m-%d')  # Formato "2025-03-04"
+var_Fecha  = fecha_reducida.strftime('%Y-%m-%d')  # Formato "2025-03-04"
 var_Ano    = fecha_reducida.strftime('%Y')        # Formato "2025"
 var_Mes    = fecha_reducida.strftime('%m')        # Formato "04"
 
