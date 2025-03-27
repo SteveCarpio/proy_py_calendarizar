@@ -90,7 +90,7 @@ def Mandar_Email_Diario(destinatarios_to, destinatarios_cc, asunto, cuerpo, df, 
                 
                 <p>{cuerpo}</p>
           
-                A continuación, se listan las tareas pendientes que requieren revisión: <br> <br>
+                A continuación, se enumeran las tareas pendientes de revisión:  <br> <br>
           
                 <table style="border-collapse: collapse;">
                     <tr>
@@ -181,4 +181,8 @@ def sTv_paso3(var_Fecha, var_Entorno):
         destinatarios_cc=['carpios@tda-sgft.com']
 
 
-    Mandar_Email_Diario(destinatarios_to, destinatarios_cc, f"Tareas pendientes a revisar (FECHA AVISO: {var_Fecha})", "", df, var_Fecha)
+    var_Asunto=f"TAREAS PENDIENTES A REVISAR (Informe: {var_Fecha}) - TDA Update"
+    var_Cuerpo=""
+        
+
+    Mandar_Email_Diario(destinatarios_to, destinatarios_cc, var_Asunto, var_Cuerpo, df, var_Fecha)

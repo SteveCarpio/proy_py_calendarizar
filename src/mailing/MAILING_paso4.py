@@ -10,11 +10,14 @@ from   cfg.MAILING_library import *
 #                                  FUNCIONES
 # ----------------------------------------------------------------------------------------
 
-def Mandar_Email_Diario(destinatarios_to, destinatarios_cc, asunto, cuerpo, var_Fecha, df1, df2):
+def Mandar_Email_SemanalMensual(destinatarios_to, destinatarios_cc, asunto, cuerpo, var_Fecha, df1, df2, p_Lunes, p_Domingo, p_AnoMes):
     
-    registros = len(df1)
-    print(f"Se han recibido: {registros} registros. ")
-    if registros > 0:
+    registros1 = len(df1)
+    registros2 = len(df2)
+    print(f"Se han recibido: {registros1} registros para el informe Semanal ")
+    print(f"Se han recibido: {registros2} registros para el informe Mensual ")
+
+    if (registros1 + registros2) >= 0:
         # Configuración del servidor SMTP (Zimbra)
         smtp_server = 'zimbra.tda-sgft.com'
         smtp_port = 25  
@@ -31,7 +34,8 @@ def Mandar_Email_Diario(destinatarios_to, destinatarios_cc, asunto, cuerpo, var_
         todos_destinatarios = destinatarios_to + destinatarios_cc 
 
         # Convertir el DataFrame a HTML
-        tabla_html = df1.to_html(index=True)  # con el índice
+        tabla_html1 = df1.to_html(index=True)  # con el índice
+        tabla_html2 = df2.to_html(index=True)  # con el índice
 
         # Cuerpo del correo usando HTML y CSS
         cuerpo_html = f"""
@@ -72,36 +76,57 @@ def Mandar_Email_Diario(destinatarios_to, destinatarios_cc, asunto, cuerpo, var_
         </head>
         <body>
             <div class="content">
-                
-                <h2>LISTA DE TAREAS PENDIENTES.</h2>
-                
+        
+                <h2>LISTA DE TAREAS DE LA PRÓXIMA SEMANA.</h2>
                 <p>{cuerpo}</p>
-          
-                A continuación, se listan las tareas pendientes que requieren revisión: <br> <br>
-          
+                A continuación, se enumeran las tareas pendientes de la próxima semana que requieren revisión: <br> <br>
                 <table style="border-collapse: collapse;">
                     <tr>
-                        <th style="text-align: left; padding: 8px; width: 200px; border: 1px solid white;">Fecha Informe:</th>
-                        <td style="padding: 8px; border: 1px solid white;">{var_Fecha.year} {var_Fecha.month} {var_Fecha.day} </td>
+                        <th style="text-align: left; padding: 8px; width: 200px; border: 1px solid white;">Próximo_Lunes:</th>
+                        <td style="padding: 8px; border: 1px solid white;">{p_Lunes.year}-{p_Lunes.month:02}-{p_Lunes.day:02} </td>
+                    </tr>
+                    <tr>
+                        <th style="text-align: left; padding: 8px; width: 200px; border: 1px solid white;">Próximo_Domingo:</th>
+                        <td style="padding: 8px; border: 1px solid white;">{p_Domingo.year}-{p_Domingo.month:02}-{p_Domingo.day:02}</td>
                     </tr>
                     <tr>
                         <th style="text-align: left; padding: 8px; width: 200px; border: 1px solid white;">Registros Pendientes:</th>
                         <td style="padding: 8px; border: 1px solid white;">{len(df1)}</td>
                     </tr>
                 </table>
-
                 <br>
+                {tabla_html1}
 
-                {tabla_html} 
+
+                <br><br><br>
+
+              
+
+                <h2>LISTA DE TAREAS DEL PRÓXIMO MES.</h2>
+                <p>{cuerpo}</p>
+                A continuación, se enumeran las tareas pendientes del próximo mes que requieren revisión: <br> <br>
+                <table style="border-collapse: collapse;">
+                    <tr>
+                        <th style="text-align: left; padding: 8px; width: 200px; border: 1px solid white;">Año Mes:</th>
+                        <td style="padding: 8px; border: 1px solid white;">{p_AnoMes} </td>
+                    </tr>
+                    <tr>
+                        <th style="text-align: left; padding: 8px; width: 200px; border: 1px solid white;">Registros Pendientes:</th>
+                        <td style="padding: 8px; border: 1px solid white;">{len(df2)}</td>
+                    </tr>
+                </table>
+                <br>
+                {tabla_html2} 
 
                 <br><br>
+                <br><br>
+                <br><br>
+                <br><br>
+
                 <i> ** Este email fue enviado desde un proceso automático desde TdA. Por favor, no responder a este email. ** </i>
+
                 <p>
                     <br><br>
-                    <br><br>
-                    <br><br>
-                    <br><br>
-
                     <table style="border: none; padding: 10px; border-spacing: 2px; width: 600px; table-layout: fixed;">
                         <tr>
                             <td style="width: 150px; padding-right: 10px; vertical-align: middle; border: 1px solid white;">
@@ -120,6 +145,7 @@ def Mandar_Email_Diario(destinatarios_to, destinatarios_cc, asunto, cuerpo, var_
                         </tr>
                     </table>
                 </p>
+
             </div>
             <!-- By: SteveCarpio:  stv.madrid@gmail.com  -->
         </body>
@@ -166,7 +192,12 @@ def Crear_DF_Mensual(df, var_Ano, var_Mes):
     # Eliminar las columnas que nos necesarias del DataFrame
     df_resultado = df_filtrado.drop(columns=['ANO', 'MES', 'SEMANA'])
 
-    return df_resultado
+    # Mostrar los resultados
+    print(f"\nDatos para el informe Mensual.\nPróximo Año y Mes: {var_Ano}-{var_Mes}")
+    print(f"\n{df_resultado}")
+    var_AnoMes = f"{var_Ano}-{var_Mes:02}"
+
+    return df_resultado, var_AnoMes
 
 def Crear_DF_Semanal(df, var_Ano, var_Mes, var_Dia):
     
@@ -182,10 +213,6 @@ def Crear_DF_Semanal(df, var_Ano, var_Mes, var_Dia):
     # El próximo domingo será 6 días después del próximo lunes
     proximo_domingo = proximo_lunes + datetime.timedelta(days=6)
 
-    # Mostrar los resultados
-    print(f"Próximo lunes:   {proximo_lunes}")
-    print(f"Próximo domingo: {proximo_domingo}")
-
     # Convertir las fechas de cadena a tipo datetime
     proximo_lunes = pd.to_datetime(proximo_lunes)
     proximo_domingo = pd.to_datetime(proximo_domingo)
@@ -198,7 +225,13 @@ def Crear_DF_Semanal(df, var_Ano, var_Mes, var_Dia):
     # Eliminar las columnas que nos necesarias del DataFrame
     df_resultado = df_filtrado.drop(columns=['ANO', 'MES', 'SEMANA'])
 
-    return df_resultado
+    # Mostrar los resultados
+    print(f"\nDatos para el informe Semanal.")
+    print(f"Próximo lunes:   {proximo_lunes}")
+    print(f"Próximo domingo: {proximo_domingo}")
+    print(f" \n{df_resultado}")
+
+    return df_resultado, proximo_lunes, proximo_domingo
 
 # ----------------------------------------------------------------------------------------
 #                               INICIO PROGRAMA
@@ -212,21 +245,21 @@ def sTv_paso4(tiempo_inicio, var_Entorno):
 
     # Leer CSV en un DataFrame
     df = Leer_Csv_DataFrame()
-    df_Mensual = Crear_DF_Mensual(df, tiempo_inicio.year, tiempo_inicio.month)
-    df_Semanal = Crear_DF_Semanal(df, tiempo_inicio.year, tiempo_inicio.month, tiempo_inicio.day)
-
-
-    print(f"\nDatos Mensual: \n{df_Mensual}")
-    print(f"\nDatos Semanal: \n{df_Semanal}")
+    df_Semanal, p_Lunes, p_Domingo = Crear_DF_Semanal(df, tiempo_inicio.year, tiempo_inicio.month, tiempo_inicio.day)
+    df_Mensual, p_AnoMes = Crear_DF_Mensual(df, tiempo_inicio.year, tiempo_inicio.month)
+    
 
     # Mandar Email Diario con el DataFrame filtrado
     if var_Entorno == "PRO":
-        print("\nEjecución en modo: PRO")
+        print("\nEnvió del email en modo: PRO")
         destinatarios_to=['carpios@tda-sgft.com']
         destinatarios_cc=['carpios@tda-sgft.com']
     else:
-        print("\nEjecución en modo: DEV")
+        print("\nEnvió del email en modo: DEV")
         destinatarios_to=['carpios@tda-sgft.com']
         destinatarios_cc=['carpios@tda-sgft.com']
+    
+    var_Asunto=f"RESUMEN DE TAREAS PENDIENTES A REVISAR (Informe: {tiempo_inicio.year}-{tiempo_inicio.month}-{tiempo_inicio.day}) - TDA Update"
+    var_Cuerpo=""
 
-    Mandar_Email_Diario(destinatarios_to, destinatarios_cc, f"Resumen de tareas pendientes a revisar (Periodo: {tiempo_inicio.year}-{tiempo_inicio.month + 1} )", "", tiempo_inicio, df_Semanal, df_Mensual )
+    Mandar_Email_SemanalMensual(destinatarios_to, destinatarios_cc, var_Asunto, var_Cuerpo, tiempo_inicio, df_Semanal, df_Mensual, p_Lunes, p_Domingo, p_AnoMes)
