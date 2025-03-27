@@ -54,7 +54,7 @@ os.system("cls")
 init(autoreset=True)
 
 # Inicializar carpetas y borrado de files
-#sTv_paso0()
+sTv_paso0()
 
 # ------------------------------- MENU -----------------------------------
 

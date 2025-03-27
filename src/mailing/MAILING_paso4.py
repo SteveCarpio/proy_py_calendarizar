@@ -116,6 +116,7 @@ def Mandar_Email_SemanalMensual(destinatarios_to, destinatarios_cc, asunto, cuer
                     </tr>
                 </table>
                 <br>
+
                 {tabla_html2} 
 
                 <br><br>
@@ -127,6 +128,7 @@ def Mandar_Email_SemanalMensual(destinatarios_to, destinatarios_cc, asunto, cuer
 
                 <p>
                     <br><br>
+                    
                     <table style="border: none; padding: 10px; border-spacing: 2px; width: 600px; table-layout: fixed;">
                         <tr>
                             <td style="width: 150px; padding-right: 10px; vertical-align: middle; border: 1px solid white;">

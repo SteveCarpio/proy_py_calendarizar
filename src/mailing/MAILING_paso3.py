@@ -102,18 +102,19 @@ def Mandar_Email_Diario(destinatarios_to, destinatarios_cc, asunto, cuerpo, df, 
                         <td style="padding: 8px; border: 1px solid white;">{len(df)}</td>
                     </tr>
                 </table>
-
                 <br>
 
                 {tabla_html} 
 
                 <br><br>
+                <br><br>
+                <br><br>
+                <br><br>
+                    
                 <i> ** Este email fue enviado desde un proceso automático desde TdA. Por favor, no responder a este email. ** </i>
+                
                 <p>
-                    <br><br>
-                    <br><br>
-                    <br><br>
-                    <br><br>
+                   <br><br>
 
                     <table style="border: none; padding: 10px; border-spacing: 2px; width: 600px; table-layout: fixed;">
                         <tr>

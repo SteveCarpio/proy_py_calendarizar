@@ -15,6 +15,7 @@ loc_RutaInforme=f'{loc_RutaRaiz}INFORMES\\'
 # **** Red ****
 
 red_RutaRaiz="H:\\Proyectos\\Python\\MisCompilados\\PROY_CALENDARIZAR\\"
+#red_RutaRaiz="H:\\MisCompilados\\PROY_CALENDARIZAR\\"    #  server python
 red_RutaAccess=f"{red_RutaRaiz}BBDD\\"
 red_RutaConfig=f'{red_RutaRaiz}CONFIG\\'
 red_RutaInforme=f'{red_RutaRaiz}INFORMES\\'
