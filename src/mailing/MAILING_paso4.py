@@ -90,7 +90,7 @@ def Mandar_Email_SemanalMensual(destinatarios_to, destinatarios_cc, asunto, cuer
                         <td style="padding: 8px; border: 1px solid white;">{p_Domingo.year}-{p_Domingo.month:02}-{p_Domingo.day:02}</td>
                     </tr>
                     <tr>
-                        <th style="text-align: left; padding: 8px; width: 200px; border: 1px solid white;">Registros Pendientes:</th>
+                        <th style="text-align: left; padding: 8px; width: 200px; border: 1px solid white;">Tareas Pendientes:</th>
                         <td style="padding: 8px; border: 1px solid white;">{len(df1)}</td>
                     </tr>
                 </table>
@@ -111,7 +111,7 @@ def Mandar_Email_SemanalMensual(destinatarios_to, destinatarios_cc, asunto, cuer
                         <td style="padding: 8px; border: 1px solid white;">{p_AnoMes} </td>
                     </tr>
                     <tr>
-                        <th style="text-align: left; padding: 8px; width: 200px; border: 1px solid white;">Registros Pendientes:</th>
+                        <th style="text-align: left; padding: 8px; width: 200px; border: 1px solid white;">Tareas Pendientes:</th>
                         <td style="padding: 8px; border: 1px solid white;">{len(df2)}</td>
                     </tr>
                 </table>

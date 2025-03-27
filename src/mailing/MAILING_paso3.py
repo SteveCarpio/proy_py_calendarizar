@@ -98,7 +98,7 @@ def Mandar_Email_Diario(destinatarios_to, destinatarios_cc, asunto, cuerpo, df, 
                         <td style="padding: 8px; border: 1px solid white;">{var_Fecha}</td>
                     </tr>
                     <tr>
-                        <th style="text-align: left; padding: 8px; width: 200px; border: 1px solid white;">Registros Pendientes:</th>
+                        <th style="text-align: left; padding: 8px; width: 200px; border: 1px solid white;">Tareas Pendientes:</th>
                         <td style="padding: 8px; border: 1px solid white;">{len(df)}</td>
                     </tr>
                 </table>
