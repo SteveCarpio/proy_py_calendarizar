@@ -173,7 +173,7 @@ def sTv_paso3(var_Fecha, var_Entorno):
     # Mandar Email Diario con el DataFrame filtrado
     if var_Entorno == "PRO":
         print("Ejecución en modo: PRO")
-        destinatarios_to=['carpios@tda-sgft.com']
+        destinatarios_to=['repcomun@tda-sgft.com']
         destinatarios_cc=['carpios@tda-sgft.com']
     else:
         print("Ejecución en modo: DEV")
@@ -181,7 +181,7 @@ def sTv_paso3(var_Fecha, var_Entorno):
         destinatarios_cc=['carpios@tda-sgft.com']
 
 
-    var_Asunto=f"TAREAS PENDIENTES A REVISAR (Informe: {var_Fecha}) - TDA Update"
+    var_Asunto=f"[AVISO] Tareas Pendientes de Revisión - Informe {var_Fecha} | TDA Update"
     var_Cuerpo=""
         
 

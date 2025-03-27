@@ -252,14 +252,14 @@ def sTv_paso4(tiempo_inicio, var_Entorno):
     # Mandar Email Diario con el DataFrame filtrado
     if var_Entorno == "PRO":
         print("\nEnvió del email en modo: PRO")
-        destinatarios_to=['carpios@tda-sgft.com']
+        destinatarios_to=['repcomun@tda-sgft.com']
         destinatarios_cc=['carpios@tda-sgft.com']
     else:
         print("\nEnvió del email en modo: DEV")
         destinatarios_to=['carpios@tda-sgft.com']
         destinatarios_cc=['carpios@tda-sgft.com']
     
-    var_Asunto=f"RESUMEN DE TAREAS PENDIENTES A REVISAR (Informe: {tiempo_inicio.year}-{tiempo_inicio.month}-{tiempo_inicio.day}) - TDA Update"
+    var_Asunto=f"Resumen Tareas Pendientes a Revisar - Informe {tiempo_inicio.year}-{tiempo_inicio.month:02}-{tiempo_inicio.day:02} | TDA Update"
     var_Cuerpo=""
 
     Mandar_Email_SemanalMensual(destinatarios_to, destinatarios_cc, var_Asunto, var_Cuerpo, tiempo_inicio, df_Semanal, df_Mensual, p_Lunes, p_Domingo, p_AnoMes)
