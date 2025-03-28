@@ -274,4 +274,4 @@ def sTv_paso4(tiempo_inicio, var_Entorno):
     var_Asunto=f"Resumen Tareas Pendientes a Revisar - Informe {tiempo_inicio.year}-{tiempo_inicio.month:02}-{tiempo_inicio.day:02} | TDA Update"
     var_Cuerpo=""
 
-    #Mandar_Email_SemanalMensual(destinatarios_to, destinatarios_cc, var_Asunto, var_Cuerpo, tiempo_inicio, df_Semanal, df_Mensual, p_Lunes, p_Domingo, p_AnoMes)
+    Mandar_Email_SemanalMensual(destinatarios_to, destinatarios_cc, var_Asunto, var_Cuerpo, tiempo_inicio, df_Semanal, df_Mensual, p_Lunes, p_Domingo, p_AnoMes)
