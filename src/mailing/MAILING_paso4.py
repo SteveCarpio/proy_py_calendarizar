@@ -33,9 +33,15 @@ def Mandar_Email_SemanalMensual(destinatarios_to, destinatarios_cc, asunto, cuer
         # Combinar destinatarios principales y en copia
         todos_destinatarios = destinatarios_to + destinatarios_cc 
 
-        # Convertir el DataFrame a HTML
-        tabla_html1 = df1.to_html(index=True)  # con el índice
-        tabla_html2 = df2.to_html(index=True)  # con el índice
+        # Eliminar los /r y /n, reemplazarlos por etiquetas html br
+        df1['DETALLE_DEL_EVENTO'] = df1['DETALLE_DEL_EVENTO'].apply(lambda x: str(x).replace('\r', '').replace('\n', '<br>'))
+        df2['DETALLE_DEL_EVENTO'] = df2['DETALLE_DEL_EVENTO'].apply(lambda x: str(x).replace('\r', '').replace('\n', '<br>'))
+
+        # Convertir el DataFrame a HTML, scarpe=False para que tenga en cuenta los BR
+        tabla_html1 = df1.to_html(index=True, escape=False)  # con el índice
+        tabla_html2 = df2.to_html(index=True, escape=False)  # con el índice
+
+        
 
         # Cuerpo del correo usando HTML y CSS
         cuerpo_html = f"""
@@ -178,29 +184,6 @@ def Leer_Csv_DataFrame():
     df['FECHA_LIMITE'] = pd.to_datetime(df['FECHA_LIMITE'], errors='coerce', dayfirst=True)  # Convertir a fecha
     return df
 
-def Crear_DF_Mensual(df, var_Ano, var_Mes):
-
-    # Me situó en el mes siguiente
-    var_Mes += 1
-    if (var_Mes + 1) > 12:
-        var_Mes = 1
-        var_Ano += 1
-
-    # Filtro el mes siguiente
-    df_filtrado = df[(df['ANO'] == var_Ano) & (df['MES'] == var_Mes)]
-    df_filtrado = df_filtrado.reset_index(drop=True)
-    df_filtrado.index = df_filtrado.index + 1
-
-    # Eliminar las columnas que nos necesarias del DataFrame
-    df_resultado = df_filtrado.drop(columns=['ANO', 'MES', 'SEMANA'])
-
-    # Mostrar los resultados
-    print(f"\nDatos para el informe Mensual.\nPróximo Año y Mes: {var_Ano}-{var_Mes}")
-    print(f"\n{df_resultado}")
-    var_AnoMes = f"{var_Ano}-{var_Mes:02}"
-
-    return df_resultado, var_AnoMes
-
 def Crear_DF_Semanal(df, var_Ano, var_Mes, var_Dia):
     
     # Fecha de hoy
@@ -235,6 +218,33 @@ def Crear_DF_Semanal(df, var_Ano, var_Mes, var_Dia):
 
     return df_resultado, proximo_lunes, proximo_domingo
 
+def Crear_DF_Mensual(df, var_Ano, var_Mes):
+
+    print(var_Ano, var_Mes)
+
+    # Me situó en el mes siguiente
+    var_Mes += 1
+    if (var_Mes) > 12:
+        var_Mes = 1
+        var_Ano += 1
+
+    print(var_Ano, var_Mes)
+
+    # Filtro el mes siguiente
+    df_filtrado = df[(df['ANO'] == var_Ano) & (df['MES'] == var_Mes)]
+    df_filtrado = df_filtrado.reset_index(drop=True)
+    df_filtrado.index = df_filtrado.index + 1
+
+    # Eliminar las columnas que nos necesarias del DataFrame
+    df_resultado = df_filtrado.drop(columns=['ANO', 'MES', 'SEMANA'])
+
+    # Mostrar los resultados
+    print(f"\nDatos para el informe Mensual.\nPróximo Año y Mes: {var_Ano}-{var_Mes}")
+    print(f"\n{df_resultado}")
+    var_AnoMes = f"{var_Ano}-{var_Mes:02}"
+
+    return df_resultado, var_AnoMes
+
 # ----------------------------------------------------------------------------------------
 #                               INICIO PROGRAMA
 # ----------------------------------------------------------------------------------------
@@ -264,4 +274,4 @@ def sTv_paso4(tiempo_inicio, var_Entorno):
     var_Asunto=f"Resumen Tareas Pendientes a Revisar - Informe {tiempo_inicio.year}-{tiempo_inicio.month:02}-{tiempo_inicio.day:02} | TDA Update"
     var_Cuerpo=""
 
-    Mandar_Email_SemanalMensual(destinatarios_to, destinatarios_cc, var_Asunto, var_Cuerpo, tiempo_inicio, df_Semanal, df_Mensual, p_Lunes, p_Domingo, p_AnoMes)
+    #Mandar_Email_SemanalMensual(destinatarios_to, destinatarios_cc, var_Asunto, var_Cuerpo, tiempo_inicio, df_Semanal, df_Mensual, p_Lunes, p_Domingo, p_AnoMes)

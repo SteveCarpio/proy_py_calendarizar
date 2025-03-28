@@ -28,7 +28,7 @@ if len(sys.argv) > 2 :
 
 # Parámetro3: Fecha (opcional)
 tiempo_inicio = dt.now()
-#tiempo_inicio = dt(2025, 12, 28)
+tiempo_inicio = dt(2025, 11, 15)
 if len(sys.argv) > 3 :
     var_param3 = sys.argv[3]
     if re.match(r"^\d{4}-\d{2}-\d{2}$", var_param3):

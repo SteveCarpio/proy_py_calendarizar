@@ -9,20 +9,6 @@ from   cfg.MAILING_library import *
 # ----------------------------------------------------------------------------------------
 #                                  FUNCIONES
 # ----------------------------------------------------------------------------------------
-def Leer_Csv_DataFrame(var_Fecha):
-    
-    # Leo el CSV generado por el proceso VBA de access de Eventos
-    df = pd.read_csv(f'{sTv.loc_RutaAccess}{sTv.var_NombreCsvDiario}', delimiter=';', quotechar='"', encoding='latin1')
-  
-    # Convertir la columna 1 a fecha
-    df['FECHA_AVISO'] = pd.to_datetime(df['FECHA_AVISO'], errors='coerce', dayfirst=True)
-
-    # Filtramos el registros a informar 
-    df_filtrado = df[df['FECHA_AVISO'].dt.date == pd.to_datetime(var_Fecha).date()]
-    df_filtrado = df_filtrado.reset_index(drop=True)
-    df_filtrado.index = df_filtrado.index + 1
-
-    return df_filtrado
 
 def Mandar_Email_Diario(destinatarios_to, destinatarios_cc, asunto, cuerpo, df, var_Fecha):
     registros = len(df)
@@ -43,8 +29,11 @@ def Mandar_Email_Diario(destinatarios_to, destinatarios_cc, asunto, cuerpo, df, 
         # Combinar destinatarios principales y en copia
         todos_destinatarios = destinatarios_to + destinatarios_cc 
 
-        # Convertir el DataFrame a HTML
-        tabla_html = df.to_html(index=True)  # con el índice
+        # Eliminar los /r y /n, reemplazarlos por etiquetas html br
+        df['DETALLE_DEL_EVENTO'] = df['DETALLE_DEL_EVENTO'].apply(lambda x: str(x).replace('\r', '').replace('\n', '<br>'))
+
+        # Convertir el DataFrame a HTML, scape=False para que tenga en cuenta los BR
+        tabla_html = df.to_html(index=True, escape=False)  # con el índice
 
         # Cuerpo del correo usando HTML y CSS
         cuerpo_html = f"""
@@ -157,6 +146,21 @@ def Mandar_Email_Diario(destinatarios_to, destinatarios_cc, asunto, cuerpo, df, 
 
     else:
         print("No se mandará email porque no hay registros a informar.")
+
+def Leer_Csv_DataFrame(var_Fecha):
+    
+    # Leo el CSV generado por el proceso VBA de access de Eventos
+    df = pd.read_csv(f'{sTv.loc_RutaAccess}{sTv.var_NombreCsvDiario}', delimiter=';', quotechar='"', encoding='latin1')
+  
+    # Convertir la columna 1 a fecha
+    df['FECHA_AVISO'] = pd.to_datetime(df['FECHA_AVISO'], errors='coerce', dayfirst=True)
+
+    # Filtramos el registros a informar 
+    df_filtrado = df[df['FECHA_AVISO'].dt.date == pd.to_datetime(var_Fecha).date()]
+    df_filtrado = df_filtrado.reset_index(drop=True)
+    df_filtrado.index = df_filtrado.index + 1
+
+    return df_filtrado
 
 # ----------------------------------------------------------------------------------------
 #                               INICIO PROGRAMA
