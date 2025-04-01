@@ -37,12 +37,13 @@ def borrar_archivos(ruta_carpeta, patron):
 # ----------------------------------------------------------------------------------------
 
 def sTv_paso0():
+    
     # Valida carpetas del programa
     valida_carpetas(sTv.loc_RutaRaiz)
-    
     valida_carpetas(sTv.loc_RutaAccess)
     valida_carpetas(sTv.loc_RutaConfig)
     valida_carpetas(sTv.loc_RutaInforme)
+    valida_carpetas(sTv.loc_RutaLog)
        
     valida_carpetas(sTv.red_RutaAccess)
     valida_carpetas(sTv.red_RutaConfig)

@@ -15,7 +15,6 @@ from   mailing.MAILING_paso4     import sTv_paso4
 
 tiempo_inicio2 = dt.now()
 
-
 # Parámetro1: Diaria o Mensual
 if len(sys.argv) > 1 :
     var_param1 = sys.argv[1]
@@ -27,7 +26,7 @@ if len(sys.argv) > 2 :
     var_Entorno = var_param2
 
 # Parámetro3: Fecha (opcional)
-tiempo_inicio = dt.now()
+tiempo_inicio = tiempo_inicio2
 #tiempo_inicio = dt(2025, 11, 15)
 if len(sys.argv) > 3 :
     var_param3 = sys.argv[3]
@@ -60,12 +59,12 @@ sTv_paso0()
 
 # Funciones para los pasos
 def paso1():
-    print(Fore.YELLOW + f"\nEjecutando PASO_1........ {dt.now()} 👌\n")
+    print(Fore.YELLOW + f"\nEjecutando PASO_1........ {dt.now()} \n")
     sTv_paso1()
     print(Fore.YELLOW + "\nPaso 1 completado! \n")
 
 def paso2():
-    print(Fore.GREEN + f"\nEjecutando PASO_2........ {dt.now()} 👌\n")
+    print(Fore.GREEN + f"\nEjecutando PASO_2........ {dt.now()} \n")
     #sTv_paso2()
     print("   ¡¡ Paso deshabilitado por motivos de conflictos entre las versiones de 32 y 64 bits !!\n")
     print("      Driver ODBC 32bits")
@@ -76,19 +75,14 @@ def paso2():
     print(Fore.GREEN + "\nPaso 2 completado! \n")
 
 def paso3():
-    print(Fore.BLUE + f"\nEjecutando PASO_3........ {dt.now()} 👌\n")
+    print(Fore.BLUE + f"\nEjecutando PASO_3........ {dt.now()} \n")
     sTv_paso3(var_Fecha, var_Entorno)
     print(Fore.BLUE + "\nPaso 3 completado! \n")
 
 def paso4():
-    print(Fore.BLUE + f"\nEjecutando PASO_4........ {dt.now()} 👌\n")
+    print(Fore.BLUE + f"\nEjecutando PASO_4........ {dt.now()} \n")
     sTv_paso4(tiempo_inicio, var_Entorno)
     print(Fore.BLUE + "\nPaso 4 completado! \n")
-
-def paso5():
-    print(Fore.YELLOW + f"\nEjecutando PASO_5........ {dt.now()} 👌\n")
-    #sTv_paso5(var_NombreSalida, var_Fechas2, var_Fechas3, var_SendEmail)
-    print(Fore.YELLOW + "\nPaso 5 completado! \n")
 
 def pasoHelp():
     os.system("cls")
@@ -174,21 +168,21 @@ def pasoHelp():
     print(Fore.MAGENTA + "=" * 94)
 
 def todos_diario():
-    print(Fore.WHITE   + "\nEjecutando TODOS los pasos DIARIOS.......................... 💪")
+    print(Fore.WHITE   + "\nEjecutando TODOS los pasos DIARIOS.......................... ")
     paso1()
     paso2()
     paso3()
-    print(Fore.WHITE   + "¡Todos los pasos DIARIOS completados exitosamente! 🎉 \n")
+    print(Fore.WHITE   + "¡ Todos los pasos DIARIOS completados exitosamente !  \n")
     print(Fore.MAGENTA + f"---------------------------------------------------------------------------------------")
     print(Fore.WHITE   + f" Tiempo Transcurrido INI: {tiempo_inicio2} - FIN: {dt.now()}")
     print(Fore.MAGENTA + f"---------------------------------------------------------------------------------------")
 
 def todos_mensual():
-    print(Fore.WHITE   + "\nEjecutando TODOS los pasos MENSUAL.......................... 💪")
+    print(Fore.WHITE   + "\nEjecutando TODOS los pasos MENSUAL.......................... ")
     paso1()
     paso2()
     paso4()
-    print(Fore.WHITE   + "¡Todos los pasos MENSUAL completados exitosamente! 🎉 \n")
+    print(Fore.WHITE   + "¡ Todos los pasos MENSUAL completados exitosamente !  \n")
     print(Fore.MAGENTA + f"---------------------------------------------------------------------------------------")
     print(Fore.WHITE   + f" Tiempo Transcurrido INI: {tiempo_inicio2} - FIN: {dt.now()}")
     print(Fore.MAGENTA + f"---------------------------------------------------------------------------------------")

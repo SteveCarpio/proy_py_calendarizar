@@ -12,13 +12,15 @@ loc_RutaRaiz='C:\\MisCompilados\\PROY_CALENDARIZAR\\'
 loc_RutaAccess=f"{loc_RutaRaiz}BBDD\\"
 loc_RutaConfig=f'{loc_RutaRaiz}CONFIG\\'
 loc_RutaInforme=f'{loc_RutaRaiz}INFORMES\\'
-# **** Red ****
+loc_RutaLog=f'{loc_RutaRaiz}LOG\\'
 
+# **** Red ****
 red_RutaRaiz="H:\\Proyectos\\Python\\MisCompilados\\PROY_CALENDARIZAR\\"
 #red_RutaRaiz="H:\\MisCompilados\\PROY_CALENDARIZAR\\"    #  server python
 red_RutaAccess=f"{red_RutaRaiz}BBDD\\"
 red_RutaConfig=f'{red_RutaRaiz}CONFIG\\'
 red_RutaInforme=f'{red_RutaRaiz}INFORMES\\'
+
 
 # ----------------------------------------------------------------------------------------
 #                          VARIABLES DE APOYO
