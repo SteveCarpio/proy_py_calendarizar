@@ -170,7 +170,7 @@ def sTv_paso3(var_Fecha, var_Entorno):
 
     # Ruta del archivo
     var_csv = f'{sTv.loc_RutaAccess}{sTv.var_NombreCsvDiario}'
-    print(f"File:  {var_csv}")
+    print(f"- File:  {var_csv}")
 
     # Leer CSV en un DataFrame
     df = Leer_Csv_DataFrame(var_Fecha)
@@ -178,20 +178,21 @@ def sTv_paso3(var_Fecha, var_Entorno):
     # Mandar Email Diario con el DataFrame filtrado
     if var_Entorno == "PRO":
         if len(df) > 1:
-            print("Ejecución en modo: PRO - OK existen datos")
-            destinatarios_to=['carpios@tda-sgft.com'] #  repcomun@tda-sgft.com
+            print("- Running en modo: PRO - OK existen datos")
+            destinatarios_to=['talanvanf@tda-sgft.com','blancod@tda-sgft.com'] #  repcomun@tda-sgft.com
             destinatarios_cc=['carpios@tda-sgft.com']
+            var_Asunto=f"[AVISO] Tareas Pendientes de Revisión - Informe {var_Fecha} | TDA Update"
         else:
-            print("Ejecución en modo: PRO - NO existen datos")
-            destinatarios_to=['carpios@tda-sgft.com'] #  talanvanf@tda-sgft.com , blancod@tda-sgft.com
+            print("- Running en modo: PRO - NO existen datos")
+            destinatarios_to=['talanvanf@tda-sgft.com','blancod@tda-sgft.com'] #  'talanvanf@tda-sgft.com','blancod@tda-sgft.com'
             destinatarios_cc=['carpios@tda-sgft.com']
+            var_Asunto=f"[INFO] No hay tareas Pendientes de Revisión - Informe {var_Fecha} | TDA Update"
     else:
-        print("Ejecución en modo: DEV")
+        print("- Running en modo: DEV")
         destinatarios_to=['carpios@tda-sgft.com']
         destinatarios_cc=['carpios@tda-sgft.com']
-
-    var_Asunto=f"[AVISO] Tareas Pendientes de Revisión - Informe {var_Fecha} | TDA Update"
+        var_Asunto=f"[ ... ] Tareas Pendientes de Revisión - Informe {var_Fecha} | TDA Update - modo DEV"
+    
     var_Cuerpo=""
-        
 
     Mandar_Email_Diario(destinatarios_to, destinatarios_cc, var_Asunto, var_Cuerpo, df, var_Fecha)
