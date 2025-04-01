@@ -48,7 +48,7 @@ var_Ano    = fecha_reducida.strftime('%Y')        # Formato "2025"
 var_Mes    = fecha_reducida.strftime('%m')        # Formato "04"
 var_Dia    = fecha_reducida.strftime('%d')        # Formato "01"
 
-#os.system("cls")
+os.system("cls")
 
 # Inicializar colorama
 init(autoreset=True)
@@ -67,7 +67,12 @@ def paso1():
 def paso2():
     print(Fore.GREEN + f"\nEjecutando PASO_2........ {dt.now()} 👌\n")
     #sTv_paso2()
-    print("   ¡¡ Paso deshabilitado por motivos de conflictos entre versiones de 32 y 64 bits !!")
+    print("   ¡¡ Paso deshabilitado por motivos de conflictos entre las versiones de 32 y 64 bits !!\n")
+    print("      Driver ODBC 32bits")
+    print("      Access 32bits")
+    print("      vs")
+    print("      Arquitectura Windows 64bits")
+    print("      Python 64bits ")
     print(Fore.GREEN + "\nPaso 2 completado! \n")
 
 def paso3():
@@ -137,9 +142,11 @@ def pasoHelp():
     print("")
     print(Fore.BLUE    + "    3) Proceso envío de email DIARIO")
     print(Fore.WHITE   + "       Solo si existen avisos se enviará un email en formato html.")
+    print(Fore.WHITE   + "       * Importante ejecutar antes el paso 1.")
     print("")
     print(Fore.BLUE    + "    4) Proceso envío de email MENSUAL")
     print(Fore.WHITE   + "       Se enviará siempre un email en formato html de la existencia de avisos.")
+    print(Fore.WHITE   + "       * Importante ejecutar antes el paso 1.")
     print("")
     print(Fore.MAGENTA + "Dependencias importantes:")
     print("")
@@ -207,7 +214,7 @@ def mostrar_menu(par_FechasSalida):
     print(Fore.BLUE    + "4) 🔵 Envió Email Mensual                     ")
     print("")
     print(Fore.MAGENTA + "?) 🟣 Ayuda                      ")
-    print(Fore.RED     + "x) ❌ Salir del programa   " + Fore.WHITE + "    (.v3)")
+    print(Fore.RED     + "x) ❌ Salir del programa   " + Fore.WHITE + "    (.v1)")
     print(Fore.MAGENTA + "=" * 37)
 
 # Función principal para gestionar el menú
@@ -252,7 +259,8 @@ if len(sys.argv) > 1:
             todos_mensual()
         case _:
             print("Parámetro incorrecto: \n Modo1: RUN-DIARIO  [PRO/DEV] [opcional: AAAA-MM-DD] \n Modo2: RUN-MENSUAL [PRO/DEV] [opcional: AAAA-MM-DD]\n")
-            print("Cualquier duda contactar con: SteveCarpio.\n")
+            print("Para más ayuda escriba: [ayuda, help, h, ?] \n")
+            print("Cualquier duda contactar con: SteveCarpio.  \n")
 else:
     input(Fore.WHITE + "Presiona Enter para continuar...")
     ejecutar_menu(var_Fecha)
