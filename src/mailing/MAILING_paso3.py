@@ -13,7 +13,7 @@ from   cfg.MAILING_library import *
 def Mandar_Email_Diario(destinatarios_to, destinatarios_cc, asunto, cuerpo, df, var_Fecha):
     registros = len(df)
     print(f"Se han recibido: {registros} registros. ")
-    if registros > 0:
+    if registros >= 0:
         # Configuración del servidor SMTP (Zimbra)
         smtp_server = 'zimbra.tda-sgft.com'
         smtp_port = 25  
@@ -145,7 +145,7 @@ def Mandar_Email_Diario(destinatarios_to, destinatarios_cc, asunto, cuerpo, df, 
 
 
     else:
-        print("No se mandará email porque no hay registros a informar.")
+        print("No se mandará email porque no hay registros a informar..")
 
 def Leer_Csv_DataFrame(var_Fecha):
     
@@ -177,14 +177,18 @@ def sTv_paso3(var_Fecha, var_Entorno):
 
     # Mandar Email Diario con el DataFrame filtrado
     if var_Entorno == "PRO":
-        print("Ejecución en modo: PRO")
-        destinatarios_to=['repcomun@tda-sgft.com']
-        destinatarios_cc=['carpios@tda-sgft.com']
+        if len(df) > 1:
+            print("Ejecución en modo: PRO - OK existen datos")
+            destinatarios_to=['carpios@tda-sgft.com'] #  repcomun@tda-sgft.com
+            destinatarios_cc=['carpios@tda-sgft.com']
+        else:
+            print("Ejecución en modo: PRO - NO existen datos")
+            destinatarios_to=['carpios@tda-sgft.com'] #  talanvanf@tda-sgft.com , blancod@tda-sgft.com
+            destinatarios_cc=['carpios@tda-sgft.com']
     else:
         print("Ejecución en modo: DEV")
         destinatarios_to=['carpios@tda-sgft.com']
         destinatarios_cc=['carpios@tda-sgft.com']
-
 
     var_Asunto=f"[AVISO] Tareas Pendientes de Revisión - Informe {var_Fecha} | TDA Update"
     var_Cuerpo=""

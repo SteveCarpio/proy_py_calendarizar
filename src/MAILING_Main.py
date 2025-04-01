@@ -229,8 +229,6 @@ def ejecutar_menu(par_FechasSalida):
             paso3()
         elif option == '4':
             paso4()
-        elif option == '5':
-            paso5()
         elif option == '?' or option.upper() == 'H':
             pasoHelp()
         elif option.upper() == 'X':
