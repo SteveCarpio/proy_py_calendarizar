@@ -3,6 +3,24 @@
 # Descripción: Variables necesarias para la ejecución del proceso.
 # Autor: SteveCarpio-2025
 # ----------------------------------------------------------------------------------------
+import os
+
+#-----------------------------------------------------------------------------------------
+#                          Funciones de APOYO
+# ----------------------------------------------------------------------------------------
+def valida_ruta_de_red():
+    ruta1="H:\\Proyectos\\Python\\MisCompilados\\PROY_CALENDARIZAR\\"  # Mapeado en mi PC
+    ruta2="H:\\MisCompilados\\PROY_CALENDARIZAR\\"                     # Mapeado en el server Python
+    # Verificar si alguna de las rutas existe
+    if os.path.isdir(ruta1):
+        ruta = ruta1
+    elif os.path.isdir(ruta2):
+        ruta = ruta2
+    else:
+        print(f"AVISO: Ninguna de las carpetas existe. {ruta1} - {ruta2} ")
+        ruta = "ERROR"
+    return ruta
+
 
 #-----------------------------------------------------------------------------------------
 #                          RUTAS DE APOYO
@@ -15,12 +33,11 @@ loc_RutaInforme=f'{loc_RutaRaiz}INFORMES\\'
 loc_RutaLog=f'{loc_RutaRaiz}LOG\\'
 
 # **** Red ****
-red_RutaRaiz="H:\\Proyectos\\Python\\MisCompilados\\PROY_CALENDARIZAR\\"
-#red_RutaRaiz="H:\\MisCompilados\\PROY_CALENDARIZAR\\"    #  server python
+ruta=valida_ruta_de_red()
+red_RutaRaiz=ruta 
 red_RutaAccess=f"{red_RutaRaiz}BBDD\\"
 red_RutaConfig=f'{red_RutaRaiz}CONFIG\\'
 red_RutaInforme=f'{red_RutaRaiz}INFORMES\\'
-
 
 # ----------------------------------------------------------------------------------------
 #                          VARIABLES DE APOYO

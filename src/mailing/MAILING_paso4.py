@@ -37,7 +37,7 @@ def Mandar_Email_SemanalMensual(destinatarios_to, destinatarios_cc, asunto, cuer
         df1['DETALLE_DEL_EVENTO'] = df1['DETALLE_DEL_EVENTO'].apply(lambda x: str(x).replace('\r', '').replace('\n', '<br>'))
         df2['DETALLE_DEL_EVENTO'] = df2['DETALLE_DEL_EVENTO'].apply(lambda x: str(x).replace('\r', '').replace('\n', '<br>'))
 
-        # Convertir el DataFrame a HTML, scarpe=False para que tenga en cuenta los BR
+        # Convertir el DataFrame a HTML, escarpe=False para que tenga en cuenta los BR
         tabla_html1 = df1.to_html(index=True, escape=False)  # con el índice
         tabla_html2 = df2.to_html(index=True, escape=False)  # con el índice
 

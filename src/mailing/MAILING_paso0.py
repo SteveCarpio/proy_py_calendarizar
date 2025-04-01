@@ -37,7 +37,7 @@ def borrar_archivos(ruta_carpeta, patron):
 # ----------------------------------------------------------------------------------------
 
 def sTv_paso0():
-    
+ 
     # Valida carpetas del programa
     valida_carpetas(sTv.loc_RutaRaiz)
     valida_carpetas(sTv.loc_RutaAccess)
@@ -52,6 +52,5 @@ def sTv_paso0():
     # Borra todos los files 
     borrar_archivos(sTv.loc_RutaAccess,  sTv.var_NombreCsvDiario)
     borrar_archivos(sTv.loc_RutaAccess,  sTv.var_NombreCsvMensual)
-    
     
     print(Fore.WHITE + "\nRequisitos previos ok\n")
