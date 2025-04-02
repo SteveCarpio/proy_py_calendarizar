@@ -1,3 +1,10 @@
 C:\Windows\system32\WindowsPowerShell\v1.0\powershell.exe $fecha = Get-Date -Format "yyyyMMdd"; C:\MisCompilados\PROY_CALENDARIZAR\MAILING_Main_v1.exe RUN-DIARIO DEV > "C:\MisCompilados\PROY_CALENDARIZAR\LOG\MAILING_DIARIO_$fecha.log" 2>&1
 
 C:\Windows\system32\WindowsPowerShell\v1.0\powershell.exe $fecha = Get-Date -Format "yyyyMMdd"; C:\MisCompilados\PROY_CALENDARIZAR\MAILING_Main_v1.exe RUN-MENSUAL DEV > "C:\MisCompilados\PROY_CALENDARIZAR\LOG\MAILING_MENSUAL_$fecha.log" 2>&1
+
+
+------------------
+
+C:\Windows\system32\WindowsPowerShell\v1.0\powershell.exe $fecha = Get-Date -Format "yyyyMMdd"; C:\MisCompilados\PROY_CALENDARIZAR\MAILING_Main_v1.exe RUN-DIARIO DEV | Out-File -FilePath "C:\MisCompilados\PROY_CALENDARIZAR\LOG\MAILING_DIARIO_$fecha.log" -Encoding OEM
+
+C:\Windows\system32\WindowsPowerShell\v1.0\powershell.exe $fecha = Get-Date -Format "yyyyMMdd"; C:\MisCompilados\PROY_CALENDARIZAR\MAILING_Main_v1.exe RUN-MENSUAL DEV | Out-File -FilePath "C:\MisCompilados\PROY_CALENDARIZAR\LOG\MAILING_MENSUAL_$fecha.log" -Encoding OEM
