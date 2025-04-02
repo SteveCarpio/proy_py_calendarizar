@@ -179,7 +179,7 @@ def sTv_paso3(var_Fecha, var_Entorno):
     if var_Entorno == "PRO":
         if len(df) > 1:
             print("- Running en modo: PRO - OK existen datos")
-            destinatarios_to=['talanvanf@tda-sgft.com','blancod@tda-sgft.com'] #  repcomun@tda-sgft.com
+            destinatarios_to=['repcomun@tda-sgft.com']                       #  repcomun@tda-sgft.com
             destinatarios_cc=['carpios@tda-sgft.com']
             var_Asunto=f"[AVISO] Tareas Pendientes de Revisión - Informe {var_Fecha} | TDA Update"
         else:

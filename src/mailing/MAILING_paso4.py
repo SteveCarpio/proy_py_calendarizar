@@ -188,9 +188,11 @@ def Crear_DF_Semanal(df, var_Ano, var_Mes, var_Dia):
     
     # Fecha de hoy
     hoy = datetime.date(var_Ano, var_Mes, var_Dia)
-    
-    # Calcular cuántos días faltan para el próximo lunes (0 es lunes, 6 es domingo)
+
+    # Calcular cuántos días faltan para el próximo lunes
     dias_para_lunes = (7 - hoy.weekday()) % 7
+    if dias_para_lunes == 0:
+        dias_para_lunes = 7  # Si hoy es lunes, tomamos el siguiente lunes
 
     # Si hoy es lunes, se tomará el próximo lunes (no el de hoy)
     proximo_lunes = hoy + datetime.timedelta(days=dias_para_lunes)
