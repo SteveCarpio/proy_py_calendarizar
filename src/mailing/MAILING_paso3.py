@@ -51,8 +51,17 @@ def Mandar_Email_Diario(destinatarios_to, destinatarios_cc, asunto, cuerpo, df, 
                     border-radius: 8px;
                     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
                 }}
+                h1 {{
+                    color: #8B0000;  
+                }}
                 h2 {{
-                    color: #8B0000;  /*  ori#70B692 */
+                    color: #8B0000;  
+                }}
+                h3 {{
+                    color: #8B0000;  
+                }}
+                b {{
+                   color: #8B0000;  /* Este es el color rojo oscuro */
                 }}
                 table {{
                     width: 100%;
@@ -64,11 +73,34 @@ def Mandar_Email_Diario(destinatarios_to, destinatarios_cc, asunto, cuerpo, df, 
                     border: 1px solid #ddd;
                 }}
                 th {{
-                    background-color: #800000;   /* #800000 ori#96C60F */
+                    background-color: #800000;      /* #800000 ori#96C60F */
                     color: white;
                 }}
                 tr:nth-child(even) {{
                     background-color: #f9f9f9; 
+                }}
+                /* Estilo general para los enlaces */
+                a {{
+                    text-decoration: none;          /* Eliminar subrayado */
+                    color: #8B0000;                 /* Rojo oscuro */
+                    font-family: 'Georgia', serif;  /* Fuente elegante */
+                    font-size: 1rem;                /* Tamaño de texto adecuado */
+                    font-weight: 500;               /* Peso de fuente para mayor elegancia */
+                    transition: color 0.3s ease, transform 0.3s ease; /* Transición suave */
+                }}
+                /* Efecto cuando el enlace es hover */
+                a:hover {{
+                    color: #B22222;                 /* Rojo más brillante en hover */
+                    transform: translateY(-2px);    /* Efecto sutil de elevación */
+                }}
+                /* Efecto al hacer clic en el enlace */
+                a:active {{
+                    color: #A52A2A;                 /* Rojo terracota cuando se hace clic */
+                    transform: translateY(0);       /* Vuelve a la posición original */
+                }}
+                /* Enlaces visitados */
+                a:visited {{
+                    color: #8B0000;                 /* El mismo rojo oscuro para enlaces visitados */
                 }}
             </style>
         </head>
