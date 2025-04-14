@@ -8,6 +8,7 @@
 
 import requests
 import urllib3
+import datetime as dt
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # ----------------------------------------------------------------------------------------
@@ -136,16 +137,29 @@ def Crear_Tarea_SOAP(pUrl, pAuthToken, pTitulo, pEstado, pPrioridad, pLocate, pD
 #                               INICIO DEL PROGRAMA
 # ----------------------------------------------------------------------------------------
 
-# ----------------- DATOS COMUNES TAREA/CITA
-vTitulo="Titulo de la TAREA / CITA"
-vSu=vTitulo                            # Sujeto - Titulo de la Alerta - Pop-up
-vDescribe="DESCRIBE: xxxxx"            # Descripción de la alerta     - Pop-up
-vLocate="Localización Clave Pizarra XXXXXXXX 3"     # Ubicación Tarea / Cita
-vContent="Contenido de la tarea XXXXXXXX \n xxxxxxxxxx"
-vFIni = "20250414T163000Z"             # 10:30 en España (UTC+2)
-vFFin = "20250414T164500Z"             # 10:45 fin
-vFRec = "20250414T161500Z"             # 10:15 Salta 15 minutos antes
 vUrl = "https://zimbra.tda-sgft.com/service/soap"
+
+# ----------------- DATOS ENTRADA
+
+vFechaAviso="2026-03-02"
+vIdTarea="TARE000007"
+vIdPlanif="PLAN000068"
+vClavePizzara="GASA"
+vEmisiones="Todas"
+vClase="OTROS REPORTES"
+vAsunto="Reporte de los Seguros Contratados (A SOLICITUD NUESTRA)"
+vDetalleEvento="Debe entregarnos, si así se lo solicitamos por escrito, un reporte completo respecto a los seguros contratados de forma anual, durante los 45 Días Hábiles siguientes al cierre de cada año."
+vRepositorio="https://repo.titulizaciondeactivos.com/s/YeLHrsajidFkyax?dir=/DOCUMENTACION/ARA"
+
+# ----------------- DATOS COMUNES TAREA/CITA
+vTitulo=f"Tarea Pendiente de {vClavePizzara}: {vIdTarea} : {vIdPlanif}"
+vSu=vTitulo                                                               # Sujeto - Titulo de la Alerta - Pop-up
+vDescribe=f"Tareas Pendientes {vIdTarea} : {vIdPlanif} : {vClavePizzara}" # Descripción de la alerta     - Pop-up
+vContent=f"Tarea Pendiente de {vClavePizzara}\n\nID_TAREA: {vIdTarea}\nID_PLANIF: {vIdPlanif} \nEmisiones: {vEmisiones} \nClase: {vClase}\n\nAsunto: {vAsunto} \n\nDetalle: {vDetalleEvento} \n\nRepositorio: {vRepositorio}"
+vFIni = "20250414T163000Z"                                                # 10:30 en España (UTC+2)
+vFFin = "20250414T184500Z"                                                # 10:45 fin
+vFRec = vFIni                                                             # Fecha y Hora del recordatorio
+
 
 print("----------------- CREAR LA TOKEN -----------------")
 vUsuario = "carpios@tda-sgft.com"
@@ -163,12 +177,14 @@ vOrganizador="carpios@tda-sgft.com"     # Email del organizador
 pREQ1="talavanf@tda-sgft.com"           # Email de las personas requeridas 1
 pREQ2="blancod@tda-sgft.com"            # Email de las personas requeridas n
 pOPT="carpios@tda-sgft.com"             # Email de las personas opcionales
-Crear_Cita_SOAP(vUrl, vAuthToken, vTitulo, vEstado1, vPrioridad1, vLocate, vDescribe, vContent, vSu, vOrganizador, pREQ1, pREQ2, pOPT, vFIni, vFFin, vFRec)
+vLocate1=f""                            # Ubicación Tarea / Cita
+Crear_Cita_SOAP(vUrl, vAuthToken, vTitulo, vEstado1, vPrioridad1, vLocate1, vDescribe, vContent, vSu, vOrganizador, pREQ1, pREQ2, pOPT, vFIni, vFFin, vFRec)
 
 print("----------------- CREAR UNA TAREA ----------------")
-vEstado2="INPR"                         # NEED:No se ha iniciado |INPR:En progreso |COMP:Completada |WAITING:En espera |DEFERRED:Pospuesta |CANCELLED:Cancelado 
+vEstado2="NEED"                         # NEED:No se ha iniciado |INPR:En progreso |COMP:Completada |WAITING:En espera |DEFERRED:Pospuesta |CANCELLED:Cancelado 
 vPrioridad2="1"                         # 1: Alta, 5: Normal, 9: Baja
-Crear_Tarea_SOAP(vUrl, vAuthToken, vTitulo, vEstado2, vPrioridad2, vLocate, vDescribe, vContent, vSu, vFIni, vFFin, vFRec)
+vLocate2=f"Escribir aquí nota personal si no se puede finalizar la tarea"  # Ubicación Tarea / Cita
+Crear_Tarea_SOAP(vUrl, vAuthToken, vTitulo, vEstado2, vPrioridad2, vLocate2, vDescribe, vContent, vSu, vFIni, vFFin, vFRec)
 
 
                 
