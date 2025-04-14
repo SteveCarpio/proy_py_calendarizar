@@ -3,12 +3,14 @@ import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
-def x1():
+def Crear_Token_SOAP():
 
     # Datos de acceso
     
     usuario = "carpios@tda-sgft.com"
-    contrasena = "G3m4198005$$"  # Por seguridad, deberías pedirla con input o desde un archivo seguro
+    #usuario = "talavanf@tda-sgft.com"
+    contrasena = "G3m4198005$$"  
+    #contrasena = "Mrpotato51.."
 
     # XML de autenticación
     auth_xml = f"""<?xml version="1.0" encoding="UTF-8"?>
@@ -43,8 +45,8 @@ def x1():
 
     return auth_token
 
-def Soap_Crear_Cita(auth_token):
-    
+def Crear_Cita_SOAP(auth_token, pTitulo, pEstado, pPrioridad, pLocate, pDescribe, pContent, pSu, pFIni, pFFin, pFRec):
+
     crear_tarea_con_alarma = f"""<?xml version="1.0" encoding="UTF-8"?>
     <soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope">
     <soap:Header>
@@ -56,22 +58,22 @@ def Soap_Crear_Cita(auth_token):
         <CreateTaskRequest xmlns="urn:zimbraMail">
         <m>
             <inv method="REQUEST" type="task">
-            <comp name="Tarea con alarma xxx0" percentComplete="0" status="INPR" priority="1">
-                <s d="20250410T160000Z"/>
-                <e d="20250410T170000Z"/>
-                <loc>Oficina Principal - Sala 2</loc>
+            <comp name="{pTitulo}" percentComplete="0" status="{pEstado}" priority="{pPrioridad}">
+                <s d="20250414T160000Z"/>
+                <e d="20250414T170000Z"/>
+                <loc>{pLocate}</loc>
                 <alarm action="DISPLAY">
                 <trigger>
-                    <abs d="20250410T120000Z"/>
+                    <abs d="20250414T120000Z"/>
                 </trigger>
-                <desc>¡Recordatorio de tarea xxx1!</desc>
+                <desc>{pDescribe}</desc>
                 <attach uri=""/>
                 </alarm>
             </comp>
             </inv>
-            <su>Prueba de tarea con recordatorio xxx2</su>
+            <su>{pSu}</su>
             <mp ct="text/plain">
-            <content>Esta tarea tiene un recordatorio programado para las  xxx3</content>
+            <content>{pContent}</content>
             </mp>
         </m>
         </CreateTaskRequest>
@@ -97,7 +99,22 @@ def Soap_Crear_Cita(auth_token):
 
 #########################################################################################
 url = "https://zimbra.tda-sgft.com/service/soap"
+
 print("----------------- CREAR LA TOKEN -----------------")
-auth_token = x1()
+auth_token = Crear_Token_SOAP()
+
 print("----------------- CREAR LA TAREA -----------------")
-Soap_Crear_Cita(auth_token)
+vTitulo="TITULO: xxxxxxx"
+vEstado="NEED"                         # NEED: No se ha iniciado | INPR: En progreso | COMP: Completada | WAITING: En espera | DEFERRED: Pospuesta
+vPrioridad="1"                         # 1   : Alta
+vLocate="UBICACION: xxxxxxx"
+vDescribe="DESCRIBE: xxxxx"
+vContent="CONTENIDO: xxxxxxxxxxxxxx \n sdfsdfsdfsd \n sdfsdfsd"
+vSu="SU: xxxxxxxxxx"
+vFIni=""
+vFFin=""
+vFRec=""
+
+
+Crear_Cita_SOAP(auth_token, vTitulo, vEstado, vPrioridad, vLocate, vDescribe, vContent, vSu, vFIni, vFFin, vFRec)
+                
