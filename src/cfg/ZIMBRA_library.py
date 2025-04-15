@@ -6,30 +6,21 @@
 
 # CARGA DE LIBRERÍAS ------------------------------------------------------------------
 #                                                                 # Ma P0 P1 P2 P3 P4 #
-import requests
-import urllib3
-import datetime as dt
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-
-
-import os                                                         # -- p0 p1 -- -- -- #
-import re                                                         # ma -- -- -- -- -- # 
-import shutil                                                     # -- -- p1 -- -- -- #
-import time                                                       # -- -- p1 -- -- -- #
-import pandas as pd                                               # -- -- -- p2 -- -- #
-import smtplib                                                    # -- -- -- -- -- -- #
-import glob                                                       # -- p0 -- -- -- -- #
-import pyodbc                                                     # -- -- -- p2 -- -- #
-import calendar                                                   # -- -- -- -- -- p4 #
-import datetime                                                   # -- -- -- -- -- p4 # 
-from colorama import init, Fore, Back, Style                      # ma p0 -- -- -- -- #
-from datetime import datetime as dt                               # ma -- -- -- -- p4 #
+import requests                                                   # -- -- -- -- -- -- #
+import urllib3                                                    # -- -- -- -- -- -- #
+import datetime as dt                                             # -- -- -- -- -- -- #
+import pandas as pd                                               # -- -- -- -- -- -- #
+import os                                                         # -- -- -- -- -- -- #
+import re                                                         # -- -- -- -- -- -- # 
+import shutil                                                     # -- -- -- -- -- -- #
+import time                                                       # -- -- -- -- -- -- #
+import glob                                                       # -- -- -- -- -- -- #
+import datetime                                                   # -- -- -- -- -- -- # 
+from colorama import init, Fore, Back, Style                      # ma -- -- -- -- -- #
+from datetime import datetime as dt                               # ma -- -- -- -- -- #
 from datetime import timedelta                                    # ma -- -- -- -- -- #
 
+# CARGA DE CONFIGURACIONES ------------------------------------------------------------
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-
-# -------------------------------------------------------------------------------------
-
-import sys                                                        # -- -- -- -- -- -- #
-import subprocess                                                 # -- -- -- -- -- -- #
 # -------------------------------------------------------------------------------------

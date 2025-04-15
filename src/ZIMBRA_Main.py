@@ -13,13 +13,6 @@ from   zimbra.ZIMBRA_paso2     import sTv_paso2
 from   zimbra.ZIMBRA_paso3     import sTv_paso3
 from   zimbra.ZIMBRA_paso4     import sTv_paso4
 
-# ----------------------------------------------------------------------------------------
-#                               FUNCIONES DE APOYO
-# ----------------------------------------------------------------------------------------
-
-
-
-
 
 # ----------------------------------------------------------------------------------------
 #                               INICIO DEL PROGRAMA
@@ -44,8 +37,8 @@ vTitulo=f"Tarea Pendiente de {vClavePizzara}: {vIdTarea} : {vIdPlanif}"
 vSu=vTitulo                                                               # Sujeto - Titulo de la Alerta - Pop-up
 vDescribe=f"Tareas Pendientes {vIdTarea} : {vIdPlanif} : {vClavePizzara}" # Descripción de la alerta     - Pop-up
 vContent=f"Tarea Pendiente de {vClavePizzara}\n\nID_TAREA: {vIdTarea}\nID_PLANIF: {vIdPlanif} \nEmisiones: {vEmisiones} \nClase: {vClase}\n\nAsunto: {vAsunto} \n\nDetalle: {vDetalleEvento} \n\nRepositorio: {vRepositorio}"
-vFIni = "20250414T163000Z"                                                # 10:30 en España (UTC+2)
-vFFin = "20250414T184500Z"                                                # 10:45 fin
+vFIni = "20250415T163000Z"                                                # 10:30 en España (UTC+2)
+vFFin = "20250415T184500Z"                                                # 10:45 fin
 vFRec = vFIni                                                             # Fecha y Hora del recordatorio
 
 print("----------------- CREAR UN TOKEN -----------------")
