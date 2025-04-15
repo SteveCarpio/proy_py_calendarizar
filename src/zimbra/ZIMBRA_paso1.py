@@ -17,5 +17,5 @@ from   cfg.ZIMBRA_library import *
 
 def sTv_paso1():
 
-    print("hola")
+    print("paso1")
     # Llamar a la función de copia

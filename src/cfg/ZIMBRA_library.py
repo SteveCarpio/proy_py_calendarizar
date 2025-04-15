@@ -25,9 +25,7 @@ import datetime                                                   # -- -- -- -- 
 from colorama import init, Fore, Back, Style                      # ma p0 -- -- -- -- #
 from datetime import datetime as dt                               # ma -- -- -- -- p4 #
 from datetime import timedelta                                    # ma -- -- -- -- -- #
-from email.mime.multipart import MIMEMultipart                    # -- -- -- -- -- -- #
-from email.mime.text import MIMEText                              # -- -- -- -- -- -- #
-from email.mime.application import MIMEApplication                # -- -- -- -- -- -- #
+
 
 
 # -------------------------------------------------------------------------------------
