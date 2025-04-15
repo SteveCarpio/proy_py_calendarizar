@@ -15,9 +15,6 @@ from   zimbra.ZIMBRA_paso2     import sTv_paso2
 #                               FUNCIONES DE APOYO
 # ----------------------------------------------------------------------------------------
 
-
-
-
 def Crear_Cita_SOAP (pUrl, pAuthToken, pTitulo, pEstado, pPrioridad, pLocate, pDescribe, pContent, pSu, pOrganizador, pREQ1, pREQ2, pOPT, pFIni, pFFin, pFRec):
     crear_cita_con_alarma = f"""<?xml version="1.0" encoding="UTF-8"?>
     <soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope">
