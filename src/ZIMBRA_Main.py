@@ -6,7 +6,7 @@
 # Versión: V1 2025
 # ----------------------------------------------------------------------------------------
 
-from   cfg.MAILING_library import *
+from   cfg.ZIMBRA_library import *
 from   zimbra.ZIMBRA_paso0     import sTv_paso0
 from   zimbra.ZIMBRA_paso1     import sTv_paso1
 from   zimbra.ZIMBRA_paso2     import sTv_paso2
