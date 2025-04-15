@@ -6,49 +6,17 @@
 # Versión: V1 2025
 # ----------------------------------------------------------------------------------------
 
-import requests
-import urllib3
-import datetime as dt
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+from   cfg.MAILING_library import *
+from   zimbra.ZIMBRA_paso0     import sTv_paso0
+from   zimbra.ZIMBRA_paso1     import sTv_paso1
+from   zimbra.ZIMBRA_paso2     import sTv_paso2
 
 # ----------------------------------------------------------------------------------------
 #                               FUNCIONES DE APOYO
 # ----------------------------------------------------------------------------------------
-def Crear_Token_SOAP(pUrl, pUsuario, pContrasena):
 
-    # XML de autenticación
-    auth_xml = f"""<?xml version="1.0" encoding="UTF-8"?>
-    <soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope">
-    <soap:Body>
-        <AuthRequest xmlns="urn:zimbraAccount">
-        <account by="name">{pUsuario}</account>
-        <password>{pContrasena}</password>
-        </AuthRequest>
-    </soap:Body>
-    </soap:Envelope>"""
 
-    # Enviar petición
-    response = requests.post(pUrl, data=auth_xml, headers={"Content-Type": "text/xml"}, verify=False)
 
-    # Mostrar respuesta
-    print("Código HTTP:", response.status_code)
-    print("Respuesta completa:")
-    print(response.text)
-
-    # Extraer el token (opcional, con XML parsing)
-    import xml.etree.ElementTree as ET
-    tree = ET.fromstring(response.content)
-    ns = {'soap': 'http://www.w3.org/2003/05/soap-envelope', 'zimbra': 'urn:zimbraAccount'}
-
-    token = tree.find('.//zimbra:authToken', ns)
-    if token is not None:
-        auth_token = token.text
-        print("✅ Token obtenido:")
-        print(f':{auth_token}:')
-    else:
-        print("❌ No se pudo obtener el token")
-
-    return auth_token
 
 def Crear_Cita_SOAP (pUrl, pAuthToken, pTitulo, pEstado, pPrioridad, pLocate, pDescribe, pContent, pSu, pOrganizador, pREQ1, pREQ2, pOPT, pFIni, pFFin, pFRec):
     crear_cita_con_alarma = f"""<?xml version="1.0" encoding="UTF-8"?>
@@ -137,10 +105,13 @@ def Crear_Tarea_SOAP(pUrl, pAuthToken, pTitulo, pEstado, pPrioridad, pLocate, pD
 #                               INICIO DEL PROGRAMA
 # ----------------------------------------------------------------------------------------
 
+# Importación del CSV, avisos Diarios
+
+
+# ----------------- DATOS ZIMBRA
 vUrl = "https://zimbra.tda-sgft.com/service/soap"
 
 # ----------------- DATOS ENTRADA
-
 vFechaAviso="2026-03-02"
 vIdTarea="TARE000007"
 vIdPlanif="PLAN000068"
@@ -160,7 +131,6 @@ vFIni = "20250414T163000Z"                                                # 10:3
 vFFin = "20250414T184500Z"                                                # 10:45 fin
 vFRec = vFIni                                                             # Fecha y Hora del recordatorio
 
-
 print("----------------- CREAR LA TOKEN -----------------")
 vUsuario = "carpios@tda-sgft.com"
 #vUsuario = "talavanf@tda-sgft.com"
@@ -168,7 +138,8 @@ vUsuario = "carpios@tda-sgft.com"
 vContrasena="G3m4198005$$"
 #vContrasena="Mrpotato51.."
 #vContrasena="U9d8z?:8K,>2"
-vAuthToken = Crear_Token_SOAP(vUrl, vUsuario, vContrasena)
+#vAuthToken = Crear_Token_SOAP(vUrl, vUsuario, vContrasena)
+vAuthToken = sTv_paso2(vUrl, vUsuario, vContrasena)
 
 print("----------------- CREAR UNA CITA -----------------")
 vEstado1="CONF"                         # CONF: confirmado (por defecto) | TENT: Tentativo/Provisional | CANC: Cancelado

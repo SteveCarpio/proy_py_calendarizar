@@ -8,7 +8,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 # === CONFIGURA TUS DATOS ===
 url = "https://zimbra.tda-sgft.com/service/soap"
 usuario = "carpios@tda-sgft.com"
-contrasena = "123456"  # Reemplazar con input() o variable de entorno en producción
+contrasena = "G3m4198005$$"  # Reemplazar con input() o variable de entorno en producción
 
 # === AUTENTICACIÓN ===
 def obtener_token():
@@ -30,6 +30,7 @@ def obtener_token():
 
 # === LISTAR TAREAS ===
 def listar_tareas(token):
+    print(token)
     listar_xml = f"""<?xml version="1.0" encoding="UTF-8"?>
     <soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope">
       <soap:Header>
