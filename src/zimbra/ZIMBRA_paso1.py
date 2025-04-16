@@ -32,6 +32,9 @@ def sTv_paso1(var_Fecha):
 
     # Leer CSV en un DataFrame
     df = Leer_Csv_DataFrame(var_Fecha)
+    if len(df) > 1:
+        print(df)
+    else:
+        print(f"No hay datos para este dia: {var_Fecha}")
+        exit(0)
 
-    print("paso1")
-    # Llamar a la función de copia

@@ -53,7 +53,7 @@ def Crear_Tarea_SOAP(pAuthToken, pTitulo, pEstado, pPrioridad, pLocate, pDescrib
 #                               INICIO PROGRAMA
 # ----------------------------------------------------------------------------------------
 
-def sTv_paso4(pAuthToken, var_Fecha1, var_Fecha2):
+def sTv_paso4(pAuthToken, var_Fecha1, var_Fecha2, df):
 
     # ----------------- DATOS ENTRADA
     vFechaAviso="2026-03-02"

@@ -24,7 +24,8 @@ if len(sys.argv) > 1 :
     vEntorno = var_param1
 
 # Parámetro2: Fecha (opcional)
-tiempo_inicio = dt.now()    # = dt(2025, 11, 15)
+tiempo_inicio = dt(2025, 4, 17)    # = dt(2025, 3, 19) | dt.now()
+#tiempo_inicio = dt.now()    # = dt(2025, 3, 19) | dt.now()
 if len(sys.argv) > 2 :
     var_param2 = sys.argv[2]
     if re.match(r"^\d{4}-\d{2}-\d{2}$", var_param2):
@@ -39,37 +40,40 @@ if len(sys.argv) > 2 :
 var_Fecha1  = tiempo_inicio.strftime('%Y-%m-%d')  # Formato "2025-03-04"
 var_Fecha2  = tiempo_inicio.strftime('%Y%m%d')    # Formato "20250304"
 
+# ----------------------------------------------------------------------------------------
+#                               PASOS DE EJECUCIÓN 
+# ----------------------------------------------------------------------------------------
 
-# PASO-1: Leer los avisos diarios del CSV
-print("----------------- LEER ARCHIVO CSV -----------------")
+# PASO-1: Leer los avisos diarios del CSV ------------------------------------------------
+print("----------------- PASO-1: LEER ARCHIVO CSV -----------------")
 try:
-    sTv_paso1(var_Fecha1)
+    df = sTv_paso1(var_Fecha1)
 except Exception as e:
     print(f"Error al leer el archivo csv de entrada:\n{e}")
     exit(1)
 
-exit(0)
-
-# PASO-2: Crear un token de autenticación para interactuar con la API de Zimbra
-print("----------------- CREAR UN TOKEN -----------------")
+# PASO-2: Crear un token de autenticación para interactuar con la API de Zimbra ----------
+print("----------------- PASO-2: CREAR UN TOKEN -----------------")
 try:
     vAuthToken = sTv_paso2(vEntorno)
 except Exception as e:
     print(f"Error al ejecutar el Paso2: Obtener el Token de Autenticación:\n{e}")
     exit(1)
 
-# PASO-3: Crear una cita en el calendario de Zimbra
-print("----------------- CREAR UNA CITA -----------------")
+# PASO-3: Crear una cita en el calendario de Zimbra --------------------------------------
+print("----------------- PASO-3: CREAR UNA CITA -----------------")
 try:
-    sTv_paso3(vAuthToken, var_Fecha1, var_Fecha2)
+    sTv_paso3(vAuthToken, var_Fecha1, var_Fecha2, df)
 except Exception as e:
     print(f"Error al ejecutar el Paso3: Crear una cita en el calendario Zimbra:\n{e}")
     exit(1)
 
-# PASO-4: Crear una tarea dentro de Zimbra
-print("----------------- CREAR UNA TAREA ----------------")
+exit(0)
+
+# PASO-4: Crear una tarea dentro de Zimbra -----------------------------------------------
+print("----------------- PASO-4: CREAR UNA TAREA ----------------")
 try:
-    sTv_paso4(vAuthToken, var_Fecha1, var_Fecha2)
+    sTv_paso4(vAuthToken, var_Fecha1, var_Fecha2, df)
 except Exception as e:
     print(f"Error al ejecutar el Paso4: Crear una tarea dentro de Zimbra:\n{e}")
     exit(1)
