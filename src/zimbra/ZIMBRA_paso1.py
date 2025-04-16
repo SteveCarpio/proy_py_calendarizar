@@ -17,8 +17,9 @@ def Leer_Csv_DataFrame(var_Fecha):
     # Convertir la columna 1 a fecha
     df['FECHA_AVISO'] = pd.to_datetime(df['FECHA_AVISO'], errors='coerce', dayfirst=True)
 
-    # Filtramos el registros a informar 
+    # Filtramos los registros a informar 
     df_filtrado = df[df['FECHA_AVISO'].dt.date == pd.to_datetime(var_Fecha).date()]
+    df_filtrado['REPOSITORIO2'] = df_filtrado['REPOSITORIO'].str.extract(r'href="([^"]+)"')
     df_filtrado = df_filtrado.reset_index(drop=True)
     df_filtrado.index = df_filtrado.index + 1
 
@@ -34,6 +35,7 @@ def sTv_paso1(var_Fecha):
     df = Leer_Csv_DataFrame(var_Fecha)
     if len(df) > 1:
         print(df)
+        return df
     else:
         print(f"No hay datos para este dia: {var_Fecha}")
         exit(0)

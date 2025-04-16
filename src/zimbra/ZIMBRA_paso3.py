@@ -54,19 +54,37 @@ def Crear_Cita_SOAP(pAuthToken, pTitulo, pEstado, pPrioridad, pLocate, pDescribe
 
 def Recupera_Datos_DataFrame(df, var_Fecha1):
     
+    vContentCumulado = ""
+    vLinea="-------------------------------------------------------------------------------"
     # ----------------- Importar valores para la Cita
-    vIdTarea="TARE000007"
-    vIdPlanif="PLAN000068"
-    vClavePizzara="GASA"
-    vEmisiones="Todas"
-    vClase="OTROS REPORTES"
-    vAsunto="Reporte de los Seguros Contratados (A SOLICITUD NUESTRA)"
-    vDetalleEvento="Debe entregarnos, si así se lo solicitamos por escrito, un reporte completo respecto a los seguros contratados de forma anual, durante los 45 Días Hábiles siguientes al cierre de cada año."
-    vRepositorio="https://repo.titulizaciondeactivos.com/s/YeLHrsajidFkyax?dir=/DOCUMENTACION/ARA"
+    for _, fila in df.iterrows():
+        vIdTarea = fila['ID_TAREA']
+        vIdPlanif = fila['ID_PLANIF']
+        vClavePizzara = fila['CLAVE_PIZARRA']
+        vEmisiones = fila['EMISIONES']
+        vClase = fila['CLASE']
+        vAsunto = fila['ASUNTO']
+        vDetalleEvento = fila['DETALLE_DEL_EVENTO']
+        vRepositorio = fila['REPOSITORIO2']
 
-    vTitulo=f"Tarea Pendiente de {vClavePizzara}: {vIdTarea} : {vIdPlanif}"
-    vContent=f"Tarea Pendiente de {vClavePizzara}\n\nID_TAREA: {vIdTarea}\nID_PLANIF: {vIdPlanif} \nEmisiones: {vEmisiones} \nClase: {vClase}\n\nAsunto: {vAsunto} \n\nDetalle: {vDetalleEvento} \n\nRepositorio: {vRepositorio}"
-    return vTitulo, vContent
+        # Crear el string con el formato deseado
+        vContent = (
+            f"Clave Pizarra: {vClavePizzara}\n"
+            f"Id Tarea: {vIdTarea}\n"
+            f"Id Planificación: {vIdPlanif}\n"
+            f"Emisiones: {vEmisiones}\n"
+            f"Clase: {vClase}\n\n"
+            f"Asunto: {vAsunto}\n\n"
+            f"Detalle del Evento:\n{vDetalleEvento}\n\n"
+            f"Repositorio: {vRepositorio}\n\n"
+            f"{vLinea}\n\n"
+        )
+        vContentCumulado += vContent
+
+    # ...............
+    vTitulo=f"({len(df)}) Tareas Pendientes hoy {var_Fecha1}"
+    vContentCumulado = f"{vTitulo}\n\n{vLinea}\n{vContentCumulado}"
+    return vTitulo, vContentCumulado
 
 # ----------------------------------------------------------------------------------------
 #                               INICIO PROGRAMA
