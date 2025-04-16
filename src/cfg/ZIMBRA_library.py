@@ -4,8 +4,7 @@
 # Autor: SteveCarpio-2025
 # -------------------------------------------------------------------------------------
 
-# CARGA DE LIBRERÍAS ------------------------------------------------------------------
-#                                                                 # Ma P0 P1 P2 P3 P4 #
+# CARGA DE LIBRERÍAS ---------------------------------------------# Ma P0 P1 P2 P3 P4 #
 import requests                                                   # -- -- -- -- -- -- #
 import urllib3                                                    # -- -- -- -- -- -- #
 import datetime as dt                                             # -- -- -- -- -- -- #
@@ -16,8 +15,8 @@ import shutil                                                     # -- -- -- -- 
 import time                                                       # -- -- -- -- -- -- #
 import glob                                                       # -- -- -- -- -- -- #
 import datetime                                                   # -- -- -- -- -- -- # 
-import csv
-import sys
+import csv                                                        # -- -- -- -- -- -- #
+import sys                                                        # -- -- -- -- -- -- #
 from colorama import init, Fore, Back, Style                      # ma -- -- -- -- -- #
 from datetime import datetime as dt                               # ma -- -- -- -- -- #
 from datetime import timedelta                                    # ma -- -- -- -- -- #

@@ -19,6 +19,7 @@ def Leer_Csv_DataFrame(var_Fecha):
 
     # Filtramos los registros a informar 
     df_filtrado = df[df['FECHA_AVISO'].dt.date == pd.to_datetime(var_Fecha).date()]
+    df_filtrado = df_filtrado.copy()
     df_filtrado['REPOSITORIO2'] = df_filtrado['REPOSITORIO'].str.extract(r'href="([^"]+)"')
     df_filtrado = df_filtrado.reset_index(drop=True)
     df_filtrado.index = df_filtrado.index + 1

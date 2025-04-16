@@ -1,7 +1,7 @@
 # ----------------------------------------------------------------------------------------
 #                                  ZIMBRA SOAP: Tareas / Citas
 #
-# Programa que Añadirá información en las tareas y citas del Zimbra
+# Programa que agregara información dentro de Zimbra en los apartados de TAREAS y CITAS
 # Autor: SteveCarpio
 # Versión: V1 2025
 # ----------------------------------------------------------------------------------------
@@ -24,8 +24,8 @@ if len(sys.argv) > 1 :
     vEntorno = var_param1
 
 # Parámetro2: Fecha (opcional)
-tiempo_inicio = dt(2025, 4, 17)    # = dt(2025, 3, 19) | dt.now()
-#tiempo_inicio = dt.now()    # = dt(2025, 3, 19) | dt.now()
+#tiempo_inicio = dt(2025, 4, 17)    # = dt(2025, 3, 19) | dt.now()
+tiempo_inicio = dt.now()    # = dt(2025, 3, 19) | dt.now()
 if len(sys.argv) > 2 :
     var_param2 = sys.argv[2]
     if re.match(r"^\d{4}-\d{2}-\d{2}$", var_param2):
