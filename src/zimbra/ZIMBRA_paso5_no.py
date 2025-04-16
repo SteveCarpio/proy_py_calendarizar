@@ -52,9 +52,11 @@ def Crear_Token_SOAP(pUsuario, pContrasena):
 
 def buscar_tareas(query):
     token = Crear_Token_SOAP("carpios@tda-sgft.com", "G3m4198005$$")
+    x1='<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">'
+    x2='http://www.w3.org/2003/05/soap-envelope'
     
-    soap_request = f"""
-    <soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope">
+    soap_request1 = f"""
+    <soap:Envelope xmlns:soap="{x1}">
     <soap:Header>
         <context xmlns="urn:zimbra">
         <authToken>{token}</authToken>
@@ -66,7 +68,7 @@ def buscar_tareas(query):
     </soap:Envelope>
     """
     soap_request2 = f"""
-    <soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope">
+    <soap:Envelope xmlns:soap="{x1}">
         <soap:Header>
             <context xmlns="urn:zimbra">
                 <authToken>{token}</authToken>
@@ -78,16 +80,23 @@ def buscar_tareas(query):
     </soap:Envelope>
     """
      
-    response = requests.post(ZIMBRA_SOAP_URL, data=soap_request2, headers={'Content-Type': 'application/xml'}, verify=False)
+    response1 = requests.post(ZIMBRA_SOAP_URL, data=soap_request2, headers={'Content-Type': 'application/xml'}, verify=False)
+    response2 = requests.post(ZIMBRA_SOAP_URL, data=soap_request2, headers={'Content-Type': 'txt/xml'}, verify=False)
 
-    print("STATUS:", response.status_code)
-    print("RESPONSE TEXT:", response.text)
-    xml = etree.fromstring(response.content)
+    print(f"TODO::{response1}::")
+    print("STATUS:", response1.status_code)
+    print(f"TODO::{response2}::")
+    print("STATUS:", response2.status_code)
+
     
-    tareas = xml.xpath('//m', namespaces={'': 'urn:zimbraMail'})
-    for t in tareas:
-        asunto = t.attrib.get('su')
-        print("ID:", t.attrib.get('id'), "| Asunto:", asunto)
+    #print("STATUS:", response.status_code)
+    #print("RESPONSE TEXT:", response.text)
+    #xml = etree.fromstring(response.content)
+    
+    #tareas = xml.xpath('//m', namespaces={'': 'urn:zimbraMail'})
+    #for t in tareas:
+    #    asunto = t.attrib.get('su')
+    #    print("ID:", t.attrib.get('id'), "| Asunto:", asunto)
 
 
 # ----------------------------------------------------------------------------------------
@@ -102,6 +111,7 @@ timestamp = int(time.mktime(fecha.timetuple())) * 1000
 
 
 buscar_tareas("in:tasks")
+
 #buscar_tareas('in:tasks su:IDEI')
 #buscar_tareas(f'in:tasks after:{timestamp}')
 #buscar_tareas('in:tasks status:NEED')
