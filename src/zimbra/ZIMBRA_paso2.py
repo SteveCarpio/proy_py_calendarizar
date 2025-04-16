@@ -46,13 +46,29 @@ def Crear_Token_SOAP(pUrl, pUsuario, pContrasena):
 
     return auth_token
 
+def Importar_User_Passwd(pEntorno):
+    xRutaArchivo=f"{sTv.loc_RutaConfig}{sTv.var_NombreUsuarios}"
+    xUsuario = None
+    xContrasena = None
+    with open(xRutaArchivo, newline='', encoding='utf-8') as archivo:
+        lector = csv.DictReader(archivo, delimiter=';')
+        for fila in lector:
+            if fila['ENTORNO'].strip('"') == pEntorno:
+                xEmail=fila['EMAIL'].strip('"')
+                xPasswd=fila['PASSWD'].strip('"')
+                break # porque solo queremos la primera coincidencia
+    return xEmail, xPasswd
 
 # ----------------------------------------------------------------------------------------
 #                               INICIO PROGRAMA
 # ----------------------------------------------------------------------------------------
 
-def sTv_paso2(pUrl, pUsuario, pContrasena):
+def sTv_paso2(pUrl, pEntorno):
+    # Importar usuario y contraseña del file .txt
+    pUsuario, pContrasena = Importar_User_Passwd(pEntorno)
 
+    # Crear un token en Zimbra
     auth_token = Crear_Token_SOAP(pUrl, pUsuario, pContrasena)
+
     return auth_token
 

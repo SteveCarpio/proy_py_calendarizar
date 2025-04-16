@@ -13,10 +13,11 @@ from   zimbra.ZIMBRA_paso2     import sTv_paso2
 from   zimbra.ZIMBRA_paso3     import sTv_paso3
 from   zimbra.ZIMBRA_paso4     import sTv_paso4
 
-
 # ----------------------------------------------------------------------------------------
 #                               INICIO DEL PROGRAMA
 # ----------------------------------------------------------------------------------------
+
+vEntorno="DEV"
 
 # ----------------- DATOS ZIMBRA
 vUrl = "https://zimbra.tda-sgft.com/service/soap"
@@ -43,14 +44,8 @@ vFRec = vFIni                                                             # Fech
 
 # Crear un token de autenticación para interactuar con la API de Zimbra
 print("----------------- CREAR UN TOKEN -----------------")
-vUsuario = "carpios@tda-sgft.com"
-#vUsuario = "talavanf@tda-sgft.com"
-#vUsuario = "publicacionesbolsasmx@tda-sgft.com"
-vContrasena="G3m4198005$$"
-#vContrasena="Mrpotato51.."
-#vContrasena="U9d8z?:8K,>2"
 try:
-    vAuthToken = sTv_paso2(vUrl, vUsuario, vContrasena)
+    vAuthToken = sTv_paso2(vUrl, vEntorno)
 except Exception as e:
     print(f"Error al ejecutar el Paso2: Obtener el Token de Autenticación:\n{e}")
     exit(1)
@@ -74,7 +69,7 @@ except Exception as e:
 print("----------------- CREAR UNA TAREA ----------------")
 vEstado2="NEED"                         # NEED:No se ha iniciado |INPR:En progreso |COMP:Completada |WAITING:En espera |DEFERRED:Pospuesta |CANCELLED:Cancelado 
 vPrioridad2="1"                         # 1: Alta, 5: Normal, 9: Baja
-vLocate2=f"Escribir aquí nota personal si no se puede finalizar la tarea"  # Ubicación Tarea / Cita
+vLocate2=f"Escribir aquí una nota en caso de problemas con la tarea"  # Ubicación Tarea / Cita
 try:
     sTv_paso4(vUrl, vAuthToken, vTitulo, vEstado2, vPrioridad2, vLocate2, vDescribe, vContent, vSu, vFIni, vFFin, vFRec)
 except Exception as e:
