@@ -27,6 +27,7 @@ var_NombreCsvDiario="C_Export_CSV_Diario.csv"
 var_NombreCsvMensual="C_Export_CSV_Mensual.csv"
 var_NombreAccess="Tabla_Eventos.accdb"
 var_NombreUsuarios="usuarios.txt"
+var_UrlSoapZimbra = "https://zimbra.tda-sgft.com/service/soap"
 
 # ----------------------------------------------------------------------------------------
 #                          AUTOR

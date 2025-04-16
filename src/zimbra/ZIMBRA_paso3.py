@@ -10,7 +10,7 @@ from   cfg.ZIMBRA_library import *
 #                                  FUNCIONES
 # ----------------------------------------------------------------------------------------
 
-def Crear_Cita_SOAP(pUrl, pAuthToken, pTitulo, pEstado, pPrioridad, pLocate, pDescribe, pContent, pSu, pOrganizador, pREQ1, pREQ2, pOPT, pFIni, pFFin, pFRec):
+def Crear_Cita_SOAP(pAuthToken, pTitulo, pEstado, pPrioridad, pLocate, pDescribe, pContent, pSu, pOrganizador, pREQ1, pREQ2, pOPT, pFIni, pFFin, pFRec):
     crear_cita_con_alarma = f"""<?xml version="1.0" encoding="UTF-8"?>
     <soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope">
       <soap:Header>
@@ -48,7 +48,7 @@ def Crear_Cita_SOAP(pUrl, pAuthToken, pTitulo, pEstado, pPrioridad, pLocate, pDe
     </soap:Envelope>"""
 
     # Enviar la solicitud
-    response = requests.post(pUrl, data=crear_cita_con_alarma, headers={"Content-Type": "text/xml"}, verify=False)
+    response = requests.post(sTv.var_UrlSoapZimbra, data=crear_cita_con_alarma, headers={"Content-Type": "text/xml"}, verify=False)
     print("Respuesta al crear cita:")
     print(response.text)
 
@@ -56,8 +56,38 @@ def Crear_Cita_SOAP(pUrl, pAuthToken, pTitulo, pEstado, pPrioridad, pLocate, pDe
 #                               INICIO PROGRAMA
 # ----------------------------------------------------------------------------------------
 
-def sTv_paso3(pUrl, pAuthToken, pTitulo, pEstado, pPrioridad, pLocate, pDescribe, pContent, pSu, pOrganizador, pREQ1, pREQ2, pOPT, pFIni, pFFin, pFRec):
-    
-    Crear_Cita_SOAP(pUrl, pAuthToken, pTitulo, pEstado, pPrioridad, pLocate, pDescribe, pContent, pSu, pOrganizador, pREQ1, pREQ2, pOPT, pFIni, pFFin, pFRec)
+def sTv_paso3(pAuthToken, var_Fecha1, var_Fecha2): 
+    # var_Fecha1 formato: 2026-03-22
+    # var_Fecha2 formato: 20260322
+
+    # ----------------- Importar valores para la Cita
+    vFechaAviso=var_Fecha1      
+    vIdTarea="TARE000007"
+    vIdPlanif="PLAN000068"
+    vClavePizzara="GASA"
+    vEmisiones="Todas"
+    vClase="OTROS REPORTES"
+    vAsunto="Reporte de los Seguros Contratados (A SOLICITUD NUESTRA)"
+    vDetalleEvento="Debe entregarnos, si así se lo solicitamos por escrito, un reporte completo respecto a los seguros contratados de forma anual, durante los 45 Días Hábiles siguientes al cierre de cada año."
+    vRepositorio="https://repo.titulizaciondeactivos.com/s/YeLHrsajidFkyax?dir=/DOCUMENTACION/ARA"
+
+    # ----------------- Rellenar Campos de la CITA
+    vTitulo=f"Tarea Pendiente de {vClavePizzara}: {vIdTarea} : {vIdPlanif}"
+    vSu=vTitulo                                                                 # Sujeto - Titulo de la Alerta - Pop-up
+    vDescribe=f"Tareas Pendientes {vIdTarea} : {vIdPlanif} : {vClavePizzara}"   # Descripción de la alerta     - Pop-up
+    vContent=f"Tarea Pendiente de {vClavePizzara}\n\nID_TAREA: {vIdTarea}\nID_PLANIF: {vIdPlanif} \nEmisiones: {vEmisiones} \nClase: {vClase}\n\nAsunto: {vAsunto} \n\nDetalle: {vDetalleEvento} \n\nRepositorio: {vRepositorio}"
+    vFIni = f"{var_Fecha2}T083000Z"                                             # (UTC+0) sumar 2horas calcular la hora de Spain
+    vFFin = f"{var_Fecha2}T104500Z"                                             # (UTC+0) sumar 2horas calcular la hora de Spain
+    vFRec = vFIni                                                               # (UTC+0) sumar 2horas calcular la hora de Spain
+
+    vEstado="CONF"                          # CONF: confirmado (por defecto) | TENT: Tentativo/Provisional | CANC: Cancelado
+    vPrioridad="5"                          # 1: Alta, 5: Normal (recomendado), 9: Baja
+    vOrganizador="carpios@tda-sgft.com"     # Email del organizador
+    vREQ1="talavanf@tda-sgft.com"           # Email de las personas requeridas 1
+    vREQ2="blancod@tda-sgft.com"            # Email de las personas requeridas n
+    vOPT="carpios@tda-sgft.com"             # Email de las personas opcionales
+    vLocate=f""                             # Ubicación Tarea / Cita
+
+    Crear_Cita_SOAP(pAuthToken, vTitulo, vEstado, vPrioridad, vLocate, vDescribe, vContent, vSu, vOrganizador, vREQ1, vREQ2, vOPT, vFIni, vFFin, vFRec)
 
 

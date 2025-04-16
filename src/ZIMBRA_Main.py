@@ -17,61 +17,59 @@ from   zimbra.ZIMBRA_paso4     import sTv_paso4
 #                               INICIO DEL PROGRAMA
 # ----------------------------------------------------------------------------------------
 
+# Parámetro1: Producción o Desarrollo
 vEntorno="DEV"
+if len(sys.argv) > 1 :
+    var_param1 = sys.argv[1]
+    vEntorno = var_param1
 
-# ----------------- DATOS ZIMBRA
-vUrl = "https://zimbra.tda-sgft.com/service/soap"
+# Parámetro2: Fecha (opcional)
+tiempo_inicio = dt.now()    # = dt(2025, 11, 15)
+if len(sys.argv) > 2 :
+    var_param2 = sys.argv[2]
+    if re.match(r"^\d{4}-\d{2}-\d{2}$", var_param2):
+        anio, mes, dia = map(int, var_param2.split('-'))
+        tiempo_inicio = dt(anio, mes, dia)
+    else:
+        print("El formato de fecha debe ser, ejemplo: 2025-07-28")
+        input(Fore.WHITE + f"Se ejecutará con el día {tiempo_inicio.strftime('%Y-%m-%d')}")
 
-# ----------------- DATOS ENTRADA
-vFechaAviso="2026-03-02"
-vIdTarea="TARE000007"
-vIdPlanif="PLAN000068"
-vClavePizzara="GASA"
-vEmisiones="Todas"
-vClase="OTROS REPORTES"
-vAsunto="Reporte de los Seguros Contratados (A SOLICITUD NUESTRA)"
-vDetalleEvento="Debe entregarnos, si así se lo solicitamos por escrito, un reporte completo respecto a los seguros contratados de forma anual, durante los 45 Días Hábiles siguientes al cierre de cada año."
-vRepositorio="https://repo.titulizaciondeactivos.com/s/YeLHrsajidFkyax?dir=/DOCUMENTACION/ARA"
 
-# ----------------- DATOS COMUNES TAREA/CITA
-vTitulo=f"Tarea Pendiente de {vClavePizzara}: {vIdTarea} : {vIdPlanif}"
-vSu=vTitulo                                                               # Sujeto - Titulo de la Alerta - Pop-up
-vDescribe=f"Tareas Pendientes {vIdTarea} : {vIdPlanif} : {vClavePizzara}" # Descripción de la alerta     - Pop-up
-vContent=f"Tarea Pendiente de {vClavePizzara}\n\nID_TAREA: {vIdTarea}\nID_PLANIF: {vIdPlanif} \nEmisiones: {vEmisiones} \nClase: {vClase}\n\nAsunto: {vAsunto} \n\nDetalle: {vDetalleEvento} \n\nRepositorio: {vRepositorio}"
-vFIni = "20250415T163000Z"                                                # 10:30 en España (UTC+2)
-vFFin = "20250415T184500Z"                                                # 10:45 fin
-vFRec = vFIni                                                             # Fecha y Hora del recordatorio
+# Crear fecha con formato.... 
+var_Fecha1  = tiempo_inicio.strftime('%Y-%m-%d')  # Formato "2025-03-04"
+var_Fecha2  = tiempo_inicio.strftime('%Y%m%d')    # Formato "20250304"
 
-# Crear un token de autenticación para interactuar con la API de Zimbra
+
+# PASO-1: Leer los avisos diarios del CSV
+print("----------------- LEER ARCHIVO CSV -----------------")
+try:
+    sTv_paso1(var_Fecha1)
+except Exception as e:
+    print(f"Error al leer el archivo csv de entrada:\n{e}")
+    exit(1)
+
+exit(0)
+
+# PASO-2: Crear un token de autenticación para interactuar con la API de Zimbra
 print("----------------- CREAR UN TOKEN -----------------")
 try:
-    vAuthToken = sTv_paso2(vUrl, vEntorno)
+    vAuthToken = sTv_paso2(vEntorno)
 except Exception as e:
     print(f"Error al ejecutar el Paso2: Obtener el Token de Autenticación:\n{e}")
     exit(1)
 
-# Crear una cita en el calendario de Zimbra
+# PASO-3: Crear una cita en el calendario de Zimbra
 print("----------------- CREAR UNA CITA -----------------")
-vEstado1="CONF"                         # CONF: confirmado (por defecto) | TENT: Tentativo/Provisional | CANC: Cancelado
-vPrioridad1="5"                         # 1: Alta, 5: Normal (recomendado), 9: Baja
-vOrganizador="carpios@tda-sgft.com"     # Email del organizador
-pREQ1="talavanf@tda-sgft.com"           # Email de las personas requeridas 1
-pREQ2="blancod@tda-sgft.com"            # Email de las personas requeridas n
-pOPT="carpios@tda-sgft.com"             # Email de las personas opcionales
-vLocate1=f""                            # Ubicación Tarea / Cita
 try:
-    sTv_paso3(vUrl, vAuthToken, vTitulo, vEstado1, vPrioridad1, vLocate1, vDescribe, vContent, vSu, vOrganizador, pREQ1, pREQ2, pOPT, vFIni, vFFin, vFRec)
+    sTv_paso3(vAuthToken, var_Fecha1, var_Fecha2)
 except Exception as e:
     print(f"Error al ejecutar el Paso3: Crear una cita en el calendario Zimbra:\n{e}")
     exit(1)
 
-# Crear una tarea dentro de Zimbra
+# PASO-4: Crear una tarea dentro de Zimbra
 print("----------------- CREAR UNA TAREA ----------------")
-vEstado2="NEED"                         # NEED:No se ha iniciado |INPR:En progreso |COMP:Completada |WAITING:En espera |DEFERRED:Pospuesta |CANCELLED:Cancelado 
-vPrioridad2="1"                         # 1: Alta, 5: Normal, 9: Baja
-vLocate2=f"Escribir aquí una nota en caso de problemas con la tarea"  # Ubicación Tarea / Cita
 try:
-    sTv_paso4(vUrl, vAuthToken, vTitulo, vEstado2, vPrioridad2, vLocate2, vDescribe, vContent, vSu, vFIni, vFFin, vFRec)
+    sTv_paso4(vAuthToken, var_Fecha1, var_Fecha2)
 except Exception as e:
     print(f"Error al ejecutar el Paso4: Crear una tarea dentro de Zimbra:\n{e}")
     exit(1)

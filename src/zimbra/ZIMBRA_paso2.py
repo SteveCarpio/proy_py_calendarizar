@@ -10,7 +10,7 @@ from   cfg.ZIMBRA_library import *
 #                                  FUNCIONES
 # ----------------------------------------------------------------------------------------
 
-def Crear_Token_SOAP(pUrl, pUsuario, pContrasena):
+def Crear_Token_SOAP(pUsuario, pContrasena):
 
     # XML de autentificación
     auth_xml = f"""<?xml version="1.0" encoding="UTF-8"?>
@@ -24,7 +24,7 @@ def Crear_Token_SOAP(pUrl, pUsuario, pContrasena):
     </soap:Envelope>"""
 
     # Enviar petición
-    response = requests.post(pUrl, data=auth_xml, headers={"Content-Type": "text/xml"}, verify=False)
+    response = requests.post(sTv.var_UrlSoapZimbra, data=auth_xml, headers={"Content-Type": "text/xml"}, verify=False)
 
     # Mostrar respuesta
     print("Código HTTP:", response.status_code)
@@ -63,12 +63,12 @@ def Importar_User_Passwd(pEntorno):
 #                               INICIO PROGRAMA
 # ----------------------------------------------------------------------------------------
 
-def sTv_paso2(pUrl, pEntorno):
+def sTv_paso2(pEntorno):
     # Importar usuario y contraseña del file .txt
     pUsuario, pContrasena = Importar_User_Passwd(pEntorno)
 
     # Crear un token en Zimbra
-    auth_token = Crear_Token_SOAP(pUrl, pUsuario, pContrasena)
+    auth_token = Crear_Token_SOAP(pUsuario, pContrasena)
 
     return auth_token
 
