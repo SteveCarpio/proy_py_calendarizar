@@ -41,6 +41,7 @@ vFIni = "20250415T163000Z"                                                # 10:3
 vFFin = "20250415T184500Z"                                                # 10:45 fin
 vFRec = vFIni                                                             # Fecha y Hora del recordatorio
 
+# Crear un token de autenticación para interactuar con la API de Zimbra
 print("----------------- CREAR UN TOKEN -----------------")
 vUsuario = "carpios@tda-sgft.com"
 #vUsuario = "talavanf@tda-sgft.com"
@@ -48,8 +49,13 @@ vUsuario = "carpios@tda-sgft.com"
 vContrasena="G3m4198005$$"
 #vContrasena="Mrpotato51.."
 #vContrasena="U9d8z?:8K,>2"
-vAuthToken = sTv_paso2(vUrl, vUsuario, vContrasena)
+try:
+    vAuthToken = sTv_paso2(vUrl, vUsuario, vContrasena)
+except Exception as e:
+    print(f"Error al ejecutar el Paso2: Obtener el Token de Autenticación:\n{e}")
+    exit(1)
 
+# Crear una cita en el calendario de Zimbra
 print("----------------- CREAR UNA CITA -----------------")
 vEstado1="CONF"                         # CONF: confirmado (por defecto) | TENT: Tentativo/Provisional | CANC: Cancelado
 vPrioridad1="5"                         # 1: Alta, 5: Normal (recomendado), 9: Baja
@@ -58,13 +64,22 @@ pREQ1="talavanf@tda-sgft.com"           # Email de las personas requeridas 1
 pREQ2="blancod@tda-sgft.com"            # Email de las personas requeridas n
 pOPT="carpios@tda-sgft.com"             # Email de las personas opcionales
 vLocate1=f""                            # Ubicación Tarea / Cita
-sTv_paso3(vUrl, vAuthToken, vTitulo, vEstado1, vPrioridad1, vLocate1, vDescribe, vContent, vSu, vOrganizador, pREQ1, pREQ2, pOPT, vFIni, vFFin, vFRec)
+try:
+    sTv_paso3(vUrl, vAuthToken, vTitulo, vEstado1, vPrioridad1, vLocate1, vDescribe, vContent, vSu, vOrganizador, pREQ1, pREQ2, pOPT, vFIni, vFFin, vFRec)
+except Exception as e:
+    print(f"Error al ejecutar el Paso3: Crear una cita en el calendario Zimbra:\n{e}")
+    exit(1)
 
+# Crear una tarea dentro de Zimbra
 print("----------------- CREAR UNA TAREA ----------------")
 vEstado2="NEED"                         # NEED:No se ha iniciado |INPR:En progreso |COMP:Completada |WAITING:En espera |DEFERRED:Pospuesta |CANCELLED:Cancelado 
 vPrioridad2="1"                         # 1: Alta, 5: Normal, 9: Baja
 vLocate2=f"Escribir aquí nota personal si no se puede finalizar la tarea"  # Ubicación Tarea / Cita
-sTv_paso4(vUrl, vAuthToken, vTitulo, vEstado2, vPrioridad2, vLocate2, vDescribe, vContent, vSu, vFIni, vFFin, vFRec)
+try:
+    sTv_paso4(vUrl, vAuthToken, vTitulo, vEstado2, vPrioridad2, vLocate2, vDescribe, vContent, vSu, vFIni, vFFin, vFRec)
+except Exception as e:
+    print(f"Error al ejecutar el Paso4: Crear una tarea dentro de Zimbra:\n{e}")
+    exit(1)
 
 
                 
