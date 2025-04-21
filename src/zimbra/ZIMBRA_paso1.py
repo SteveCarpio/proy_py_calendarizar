@@ -59,6 +59,7 @@ def sTv_paso1(var_Fecha):
         return df
     else:
         print(f"No se encontraron datos del dia: {var_Fecha}")
-        print(f"Proceso finalizado en el paso-1 ")
-        exit(0)
+        print(Fore.MAGENTA + "\n----------------------------------- [ Proceso Finalizado en el paso-1 ] -----------------------------------\n")
+        sys.exit(0)
+    
 
