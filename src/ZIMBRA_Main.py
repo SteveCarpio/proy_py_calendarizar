@@ -38,7 +38,6 @@ if len(sys.argv) > 2 :
         print("El formato de fecha debe ser, ejemplo: 2025-07-28")
         input(Fore.WHITE + f"Se ejecutará con el día {tiempo_inicio.strftime('%Y-%m-%d')}")
 
-
 # Crear fecha con formato.... 
 var_Fecha1  = tiempo_inicio.strftime('%Y-%m-%d')  # Formato "2025-03-04"
 var_Fecha2  = tiempo_inicio.strftime('%Y%m%d')    # Formato "20250304"
@@ -50,7 +49,7 @@ var_Fecha2  = tiempo_inicio.strftime('%Y%m%d')    # Formato "20250304"
 # PASO-0: Validar requisitos del programa ------------------------------------------------
 print(Fore.MAGENTA + "\n----------------------------------- [ Inicio del Proceso ] -----------------------------------\n")
 try:
-    sTv_paso0()
+    sTv_paso0(vEntorno)
 except Exception as e:
     print(f"Error Paso0: Validando requisitos previos:\n{e}")
     sys.exit(1)
