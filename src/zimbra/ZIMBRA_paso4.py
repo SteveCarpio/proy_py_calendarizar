@@ -9,55 +9,11 @@ from   cfg.ZIMBRA_library import *
 # ----------------------------------------------------------------------------------------
 #                                  FUNCIONES
 # ----------------------------------------------------------------------------------------
-def preparar_html_para_zimbra(texto_html):
-    # Quita xmlns y cualquier otro atributo sospechoso
-    limpio = re.sub(r'\s+xmlns="[^"]+"', '', texto_html)
-    # Envolver en CDATA
-    return f"<![CDATA[{limpio}]]>"
-
-def Crear_Tarea_SOAP_otro(pAuthToken, pTitulo, pEstado, pPrioridad, pLocate, pDescribe, pContent, pSu, pFIni, pFFin, pFRec):
-    # Preparar el contenido HTML
-    contenido_html = preparar_html_para_zimbra(pContent)
-
-    crear_tarea_con_alarma = f"""<?xml version="1.0" encoding="UTF-8"?>
-    <soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope">
-    <soap:Header>
-        <context xmlns="urn:zimbra">
-        <authToken>{pAuthToken}</authToken>
-        </context>
-    </soap:Header>
-    <soap:Body>
-        <CreateTaskRequest xmlns="urn:zimbraMail">
-        <m>
-            <inv method="REQUEST" type="task">
-            <comp name="{pTitulo}" percentComplete="0" status="{pEstado}" priority="{pPrioridad}">
-                <s d="{pFIni}"/>
-                <e d="{pFFin}"/>
-                <loc>{pLocate}</loc>
-                <alarm action="DISPLAY">
-                <trigger>
-                    <abs d="{pFRec}"/>
-                </trigger>
-                <desc>{pDescribe}</desc>
-                <attach uri=""/>
-                </alarm>
-            </comp>
-            </inv>
-            <su>{pSu}</su>
-            <mp ct="text/html">
-            <content>{contenido_html}</content>
-            </mp>
-        </m>
-        </CreateTaskRequest>
-    </soap:Body>
-    </soap:Envelope>"""
-
-    # Enviar la solicitud
-    response2 = requests.post(sTv.var_UrlSoapZimbra, data=crear_tarea_con_alarma, headers={"Content-Type": "text/xml"}, verify=False)
-    print("Respuesta al crear tarea:")
-    print(response2.text)
 
 def Crear_Tarea_SOAP(pAuthToken, pTitulo, pEstado, pPrioridad, pLocate, pDescribe, pContent, pSu, pFIni, pFFin, pFRec):
+    
+    pContent = f"{pContent}\n--------------------------------------------------------------\nNotas:\n"
+
     crear_tarea_con_alarma = f"""<?xml version="1.0" encoding="UTF-8"?>
     <soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope">
     <soap:Header>

@@ -57,6 +57,8 @@ def Importar_User_Passwd(pEntorno):
                 xEmail=fila['EMAIL'].strip('"')
                 xPasswd=fila['PASSWD'].strip('"')
                 break # porque solo queremos la primera coincidencia
+    print(xEmail)
+    print(xPasswd)
     return xEmail, xPasswd
 
 # ----------------------------------------------------------------------------------------

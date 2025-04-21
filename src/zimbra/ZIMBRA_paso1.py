@@ -26,11 +26,31 @@ def Leer_Csv_DataFrame(var_Fecha):
 
     return df_filtrado
 
+def copiar_files(src_path, dest_path):
+    try:
+        # Verificar si el archivo de destino ya existe y eliminarlo si es necesario
+        if os.path.exists(dest_path):
+            os.remove(dest_path)
+            print(f"CSV borrado de: {dest_path}")
+
+        # Intentar copiar el archivo
+        shutil.copy(src_path, dest_path)
+        print(f"CSV copiado de: {src_path} a: {dest_path}")
+
+    except PermissionError:
+        print(f"Error de permiso: No se puede acceder a: {src_path} porque está siendo usado por otro proceso.")
+    
+    except Exception as e:
+        print(f"Ha ocurrido un error: {str(e)}")
+
 # ----------------------------------------------------------------------------------------
 #                               INICIO PROGRAMA
 # ----------------------------------------------------------------------------------------
 
 def sTv_paso1(var_Fecha):
+
+    # Copiar CSV al servidor Python
+    copiar_files(f"{sTv.red_RutaAccess}{sTv.var_NombreCsvDiario}", f"{sTv.loc_RutaAccess}{sTv.var_NombreCsvDiario}")
 
     # Leer CSV en un DataFrame
     df = Leer_Csv_DataFrame(var_Fecha)
@@ -38,6 +58,7 @@ def sTv_paso1(var_Fecha):
         print(df)
         return df
     else:
-        print(f"No hay datos para este dia: {var_Fecha}")
+        print(f"No se encontraron datos del dia: {var_Fecha}")
+        print(f"Proceso finalizado en el paso-1 ")
         exit(0)
 

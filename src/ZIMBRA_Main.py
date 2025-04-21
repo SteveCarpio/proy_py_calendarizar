@@ -6,7 +6,7 @@
 # Versión: V1 2025
 # ----------------------------------------------------------------------------------------
 
-from   cfg.ZIMBRA_library import *
+from   cfg.ZIMBRA_library      import *
 from   zimbra.ZIMBRA_paso0     import sTv_paso0
 from   zimbra.ZIMBRA_paso1     import sTv_paso1
 from   zimbra.ZIMBRA_paso2     import sTv_paso2
@@ -16,6 +16,9 @@ from   zimbra.ZIMBRA_paso4     import sTv_paso4
 # ----------------------------------------------------------------------------------------
 #                               INICIO DEL PROGRAMA
 # ----------------------------------------------------------------------------------------
+
+# Inicializar colorama
+init(autoreset=True)
 
 # Parámetro1: Producción o Desarrollo
 vEntorno="DEV"
@@ -44,36 +47,44 @@ var_Fecha2  = tiempo_inicio.strftime('%Y%m%d')    # Formato "20250304"
 #                               PASOS DE EJECUCIÓN 
 # ----------------------------------------------------------------------------------------
 
+# PASO-0: Validar requisitos del programa ------------------------------------------------
+print(Fore.MAGENTA + "\n----------------------------------- [ Inicio del Proceso ] -----------------------------------\n")
+try:
+    df = sTv_paso0()
+except Exception as e:
+    print(f"Error Paso0: Validando requisitos previos:\n{e}")
+    exit(1)
+
 # PASO-1: Leer los avisos diarios del CSV ------------------------------------------------
-print("\n----------------- PASO-1: LEER ARCHIVO DE ENTRADA CSV -----------------")
+print(Fore.YELLOW + "\n----------------- PASO-1: LEER ARCHIVO DE EVENTOS DIARIOS CSV -----------------")
 try:
     df = sTv_paso1(var_Fecha1)
 except Exception as e:
-    print(f"Error al leer el archivo csv de entrada:\n{e}")
+    print(f"Error Paso1: Tratar el archivo csv de entrada:\n{e}")
     exit(1)
 
 # PASO-2: Crear un token de autenticación para interactuar con la API de Zimbra ----------
-print("\n----------------- PASO-2: CREAR UN TOKEN DE ZIMBRA -----------------")
+print(Fore.GREEN + "\n----------------- PASO-2: CREAR UN TOKEN DE ZIMBRA -----------------")
 try:
     vAuthToken = sTv_paso2(vEntorno)
 except Exception as e:
-    print(f"Error al ejecutar el Paso2: Obtener el Token de Autenticación:\n{e}")
+    print(f"Error Paso2: Obtener el Token de Autenticación:\n{e}")
     exit(1)
 
 # PASO-3: Crear una cita en el calendario de Zimbra --------------------------------------
-print("\n----------------- PASO-3: AGREGAR CITA A LA AGENDA DE ZIMBRA -----------------")
+print(Fore.CYAN + "\n----------------- PASO-3: AGREGAR CITA A LA AGENDA DE ZIMBRA -----------------")
 try:
     sTv_paso3(vAuthToken, var_Fecha1, var_Fecha2, df)
 except Exception as e:
-    print(f"Error al ejecutar el Paso3: Crear una cita en el calendario Zimbra:\n{e}")
+    print(f"Error Paso3: Crear una cita en el calendario Zimbra:\n{e}")
     exit(1)
 
 # PASO-4: Crear una tarea dentro de Zimbra -----------------------------------------------
-print("\n----------------- PASO-4: AGREGAR TAREAS A REALIZAR HOY EN ZIMBRA ----------------")
+print(Fore.CYAN + "\n----------------- PASO-4: AGREGAR TAREAS A REALIZAR HOY EN ZIMBRA ----------------")
 try:
     sTv_paso4(vAuthToken, var_Fecha1, var_Fecha2, df)
 except Exception as e:
-    print(f"Error al ejecutar el Paso4: Crear una tarea dentro de Zimbra:\n{e}")
+    print(f"Error Paso4: Crear una tarea dentro de Zimbra:\n{e}")
     exit(1)
 
-print("\n----------------- [ Proceso Finalizado ] -----------------\n")
+print(Fore.MAGENTA + "\n----------------------------------- [ Proceso Finalizado ] -----------------------------------\n")
