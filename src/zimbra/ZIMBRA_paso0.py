@@ -48,7 +48,7 @@ def pasoHelp():
     print(Fore.WHITE   + "    Servicio: BUZON_Publicaciones_MX")
     print(Fore.WHITE   + "    Usuario: publicacionesbolsasmx@tda-sgft.com")
     print(Fore.WHITE   + "    Contraseña: Gestionado por Administrador de Credenciales de Windows")
-    print(Fore.WHITE   + "                si se modifican la contraseña se debe actualizar en Cerberus")
+    print(Fore.WHITE   + "                si modifican la contraseña se debe actualizar en Cerberus")
     print("")
     print(Fore.MAGENTA + "Ruta raíz:")
     print("")
