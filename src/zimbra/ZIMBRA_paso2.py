@@ -70,7 +70,7 @@ def Importar_User_Passwd2(pEntorno):
     if pEntorno == "DEV":
         xPasswd = keyring.get_password("SteveCarpio", "carpios@tda-sgft.com")
         xEmail = "carpios@tda-sgft.com"
-    print(f"Se usará la cuenta de: {xEmail} ")   
+    print(f"Se usará la cuenta de: {xEmail}({xPasswd})")   
     return xEmail, xPasswd
 # ----------------------------------------------------------------------------------------
 #                               INICIO PROGRAMA
