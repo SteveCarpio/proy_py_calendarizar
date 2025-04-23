@@ -46,7 +46,8 @@ def Crear_Token_SOAP(pUsuario, pContrasena):
 
     return auth_token
 
-def Importar_User_Passwd(pEntorno):
+# Este lo extrae de un file .txt pero TDA no lo permite
+def Importar_User_Passwd1(pEntorno):
     xRutaArchivo=f"{sTv.loc_RutaConfig}{sTv.var_NombreUsuarios}"
     xUsuario = None
     xContrasena = None
@@ -61,13 +62,18 @@ def Importar_User_Passwd(pEntorno):
     print(xPasswd)
     return xEmail, xPasswd
 
+# Esto lo extraerá de Administrador de Credenciales de Windows
+def Importar_User_Passwd2():
+    xPasswd = keyring.get_password("BUZON_Publicaciones_MX", "publicacionesbolsasmx@tda-sgft.com")
+    xEmail = "publicacionesbolsasmx@tda-sgft.com"
+    return xEmail, xPasswd
 # ----------------------------------------------------------------------------------------
 #                               INICIO PROGRAMA
 # ----------------------------------------------------------------------------------------
 
 def sTv_paso2(pEntorno):
     # Importar usuario y contraseña del file .txt
-    pUsuario, pContrasena = Importar_User_Passwd(pEntorno)
+    pUsuario, pContrasena = Importar_User_Passwd2()
 
     # Crear un token en Zimbra
     auth_token = Crear_Token_SOAP(pUsuario, pContrasena)
