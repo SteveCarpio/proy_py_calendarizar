@@ -81,8 +81,11 @@ def Recupera_Datos_DataFrame(df, var_Fecha1):
         )
         vContentCumulado += vContent
 
-    # ...............
-    vTitulo=f"({len(df)}) Tareas Pendientes hoy {var_Fecha1}"
+    # Crea el titulo
+    conteo = df['CLAVE_PIZARRA'].value_counts()
+    vClavesPizarra = ', '.join(f"{nombre}({cantidad})" for nombre, cantidad in conteo.items())
+    vTitulo=f"{vClavesPizarra}: TareasPendientes {var_Fecha1}"
+    # Crea el contenido acumulado
     vContentCumulado = f"{vTitulo}\n\n{vLinea}\n{vContentCumulado}"
     return vTitulo, vContentCumulado
 

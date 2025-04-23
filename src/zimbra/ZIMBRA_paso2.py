@@ -63,9 +63,14 @@ def Importar_User_Passwd1(pEntorno):
     return xEmail, xPasswd
 
 # Esto lo extraerá de Administrador de Credenciales de Windows
-def Importar_User_Passwd2():
-    xPasswd = keyring.get_password("BUZON_Publicaciones_MX", "publicacionesbolsasmx@tda-sgft.com")
-    xEmail = "publicacionesbolsasmx@tda-sgft.com"
+def Importar_User_Passwd2(pEntorno):
+    if pEntorno == "PRO":
+        xPasswd = keyring.get_password("BUZON_Publicaciones_MX", "publicacionesbolsasmx@tda-sgft.com")
+        xEmail = "publicacionesbolsasmx@tda-sgft.com"
+    if pEntorno == "DEV":
+        xPasswd = keyring.get_password("SteveCarpio", "carpios@tda-sgft.com")
+        xEmail = "carpios@tda-sgft.com"
+    print(f"Se usará la cuenta de: {xEmail} ")   
     return xEmail, xPasswd
 # ----------------------------------------------------------------------------------------
 #                               INICIO PROGRAMA
@@ -73,7 +78,7 @@ def Importar_User_Passwd2():
 
 def sTv_paso2(pEntorno):
     # Importar usuario y contraseña del file .txt
-    pUsuario, pContrasena = Importar_User_Passwd2()
+    pUsuario, pContrasena = Importar_User_Passwd2(pEntorno)
 
     # Crear un token en Zimbra
     auth_token = Crear_Token_SOAP(pUsuario, pContrasena)

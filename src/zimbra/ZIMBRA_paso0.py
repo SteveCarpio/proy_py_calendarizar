@@ -48,7 +48,7 @@ def pasoHelp():
     print(Fore.WHITE   + "    Servicio: BUZON_Publicaciones_MX")
     print(Fore.WHITE   + "    Usuario: publicacionesbolsasmx@tda-sgft.com")
     print(Fore.WHITE   + "    Contraseña: Gestionado por Administrador de Credenciales de Windows")
-    print(Fore.WHITE   + "                si modifican la contraseña se debe actualizar en Cerberus")
+    print(Fore.WHITE   + "                * Si modifican la contraseña se debe actualizar en Cerberus")
     print("")
     print(Fore.MAGENTA + "Ruta raíz:")
     print("")
@@ -99,17 +99,13 @@ def pasoHelp():
     print(Fore.WHITE   + "          Se deben recibir al menos estos campos:")
     print(Fore.WHITE   + "          FECHA_AVISO, ID_TAREA, ID_PLANIF, CLAVE_PIZARRA, EMISIONES, CLASE, ASUNTO, DETALLE_DEL_EVENTO, REPOSITORIO")
     print("")
-
     print(Fore.CYAN   + "    - Zimbra SOAP Activo:")
     print(Fore.WHITE   + "          URL:        https://zimbra.tda-sgft.com/service/soap")
     print(Fore.WHITE   + "          Usuario:    publicacionesbolsasmx@tda-sgft.com")
-    print(Fore.WHITE   + "          Contraseña: Ver en Cerberus")
-    
     print("")
-
     print(Fore.MAGENTA + "=" * 94)
     print(Fore.WHITE   + "Para más ayuda, contactar con: SteveCarpio 'carpios@tda-sgft.com' ")
-    print(Fore.WHITE   + "Versión 1 - 2025")
+    print(Fore.WHITE   + "Versión 2 - 2025")
     print(Fore.MAGENTA + "=" * 94)
 
 # ----------------------------------------------------------------------------------------
