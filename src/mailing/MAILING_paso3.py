@@ -10,6 +10,16 @@ from   cfg.MAILING_library import *
 #                                  FUNCIONES
 # ----------------------------------------------------------------------------------------
 
+# Función para cambiar los colores en las etiquetas TR HTML
+def aplicar_colores_alternos(tabla_html):
+    soup = BeautifulSoup(tabla_html, "html.parser")
+    filas = soup.find_all("tr")
+    for i, fila in enumerate(filas[1:]):  # saltamos la cabecera (filas[0])
+        color = "#f2f2f2" if i % 2 == 0 else "#ffffff"
+        estilo_existente = fila.get("style", "")
+        fila["style"] = f"{estilo_existente} background-color: {color};"
+    return str(soup)
+
 def Mandar_Email_Diario(destinatarios_to, destinatarios_cc, asunto, cuerpo, df, var_Fecha):
     registros = len(df)
     print(f"Se han recibido: {registros} registros. ")
@@ -32,8 +42,11 @@ def Mandar_Email_Diario(destinatarios_to, destinatarios_cc, asunto, cuerpo, df, 
         # Eliminar los /r y /n, reemplazarlos por etiquetas html br
         df['DETALLE_DEL_EVENTO'] = df['DETALLE_DEL_EVENTO'].apply(lambda x: str(x).replace('\r', '').replace('\n', '<br>'))
 
-        # Convertir el DataFrame a HTML, scape=False para que tenga en cuenta los BR
-        tabla_html = df.to_html(index=True, escape=False)  # con el índice
+        # Convertir el DataFrame a HTML, escape=False para que tenga en cuenta los BR
+        #tabla_html1 = df1.to_html(index=True, escape=False)  # con el índice
+        #tabla_html2 = df2.to_html(index=True, escape=False)  # con el índice
+        # A parte se invoca una función para modificar colores alternos del TR de html
+        tabla_html = aplicar_colores_alternos(df.to_html(index=True, escape=False))
 
         # Cuerpo del correo usando HTML y CSS
         cuerpo_html = f"""

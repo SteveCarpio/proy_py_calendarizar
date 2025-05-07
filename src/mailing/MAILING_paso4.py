@@ -10,8 +10,17 @@ from   cfg.MAILING_library import *
 #                                  FUNCIONES
 # ----------------------------------------------------------------------------------------
 
+# Función para cambiar los colores en las etiquetas TR HTML
+def aplicar_colores_alternos(tabla_html):
+    soup = BeautifulSoup(tabla_html, "html.parser")
+    filas = soup.find_all("tr")
+    for i, fila in enumerate(filas[1:]):  # saltamos la cabecera (filas[0])
+        color = "#f2f2f2" if i % 2 == 0 else "#ffffff"
+        estilo_existente = fila.get("style", "")
+        fila["style"] = f"{estilo_existente} background-color: {color};"
+    return str(soup)
+
 def Mandar_Email_SemanalMensual(destinatarios_to, destinatarios_cc, asunto, cuerpo, var_Fecha, df1, df2, p_Lunes, p_Domingo, p_AnoMes):
-    
     registros1 = len(df1)
     registros2 = len(df2)
     print(f"Se han recibido: {registros1} registros para el informe Semanal ")
@@ -38,10 +47,11 @@ def Mandar_Email_SemanalMensual(destinatarios_to, destinatarios_cc, asunto, cuer
         df2['DETALLE_DEL_EVENTO'] = df2['DETALLE_DEL_EVENTO'].apply(lambda x: str(x).replace('\r', '').replace('\n', '<br>'))
 
         # Convertir el DataFrame a HTML, escape=False para que tenga en cuenta los BR
-        tabla_html1 = df1.to_html(index=True, escape=False)  # con el índice
-        tabla_html2 = df2.to_html(index=True, escape=False)  # con el índice
-
-        
+        #tabla_html1 = df1.to_html(index=True, escape=False)  # con el índice
+        #tabla_html2 = df2.to_html(index=True, escape=False)  # con el índice
+        # A parte se invoca una función para modificar colores alternos del TR de html
+        tabla_html1 = aplicar_colores_alternos(df1.to_html(index=True, escape=False))
+        tabla_html2 = aplicar_colores_alternos(df2.to_html(index=True, escape=False))
 
         # Cuerpo del correo usando HTML y CSS
         cuerpo_html = f"""
@@ -109,6 +119,9 @@ def Mandar_Email_SemanalMensual(destinatarios_to, destinatarios_cc, asunto, cuer
                 /* Enlaces visitados */
                 a:visited {{
                     color: #8B0000;                 /* El mismo rojo oscuro para enlaces visitados */
+                }}
+                .compact-div {{
+                    margin-bottom: 1px;
                 }}
             </style>
         </head>
