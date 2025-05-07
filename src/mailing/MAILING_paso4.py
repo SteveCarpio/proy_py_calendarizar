@@ -10,6 +10,7 @@ from   cfg.MAILING_library import *
 #                                  FUNCIONES
 # ----------------------------------------------------------------------------------------
 
+# Función que carga los destinatarios del email
 def cargar_destinatarios_csv(tipo):
     with open(f"{sTv.loc_RutaConfig}destinatarios.csv", newline='', encoding='utf-8') as archivo_csv:
         for linea in archivo_csv:
@@ -26,7 +27,7 @@ def aplicar_colores_alternos(tabla_html):
     soup = BeautifulSoup(tabla_html, "html.parser")
     filas = soup.find_all("tr")
     for i, fila in enumerate(filas[1:]):  # saltamos la cabecera (filas[0])
-        color = "#f2f2f2" if i % 2 == 0 else "#ffffff"
+        color = "#fff2f0" if i % 2 == 0 else "#ffffff"  # (gris f2f2f2)
         estilo_existente = fila.get("style", "")
         fila["style"] = f"{estilo_existente} background-color: {color};"
     return str(soup)
@@ -130,9 +131,6 @@ def Mandar_Email_SemanalMensual(destinatarios_to, destinatarios_cc, asunto, cuer
                 /* Enlaces visitados */
                 a:visited {{
                     color: #8B0000;                 /* El mismo rojo oscuro para enlaces visitados */
-                }}
-                .compact-div {{
-                    margin-bottom: 1px;
                 }}
             </style>
         </head>
