@@ -10,6 +10,18 @@ from   cfg.MAILING_library import *
 #                                  FUNCIONES
 # ----------------------------------------------------------------------------------------
 
+# Función que carga los destinatarios del email
+def cargar_destinatarios_csv(tipo):
+    with open(f"{sTv.loc_RutaConfig}destinatarios.csv", newline='', encoding='utf-8') as archivo_csv:
+        for linea in archivo_csv:
+            if linea.startswith(tipo):
+                # Extraer todo lo que está después de "TIPO"
+                datos = linea.split(":", 1)[1]
+                # Usamos una expresión regular para encontrar todas las direcciones de email
+                destinatarios = re.findall(r'[\w\.-]+@[\w\.-]+', datos)
+                return destinatarios
+    return []
+
 # Función para cambiar los colores en las etiquetas TR HTML
 def aplicar_colores_alternos(tabla_html):
     soup = BeautifulSoup(tabla_html, "html.parser")
@@ -224,19 +236,19 @@ def sTv_paso3(var_Fecha, var_Entorno):
     if var_Entorno == "PRO":
         if len(df) > 1:
             print("- Running en modo: PRO - OK existen datos")
-            destinatarios_to=['repcomun@tda-sgft.com']                       #  repcomun@tda-sgft.com
-            destinatarios_cc=['carpios@tda-sgft.com']
+            destinatarios_to = cargar_destinatarios_csv("DIARIO_TO_PRO1")
+            destinatarios_cc = cargar_destinatarios_csv("DIARIO_CC_PRO")
             var_Asunto=f"[AVISO] Tareas Pendientes de Revisión - Informe {var_Fecha} | TDA Update"
         else:
             print("- Running en modo: PRO - NO existen datos")
-            destinatarios_to=['talanvanf@tda-sgft.com','blancod@tda-sgft.com'] #  'talanvanf@tda-sgft.com','blancod@tda-sgft.com'
-            destinatarios_cc=['carpios@tda-sgft.com']
+            destinatarios_to = cargar_destinatarios_csv("DIARIO_TO_PRO2")
+            destinatarios_cc = cargar_destinatarios_csv("DIARIO_CC_PRO")
             var_Asunto=f"[INFO] No hay tareas Pendientes de Revisión - Informe {var_Fecha} | TDA Update"
     else:
         print("- Running en modo: DEV")
-        destinatarios_to=['carpios@tda-sgft.com']
-        destinatarios_cc=['carpios@tda-sgft.com']
-        var_Asunto=f"[ ... ] Tareas Pendientes de Revisión - Informe {var_Fecha} | TDA Update - modo DEV"
+        destinatarios_to = cargar_destinatarios_csv("DIARIO_TO_DEV")
+        destinatarios_cc = cargar_destinatarios_csv("DIARIO_CC_DEV")
+        var_Asunto=f"[AVISO] Tareas Pendientes de Revisión - Informe {var_Fecha} | TDA Update - modo DEV"
     
     var_Cuerpo=""
 

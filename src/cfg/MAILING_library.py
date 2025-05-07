@@ -15,7 +15,8 @@ import smtplib                                                    # -- -- -- -- 
 import glob                                                       # -- p0 -- -- -- -- #
 import pyodbc                                                     # -- -- -- p2 -- -- #
 import calendar                                                   # -- -- -- -- -- p4 #
-import datetime                                                   # -- -- -- -- -- p4 # 
+import datetime                                                   # -- -- -- -- -- p4 #
+import csv                                                        # -- -- -- -- -- p4 #
 from colorama import init, Fore, Back, Style                      # ma p0 -- -- -- -- #
 from datetime import datetime as dt                               # ma -- -- -- -- p4 #
 from datetime import timedelta                                    # ma -- -- -- -- -- #

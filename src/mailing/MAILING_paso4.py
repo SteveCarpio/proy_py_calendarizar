@@ -10,6 +10,17 @@ from   cfg.MAILING_library import *
 #                                  FUNCIONES
 # ----------------------------------------------------------------------------------------
 
+def cargar_destinatarios_csv(tipo):
+    with open(f"{sTv.loc_RutaConfig}destinatarios.csv", newline='', encoding='utf-8') as archivo_csv:
+        for linea in archivo_csv:
+            if linea.startswith(tipo):
+                # Extraer todo lo que está después de "TIPO"
+                datos = linea.split(":", 1)[1]
+                # Usamos una expresión regular para encontrar todas las direcciones de email
+                destinatarios = re.findall(r'[\w\.-]+@[\w\.-]+', datos)
+                return destinatarios
+    return []
+
 # Función para cambiar los colores en las etiquetas TR HTML
 def aplicar_colores_alternos(tabla_html):
     soup = BeautifulSoup(tabla_html, "html.parser")
@@ -307,16 +318,16 @@ def sTv_paso4(tiempo_inicio, var_Entorno):
     df_Semanal, p_Lunes, p_Domingo = Crear_DF_Semanal(df, tiempo_inicio.year, tiempo_inicio.month, tiempo_inicio.day)
     df_Mensual, p_AnoMes = Crear_DF_Mensual(df, tiempo_inicio.year, tiempo_inicio.month)
     
-
-    # Mandar Email Diario con el DataFrame filtrado
+    # Mandar Email Mensual con el DataFrame filtrado
     if var_Entorno == "PRO":
         print("\nEnvió del email en modo: PRO")
-        destinatarios_to=['repcomun@tda-sgft.com']
-        destinatarios_cc=['carpios@tda-sgft.com']
+        
+        destinatarios_to = cargar_destinatarios_csv("MENSUAL_TO_PRO")
+        destinatarios_cc = cargar_destinatarios_csv("MENSUAL_CC_PRO")
     else:
         print("\nEnvió del email en modo: DEV")
-        destinatarios_to=['carpios@tda-sgft.com']
-        destinatarios_cc=['carpios@tda-sgft.com']
+        destinatarios_to = cargar_destinatarios_csv("MENSUAL_TO_DEV")
+        destinatarios_cc = cargar_destinatarios_csv("MENSUAL_CC_DEV")
     
     var_Asunto=f"Resumen Tareas Pendientes a Revisar - Informe {tiempo_inicio.year}-{tiempo_inicio.month:02}-{tiempo_inicio.day:02} | TDA Update"
     var_Cuerpo=""
