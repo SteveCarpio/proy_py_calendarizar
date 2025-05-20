@@ -39,10 +39,10 @@ def Crear_Token_SOAP(pUsuario, pContrasena):
     token = tree.find('.//zimbra:authToken', ns)
     if token is not None:
         auth_token = token.text
-        print("✅ Token obtenido:")
+        print(" Token obtenido:")
         print(f':{auth_token}:')
     else:
-        print("❌ No se pudo obtener el token")
+        print(" No se pudo obtener el token")
 
     return auth_token
 
