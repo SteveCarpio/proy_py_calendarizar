@@ -217,6 +217,10 @@ def Leer_Csv_DataFrame(var_Fecha):
     df_filtrado = df_filtrado.reset_index(drop=True)
     df_filtrado.index = df_filtrado.index + 1
 
+    # Renombrar columnas del dataframe por petición de Patricia
+    df_filtrado.rename(columns={"CLAVE_PIZARRA": "EMISORA"}, inplace=True)
+    df_filtrado.rename(columns={"CLASE": "TEMA"}, inplace=True)
+
     return df_filtrado
 
 # ----------------------------------------------------------------------------------------

@@ -234,8 +234,14 @@ def Mandar_Email_SemanalMensual(destinatarios_to, destinatarios_cc, asunto, cuer
 
 # Leo el CSV generado por el proceso VBA de access de Eventos
 def Leer_Csv_DataFrame():
+
     df = pd.read_csv(f'{sTv.loc_RutaAccess}{sTv.var_NombreCsvMensual}', delimiter=';', quotechar='"', encoding='latin1')
-    df['FECHA_LIMITE'] = pd.to_datetime(df['FECHA_LIMITE'], errors='coerce', dayfirst=True)  # Convertir a fecha
+    # Convertir a fecha
+    df['FECHA_LIMITE'] = pd.to_datetime(df['FECHA_LIMITE'], errors='coerce', dayfirst=True)  
+    # Renombrar columnas del dataframe por petición de patricia
+    df.rename(columns={"CLAVE_PIZARRA": "EMISORA"}, inplace=True)
+    df.rename(columns={"CLASE": "TEMA"}, inplace=True)
+    
     return df
 
 def Crear_DF_Semanal(df, var_Ano, var_Mes, var_Dia):

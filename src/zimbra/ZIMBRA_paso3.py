@@ -73,11 +73,11 @@ def Recupera_Datos_DataFrame(df, var_Fecha1):
 
         # Crear el string con el formato deseado
         vContent = (
-            f"Clave Pizarra: {vClavePizzara}\n"
+            f"Emisora: {vClavePizzara}\n"
             f"Id Tarea: {vIdTarea}\n"
             f"Id Planificación: {vIdPlanif}\n"
             f"Emisiones: {vEmisiones}\n"
-            f"Clase: {vClase}\n\n"
+            f"Tema: {vClase}\n\n"
             f"Asunto: {vAsunto}\n\n"
             f"Detalle del Evento:\n{vDetalleEvento2}\n\n"
             f"Repositorio: {vRepositorio}\n\n"
