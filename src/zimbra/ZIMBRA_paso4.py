@@ -68,6 +68,10 @@ def Recupera_Datos_DataFrame(pAuthToken, var_Fecha1, var_Fecha2, df):
         vDetalleEvento = fila['DETALLE_DEL_EVENTO']
         vRepositorio = fila['REPOSITORIO2']
 
+        # Quitar las etiquetas HTML de la variable vDetalleEvento
+        soup = BeautifulSoup(vDetalleEvento, 'html.parser')
+        vDetalleEvento2 = soup.get_text(separator="\n")
+
         # Crear el string con el formato deseado
         vContent = (
             f"Clave Pizarra: {vClavePizzara}\n"
@@ -76,15 +80,15 @@ def Recupera_Datos_DataFrame(pAuthToken, var_Fecha1, var_Fecha2, df):
             f"Emisiones: {vEmisiones}\n"
             f"Clase: {vClase}\n\n"
             f"Asunto: {vAsunto}\n\n"
-            f"Detalle del Evento:\n{vDetalleEvento}\n\n"
+            f"Detalle del Evento:\n{vDetalleEvento2}\n\n"
             f"Repositorio: {vRepositorio}\n\n"
         )
 
         vTitulo=f"Tarea Pendiente de {vClavePizzara}: {vIdTarea} : {vIdPlanif}"
         vSu=vTitulo                                                          # Sujeto - Titulo de la Alerta - Pop-up
         vDescribe=vTitulo                                                    # Descripción de la alerta     - Pop-up
-        vFIni = f"{var_Fecha2}T073000Z"                                      # 10:30 en España (UTC+2)
-        vFFin = f"{var_Fecha2}T174500Z"                                      # 10:45 fin
+        vFIni = f"{var_Fecha2}T081500Z"                                      # 10:40 en España (UTC+2)
+        vFFin = f"{var_Fecha2}T104500Z"                                      # 10:45 fin
         vFRec = vFIni                                                        # Fecha y Hora del recordatorio
         vEstado="NEED"                                                       # NEED:No se ha iniciado |INPR:En progreso |COMP:Completada |WAITING:En espera |DEFERRED:Pospuesta |CANCELLED:Cancelado 
         vPrioridad="1"                                                       # 1: Alta, 5: Normal, 9: Baja

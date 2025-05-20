@@ -21,7 +21,8 @@ import keyring                                                    # -- -- -- -- 
 from colorama import init, Fore, Back, Style                      # ma -- -- -- -- -- #
 from datetime import datetime as dt                               # ma -- -- -- -- -- #
 from datetime import timedelta                                    # ma -- -- -- -- -- #
-from lxml import etree
+from lxml import etree                                            # -- -- -- -- -- -- #
+from bs4 import BeautifulSoup                                     # -- -- -- -- p3 -- #
 
 # CARGA DE CONFIGURACIONES ------------------------------------------------------------
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)

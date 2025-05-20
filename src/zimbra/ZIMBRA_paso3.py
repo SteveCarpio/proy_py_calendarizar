@@ -67,6 +67,10 @@ def Recupera_Datos_DataFrame(df, var_Fecha1):
         vDetalleEvento = fila['DETALLE_DEL_EVENTO']
         vRepositorio = fila['REPOSITORIO2']
 
+        # Quitar las etiquetas HTML de la variable vDetalleEvento
+        soup = BeautifulSoup(vDetalleEvento, 'html.parser')
+        vDetalleEvento2 = soup.get_text(separator="\n")
+
         # Crear el string con el formato deseado
         vContent = (
             f"Clave Pizarra: {vClavePizzara}\n"
@@ -75,7 +79,7 @@ def Recupera_Datos_DataFrame(df, var_Fecha1):
             f"Emisiones: {vEmisiones}\n"
             f"Clase: {vClase}\n\n"
             f"Asunto: {vAsunto}\n\n"
-            f"Detalle del Evento:\n{vDetalleEvento}\n\n"
+            f"Detalle del Evento:\n{vDetalleEvento2}\n\n"
             f"Repositorio: {vRepositorio}\n\n"
             f"{vLinea}\n\n"
         )
@@ -99,8 +103,8 @@ def sTv_paso3(pAuthToken, var_Fecha1, var_Fecha2, df):
     vTitulo, vContent = Recupera_Datos_DataFrame(df, var_Fecha1)
     
     # Valores para el XML de CITAS
-    vFIni = f"{var_Fecha2}T073000Z"         # (UTC+0) sumar 2horas calcular la hora de Spain
-    vFFin = f"{var_Fecha2}T094500Z"         # (UTC+0) sumar 2horas calcular la hora de Spain
+    vFIni = f"{var_Fecha2}T081500Z"         # (UTC+0) sumar 2horas calcular la hora de Spain
+    vFFin = f"{var_Fecha2}T104500Z"         # (UTC+0) sumar 2horas calcular la hora de Spain
     vFRec = vFIni                           # (UTC+0) sumar 2horas calcular la hora de Spain
     vSu=vTitulo                             # Sujeto - Titulo de la Alerta - Pop-up
     vDescribe=vTitulo                       # Descripción de la alerta     - Pop-up

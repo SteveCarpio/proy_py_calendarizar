@@ -13,7 +13,7 @@ def Leer_Csv_DataFrame(var_Fecha):
     
     # Leo el CSV generado por el proceso VBA de access de Eventos
     df = pd.read_csv(f'{sTv.loc_RutaAccess}{sTv.var_NombreCsvDiario}', delimiter=';', quotechar='"', encoding='latin1')
-  
+
     # Convertir la columna 1 a fecha
     df['FECHA_AVISO'] = pd.to_datetime(df['FECHA_AVISO'], errors='coerce', dayfirst=True)
 
@@ -54,7 +54,7 @@ def sTv_paso1(var_Fecha):
 
     # Leer CSV en un DataFrame
     df = Leer_Csv_DataFrame(var_Fecha)
-    if len(df) > 1:
+    if len(df) >= 1:
         print(df)
         return df
     else:
